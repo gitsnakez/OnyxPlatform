@@ -1,0 +1,67 @@
+  Onyx.g.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly Onyx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9b0c462d1e23f9ca: 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35: 
+	hash=None, flags=None
+Assembly PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35: 
+	hash=None, flags=None
+Assembly System.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class Onyx.FlashWindowHelper: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    UInt32 FLASHW_STOP = 0 : Public, Static, Literal, HasDefault
+    UInt32 FLASHW_CAPTION = 1 : Public, Static, Literal, HasDefault
+    UInt32 FLASHW_TRAY = 2 : Public, Static, Literal, HasDefault
+    UInt32 FLASHW_ALL = 3 : Public, Static, Literal, HasDefault
+    UInt32 FLASHW_TIMER = 4 : Public, Static, Literal, HasDefault
+    UInt32 FLASHW_TIMERNOFG = 12 : Public, Static, Literal, HasDefault
+  Methods:
+    FlashApplicationWindow(Window): PrivateScope, Public, Static, HideBySig
+    StopFlashing(Window): PrivateScope, Public, Static, HideBySig
+    Flash(IntPtr): PrivateScope, Public, Static, HideBySig
+    Flash(IntPtr, UInt32): PrivateScope, Public, Static, HideBySig
+Class Onyx.IconHelper: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    RemoveIcon(Window): PrivateScope, Public, Static, HideBySig
+Class Onyx.MessageSystem: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    Show(String, String): PrivateScope, Public, Static, HideBySig
+Class Onyx.Engine: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Fields:
+    IntPtr WindowHandle : Public, Static
+  Methods:
+    OnCreate(): PrivateScope, Public, Static, HideBySig
+    OnUpdate(): PrivateScope, Public, Static, HideBySig
+    OnDestroy(): PrivateScope, Public, Static, HideBySig
+    OnResizeWindow(): PrivateScope, Public, Static, HideBySig
+    OnChangeWindowPosition(): PrivateScope, Public, Static, HideBySig
+    OnEnter(): PrivateScope, Public, Static, HideBySig
+    OnLeave(): PrivateScope, Public, Static, HideBySig
+    OnKeyDown(Int32): PrivateScope, Public, Static, HideBySig
+    OnKeyUp(Int32): PrivateScope, Public, Static, HideBySig
+    OnMouseMove(Int32, Int32): PrivateScope, Public, Static, HideBySig
+    OnMouseButtonDown(Boolean, Int32, Int32): PrivateScope, Public, Static, HideBySig
+    OnMouseButtonUp(Boolean, Int32, Int32): PrivateScope, Public, Static, HideBySig
+Class Onyx.MessageWindow: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Window
+    Void .ctor(System.String, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.Windows.Markup.IComponentConnector
+  Fields:
+    IntPtr ParentHWND : Public
+  Methods:
+    Show(IntPtr, String, String): PrivateScope, Public, Static, HideBySig
+    InitializeComponent(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class Onyx.App: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Application
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.Windows.Markup.IComponentConnector
+  Methods:
+    InitializeComponent(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask

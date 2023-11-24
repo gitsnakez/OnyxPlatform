@@ -1,0 +1,6 @@
+D:\OnyxPlatform\OnyxApplication\bin\Debug\game.dll
+D:\OnyxPlatform\OnyxApplication\bin\Debug\game.pdb
+D:\OnyxPlatform\OnyxApplication\obj\Debug\OnyxApplication.csproj.AssemblyReference.cache
+D:\OnyxPlatform\OnyxApplication\obj\Debug\OnyxApplication.csproj.CoreCompileInputs.cache
+D:\OnyxPlatform\OnyxApplication\obj\Debug\game.dll
+D:\OnyxPlatform\OnyxApplication\obj\Debug\game.pdb

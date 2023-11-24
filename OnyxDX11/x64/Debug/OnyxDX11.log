@@ -1,0 +1,22 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (Angara.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  DeviceContext.cpp
+D:\C++\OnyxDX11\ExceptHelper.h(8,2): warning C4091: static : пропускается слева от "ExceptHelper", когда ни одна переменная не объявлена
+D:\C++\OnyxDX11\RenderSystem\DeviceContext.cpp(64,13): warning C4244: =: преобразование "UINT" в "FLOAT", возможна потеря данных
+D:\C++\OnyxDX11\RenderSystem\DeviceContext.cpp(65,14): warning C4244: =: преобразование "UINT" в "FLOAT", возможна потеря данных
+  RenderSystem.cpp
+D:\C++\OnyxDX11\ExceptHelper.h(8,2): warning C4091: static : пропускается слева от "ExceptHelper", когда ни одна переменная не объявлена
+  SwapChain.cpp
+D:\C++\OnyxDX11\ExceptHelper.h(8,2): warning C4091: static : пропускается слева от "ExceptHelper", когда ни одна переменная не объявлена
+  Viewport.cpp
+D:\C++\OnyxDX11\Math\Matrix4x4.h(111,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\Math\Matrix4x4.h(112,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\Math\Matrix4x4.h(113,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\Math\Matrix4x4.h(114,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\ExceptHelper.h(8,2): warning C4091: static : пропускается слева от "ExceptHelper", когда ни одна переменная не объявлена
+  main.cpp
+D:\C++\OnyxDX11\Math\Matrix4x4.h(111,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\Math\Matrix4x4.h(112,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\Math\Matrix4x4.h(113,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\C++\OnyxDX11\Math\Matrix4x4.h(114,44): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+  Создание кода...
+  OnyxDX11.vcxproj -> D:\C++\OnyxDX11\BuildAPI\bin\Onyx.dll

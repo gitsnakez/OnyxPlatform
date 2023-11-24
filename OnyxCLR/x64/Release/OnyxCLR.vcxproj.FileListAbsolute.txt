@@ -1,0 +1,6 @@
+D:\OnyxPlatform\OnyxCLR\x64\Release\OnyxCLR.vcxproj.AssemblyReference.cache
+D:\OnyxPlatform\OnyxCLR\x64\Release\OnyxCLR.vcxproj.CopyComplete
+D:\OnyxPlatform\OnyxCLR\x64\Release\game.exe
+D:\OnyxPlatform\OnyxCLR\x64\Release\Onyx.dll
+D:\OnyxPlatform\OnyxCLR\x64\Release\Onyx.pdb
+D:\OnyxPlatform\OnyxCLR\x64\Release\Onyx.dll.config

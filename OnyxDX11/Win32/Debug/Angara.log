@@ -1,0 +1,54 @@
+﻿  Application.cpp
+D:\C++\Angara\Math\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Math\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Math\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Math\Matrix4x4.h(107,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Application.cpp(87,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
+D:\C++\Angara\Application.cpp(517,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\C++\Angara\Application.cpp(518,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\C++\Angara\Application.cpp(540,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\C++\Angara\Application.cpp(541,22): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\C++\Angara\Application.cpp(563,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\C++\Angara\Application.cpp(564,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  GraphicsEngine.cpp
+  BindSystem.cpp
+  InputSystem.cpp
+  main.cpp
+D:\C++\Angara\Math\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Math\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Math\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\C++\Angara\Math\Matrix4x4.h(107,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Mesh.cpp
+  MeshManager.cpp
+  Texture.cpp
+D:\C++\Angara\ResourceSystem\TextureSystem\Texture.cpp(27,54): warning C4244: '=': conversion from 'UINT' to 'FLOAT', possible loss of data
+  TextureManager.cpp
+  ConstantBuffer.cpp
+  DeviceContext.cpp
+D:\C++\Angara\RenderSystem\DeviceContext.cpp(64,13): warning C4244: '=': conversion from 'UINT' to 'FLOAT', possible loss of data
+D:\C++\Angara\RenderSystem\DeviceContext.cpp(65,14): warning C4244: '=': conversion from 'UINT' to 'FLOAT', possible loss of data
+  IndexBuffer.cpp
+  PixelShader.cpp
+  RenderSystem.cpp
+  SwapChain.cpp
+  VertexBuffer.cpp
+  VertexShader.cpp
+  Resource.cpp
+  ResourceManager.cpp
+  AssetLoader.cpp
+  Generating Code...
+  Compiling...
+  BindParser.cpp
+  file_reader.cpp
+  MapLoader.cpp
+D:\C++\Angara\SubTools\MapLoader.cpp(30,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Window.cpp
+D:\C++\Angara\Window\Window.cpp(121,73): warning C4553: '==': result of expression not used; did you intend '='?
+  Generating Code...
+D:\C++\Angara\SubTools\BindParser.cpp(72): warning C4715: 'BindParser::ComputeKey': not all control paths return a value
+     Creating library D:\C++\Angara\BuildAngara\bin\Angara.lib and object D:\C++\Angara\BuildAngara\bin\Angara.exp
+Texture.obj : error LNK2019: unresolved external symbol "public: void __cdecl DirectX::ScratchImage::Release(void)" (?Release@ScratchImage@DirectX@@QAAXXZ) referenced in function "public: __thiscall DirectX::ScratchImage::~ScratchImage(void)" (??1ScratchImage@DirectX@@QAE@XZ)
+Texture.obj : error LNK2019: unresolved external symbol "long __cdecl DirectX::LoadFromWICFile(wchar_t const *,unsigned long,struct DirectX::TexMetadata *,class DirectX::ScratchImage &,class std::function<void __cdecl(struct IWICMetadataQueryReader *)>)" (?LoadFromWICFile@DirectX@@YAJPB_WKPAUTexMetadata@1@AAVScratchImage@1@V?$function@$$A6AXPAUIWICMetadataQueryReader@@@Z@std@@@Z) referenced in function "public: __thiscall Texture::Texture(wchar_t const *)" (??0Texture@@QAE@PB_W@Z)
+Texture.obj : error LNK2019: unresolved external symbol "long __cdecl DirectX::CreateTexture(struct ID3D11Device *,struct DirectX::Image const *,unsigned int,struct DirectX::TexMetadata const &,struct ID3D11Resource * *)" (?CreateTexture@DirectX@@YAJPAUID3D11Device@@PBUImage@1@IABUTexMetadata@1@PAPAUID3D11Resource@@@Z) referenced in function "public: __thiscall Texture::Texture(wchar_t const *)" (??0Texture@@QAE@PB_W@Z)
+bin\DirectXTex\bin\DirectXTexD.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
+D:\C++\Angara\BuildAngara\bin\Angara.dll : fatal error LNK1120: 3 unresolved externals

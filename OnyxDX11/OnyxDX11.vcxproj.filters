@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="InputSystem\BindSystem.cpp" />
+    <ClCompile Include="InputSystem\InputSystem.cpp" />
+    <ClCompile Include="RenderSystem\ConstantBuffer.cpp" />
+    <ClCompile Include="RenderSystem\IndexBuffer.cpp" />
+    <ClCompile Include="RenderSystem\VertexShader.cpp" />
+    <ClCompile Include="RenderSystem\VertexBuffer.cpp" />
+    <ClCompile Include="RenderSystem\SwapChain.cpp" />
+    <ClCompile Include="RenderSystem\RenderSystem.cpp" />
+    <ClCompile Include="RenderSystem\PixelShader.cpp" />
+    <ClCompile Include="RenderSystem\DeviceContext.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
+    <ClCompile Include="ResourceSystem\ResourceManager.cpp" />
+    <ClCompile Include="ResourceSystem\Resource.cpp" />
+    <ClCompile Include="ResourceSystem\TextureSystem\TextureManager.cpp" />
+    <ClCompile Include="ResourceSystem\TextureSystem\Texture.cpp" />
+    <ClCompile Include="ResourceSystem\MeshSystem\MeshManager.cpp" />
+    <ClCompile Include="ResourceSystem\MeshSystem\Mesh.cpp" />
+    <ClCompile Include="SubTools\file_reader.cpp" />
+    <ClCompile Include="SubTools\AssetLoader.cpp" />
+    <ClCompile Include="SubTools\MapLoader.cpp" />
+    <ClCompile Include="Viewport.cpp" />
+    <ClCompile Include="ExceptHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Graphics\GraphicsEngine.h" />
+    <ClInclude Include="InputSystem\BindSystem.h" />
+    <ClInclude Include="InputSystem\InputListener.h" />
+    <ClInclude Include="InputSystem\InputSystem.h" />
+    <ClInclude Include="Math\Matrix4x4.h" />
+    <ClInclude Include="Math\Point.h" />
+    <ClInclude Include="Math\Vector3D.h" />
+    <ClInclude Include="Math\Vector4D.h" />
+    <ClInclude Include="RenderSystem\SwapChain.h" />
+    <ClInclude Include="RenderSystem\VertexShader.h" />
+    <ClInclude Include="RenderSystem\VertexBuffer.h" />
+    <ClInclude Include="RenderSystem\RenderSystem.h" />
+    <ClInclude Include="RenderSystem\Prerequisites.h" />
+    <ClInclude Include="RenderSystem\PixelShader.h" />
+    <ClInclude Include="RenderSystem\IndexBuffer.h" />
+    <ClInclude Include="RenderSystem\DeviceContext.h" />
+    <ClInclude Include="RenderSystem\ConstantBuffer.h" />
+    <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="ResourceSystem\ResourceManager.h" />
+    <ClInclude Include="ResourceSystem\Resource.h" />
+    <ClInclude Include="ResourceSystem\TextureSystem\TextureManager.h" />
+    <ClInclude Include="ResourceSystem\TextureSystem\Texture.h" />
+    <ClInclude Include="Math\Vector2D.h" />
+    <ClInclude Include="ResourceSystem\MeshSystem\MeshManager.h" />
+    <ClInclude Include="ResourceSystem\MeshSystem\Mesh.h" />
+    <ClInclude Include="SubTools\tiny_obj_loader.h" />
+    <ClInclude Include="Math\VertexMesh.h" />
+    <ClInclude Include="SubTools\file_reader.h" />
+    <ClInclude Include="SubTools\AssetLoader.h" />
+    <ClInclude Include="SubTools\MapLoader.h" />
+    <ClInclude Include="SubTools\ext_funcs.h" />
+    <ClInclude Include="share.h" />
+    <ClInclude Include="Viewport.h" />
+    <ClInclude Include="ExceptHelper.h" />
+  </ItemGroup>
+</Project>

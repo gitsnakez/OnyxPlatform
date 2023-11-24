@@ -1,0 +1,15 @@
+D:\OnyxPlatform\Engine\bin\Debug\Onyx.dll.config
+D:\OnyxPlatform\Engine\bin\Debug\Onyx.dll
+D:\OnyxPlatform\Engine\bin\Debug\Onyx.pdb
+D:\OnyxPlatform\Engine\bin\Debug\Onyx.tlb
+D:\OnyxPlatform\Engine\obj\Debug\Onyx.csproj.AssemblyReference.cache
+D:\OnyxPlatform\Engine\obj\Debug\App.g.cs
+D:\OnyxPlatform\Engine\obj\Debug\MessageWindow.g.cs
+D:\OnyxPlatform\Engine\obj\Debug\Onyx_MarkupCompile.cache
+D:\OnyxPlatform\Engine\obj\Debug\Onyx_MarkupCompile.lref
+D:\OnyxPlatform\Engine\obj\Debug\App.baml
+D:\OnyxPlatform\Engine\obj\Debug\MessageWindow.baml
+D:\OnyxPlatform\Engine\obj\Debug\Onyx.g.resources
+D:\OnyxPlatform\Engine\obj\Debug\Onyx.csproj.CoreCompileInputs.cache
+D:\OnyxPlatform\Engine\obj\Debug\Onyx.dll
+D:\OnyxPlatform\Engine\obj\Debug\Onyx.pdb

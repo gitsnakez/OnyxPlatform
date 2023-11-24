@@ -1,0 +1,4 @@
+﻿  ExceptionHelper.cpp
+  ExceptionHelper.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
+     Создается библиотека D:\OnyxPlatform\\OnyxCLR\x64\Release\game.lib и объект D:\OnyxPlatform\\OnyxCLR\x64\Release\game.exp
+  OnyxCLR.vcxproj -> D:\OnyxPlatform\OnyxCLR\x64\Release\game.exe
