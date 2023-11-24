@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\C++\OnyxDX11\BuildAPI\bin\Onyx.dll</FullPath>
+      <FullPath>D:\OnyxPlatform\OnyxDX11\BuildAPI\bin\Onyx.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -31,10 +31,36 @@
 *.out
 *.app
 
-# vs
+#Visual Studio files
+*.[Oo]bj
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+ipch/
+obj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+Ankh.NoLoad
 *.sln
 *.csproj
 *.csproj.user
+*.baml
 *.snk
 *.config
 *.vcxproj
@@ -42,3 +68,11 @@
 *.vcxproj.user
 
 *.lnk
+*.ico
+*.psd
+
+OnyxEngine/.vs/
+OnyxApplication/.vs/
+OnyxCLR/.vs/
+OnyxDX11/.vs/
+OnyxLauncher/.vs/
