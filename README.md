@@ -4,7 +4,7 @@ My small 3D engine project.
  - C#
  - D3D API.
 
-My targets:
+My real targets:
  - Make multi-module system.
  - Make Editor prototype with viewport.
 
