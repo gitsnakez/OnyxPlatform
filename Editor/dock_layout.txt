@@ -1,0 +1,55 @@
+<DockingManager Grid.Row="1">
+    <avalon:LayoutRoot x:Name="Root">
+        <avalon:LayoutPanel x:Name="Panel">
+
+            <avalon:LayoutAnchorablePaneGroup x:Name="CenterViewGroup" DockWidth="8*" Orientation="Vertical">
+                <avalon:LayoutAnchorablePane x:Name="CenterTopPane" DockHeight="6*">
+                    <avalon:LayoutAnchorable Title="Viewport" CanClose="False" ContentId="viewport">
+                        <Border Background="Black" Style="{StaticResource ViewportBorder}">
+                            <WindowsFormsHost x:Name="ViewportHost"/>
+                        </Border>
+                    </avalon:LayoutAnchorable>
+                </avalon:LayoutAnchorablePane>
+                <avalon:LayoutAnchorablePane DockHeight="2*">
+                    <avalon:LayoutAnchorable Title="Output" ContentId="output"/>
+                    <avalon:LayoutAnchorable Title="Terminal" ContentId="output"/>
+                </avalon:LayoutAnchorablePane>
+            </avalon:LayoutAnchorablePaneGroup>
+
+            <avalon:LayoutAnchorablePaneGroup x:Name="LeftAnchorableGroup" Orientation="Vertical" DockWidth="2*">
+                <avalon:LayoutAnchorablePane x:Name="LeftPaneTop" DockHeight="2*">
+                    <avalon:LayoutAnchorable x:Name="ObjectTree" Title="Object Tree" ContentId="ObjectTree">
+                        <TreeView Foreground="White" Background="Transparent" BorderThickness="0">
+                            <TreeViewItem Header="Groups" Foreground="White" IsExpanded="True">
+                                <TreeViewItem Header="Mesh" Foreground="White"/>
+                                <TreeViewItem Header="Prop" Foreground="White">
+                                    <TreeViewItem Header="Static" Foreground="White"/>
+                                    <TreeViewItem Header="Dynamic" Foreground="White"/>
+                                    <TreeViewItem Header="Physic" Foreground="White"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Point" Foreground="White">
+                                    <TreeViewItem Header="Player" Foreground="White"/>
+                                    <TreeViewItem Header="NPC" Foreground="White"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Script" Foreground="White">
+                                    <TreeViewItem Header="Action" Foreground="White"/>
+                                    <TreeViewItem Header="Rule" Foreground="White"/>
+                                    <TreeViewItem Header="Trigger" Foreground="White"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Sound" Foreground="White">
+                                    <TreeViewItem Header="Ambient" Foreground="White"/>
+                                    <TreeViewItem Header="Soundscape" Foreground="White"/>
+                                </TreeViewItem>
+                            </TreeViewItem>
+                        </TreeView>
+                    </avalon:LayoutAnchorable>
+                </avalon:LayoutAnchorablePane>
+                <avalon:LayoutAnchorablePane x:Name="LeftPaneBottom" DockHeight="3*">
+                    <avalon:LayoutAnchorable Title="Properties" ContentId="Property">
+                    </avalon:LayoutAnchorable>
+                </avalon:LayoutAnchorablePane>
+            </avalon:LayoutAnchorablePaneGroup>
+        </avalon:LayoutPanel>
+
+    </avalon:LayoutRoot>
+</DockingManager>

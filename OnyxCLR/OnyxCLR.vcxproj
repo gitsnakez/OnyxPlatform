@@ -75,12 +75,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>game</TargetName>
-    <OutDir>$(SolutionDir)\OnyxCLR\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>onyx</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>game</TargetName>
-    <OutDir>$(SolutionDir)\OnyxCLR\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>onyx</TargetName>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -90,7 +90,7 @@
       </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Dwmapi.lib;uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AddModuleNamesToAssembly>
       </AddModuleNamesToAssembly>
@@ -122,7 +122,7 @@
       </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Dwmapi.lib;uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AddModuleNamesToAssembly>
       </AddModuleNamesToAssembly>
@@ -131,26 +131,44 @@
   <ItemGroup>
     <ClInclude Include="ExceptionHelper.h" />
     <ClInclude Include="external.h" />
+    <ClInclude Include="IInputSystem.h" />
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="IWindowCallBack.h" />
     <ClInclude Include="OnyxAPIWrapper.h" />
+    <ClInclude Include="OSharp.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="standart_resources.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExceptionHelper.cpp" />
+    <ClCompile Include="IInputSystem.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="IWindowCallBack.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OnyxAPIWrapper.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
+      <Project>{4f6086b3-2490-4854-a736-c5ea66815707}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\Onyx.csproj">
       <Project>{a6447db7-08ac-4961-8b44-c8f5220458fd}</Project>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
     </ProjectReference>
+    <ProjectReference Include="..\OSharp\OSharp.csproj">
+      <Project>{a6447db7-08ac-4961-8b44-c8f5220458fd}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OnyxCLR.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

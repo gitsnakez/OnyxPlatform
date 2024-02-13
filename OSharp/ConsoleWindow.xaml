@@ -1,0 +1,44 @@
+﻿<Window x:Class="OSharp.ConsoleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OSharp"
+        mc:Ignorable="d"
+        Title="Console" Height="450" Width="800" FontFamily="Segoe UI" FontSize="14" ResizeMode="CanResizeWithGrip" Background="{DynamicResource GeneralBackground}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ControlAppearanceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OnyxFlatButton}">
+                <Setter Property="BorderBrush" Value="#3F3F3F"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Margin" Value="4 4 0 0"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource OnyxFlatTextBox}">
+                <Setter Property="BorderBrush" Value="#3F3F3F"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Margin" Value="4 4 0 0"/>
+            </Style>
+            <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource OnyxFlatRichTextBox}">
+                <Setter Property="BorderBrush" Value="#3F3F3F"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="46"/>
+        </Grid.RowDefinitions>
+        <RichTextBox IsReadOnly="True" Margin="10 10 10 0"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Height="26" FontSize="14" Width="Auto" VerticalAlignment="Center" Margin="10 10 0 10" Grid.Column="0"/>
+            <Button Content="Send" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</Window>

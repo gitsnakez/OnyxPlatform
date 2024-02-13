@@ -1,32 +1,23 @@
 #include <msclr\auto_gcroot.h>
-#ifdef _DEBUG
-#using "..\Engine\bin\Debug\Onyx.dll"
-#elif NDEBUG
-#using "..\Engine\bin\Release\Onyx.dll"
-#endif
 #include "OnyxAPIWrapper.h"
+#include "OSharp.h"
+#include "IInputSystem.h"
+#include "IWindowCallBack.h"
 #include <string>
 
 using namespace System::Runtime::InteropServices;
-using namespace Onyx;
-
-class OnyxAPIPrivate
-{
-    /*public:
-        msclr::auto_gcroot<Engine^> engine;*/
-};
+using namespace OSharp;
 
 OnyxAPIWrapper::OnyxAPIWrapper(HWND Handle)
 {
     Engine::WindowHandle = (System::IntPtr)Handle;
-    //_private = new OnyxAPIPrivate();
-    //_private->engine = gcnew Engine();
-    //_private->engine->WindowHandle = (System::IntPtr)Handle;
+    Engine::CallBack = gcnew IWindowCallBack();
+    Engine::Input = gcnew IInputSystem();
 }
 
 OnyxAPIWrapper::~OnyxAPIWrapper()
 {
-    delete _private;
+
 }
 
 void OnyxAPIWrapper::OnCreate()
@@ -75,7 +66,7 @@ void OnyxAPIWrapper::ShowMessage(std::string title, std::string message)
 {
     System::String^ titleCLR = gcnew System::String(title.c_str(), 0, title.length());
     System::String^ messageCLR = gcnew System::String(message.c_str(), 0, message.length());
-    Onyx::MessageSystem::Show(titleCLR, messageCLR);
+    MessageSystem::Show(titleCLR, messageCLR);
 }
 
 void OnyxAPIWrapper::OnKeyDown(int keyCode)

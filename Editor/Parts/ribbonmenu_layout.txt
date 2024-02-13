@@ -1,0 +1,125 @@
+<Fluent:BackstageTabControl>
+    <Fluent:BackstageTabItem Header="New"/>
+    <Fluent:BackstageTabItem Header="Open"/>
+    <Fluent:BackstageTabItem Header="Save"/>
+    <Fluent:BackstageTabItem Header="Save as"/>
+    <Fluent:BackstageTabItem Header="Import"/>
+    <Fluent:BackstageTabItem Header="Export"/>
+    <Fluent:BackstageTabItem Header="Close"/>
+</Fluent:BackstageTabControl>
+
+<Fluent:Ribbon.QuickAccessItems>
+    <Fluent:QuickAccessMenuItem Header="New" IsChecked="true">
+        <Fluent:Button Header="New" Icon="pack://application:,,,/Icons/placeholder.png"/>
+    </Fluent:QuickAccessMenuItem>
+    <Fluent:QuickAccessMenuItem Header="Save" IsChecked="true">
+        <Fluent:Button Header="Save" Icon="pack://application:,,,/Icons/placeholder.png"/>
+    </Fluent:QuickAccessMenuItem>
+    <Fluent:QuickAccessMenuItem Header="Exit" IsChecked="true">
+        <Fluent:Button Header="Exit" Icon="pack://application:,,,/Icons/placeholder.png"/>
+    </Fluent:QuickAccessMenuItem>
+</Fluent:Ribbon.QuickAccessItems>
+<Fluent:Ribbon.Menu>
+    <Fluent:Backstage>
+        <Fluent:BackstageTabControl>
+            <Fluent:BackstageTabItem Header="New"/>
+            <Fluent:BackstageTabItem Header="Open"/>
+            <Fluent:BackstageTabItem Header="Save"/>
+            <Fluent:BackstageTabItem Header="Save as"/>
+            <Fluent:BackstageTabItem Header="Import"/>
+            <Fluent:BackstageTabItem Header="Export"/>
+            <Fluent:BackstageTabItem Header="Close"/>
+        </Fluent:BackstageTabControl>
+    </Fluent:Backstage>
+</Fluent:Ribbon.Menu>
+<Fluent:RibbonTabItem Header="Главная">
+    <Fluent:RibbonGroupBox Header="Взаимодействие">
+        <Fluent:SplitButton Header="Выбрать">
+            <Fluent:MenuItem Header="Выделение"/>
+            <Fluent:MenuItem Header="Перемещение"/>
+            <Fluent:MenuItem Header="Вращение"/>
+            <Fluent:MenuItem Header="Увеличение"/>
+        </Fluent:SplitButton>
+        <Fluent:ToggleButton Header="Камера"/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Основные объекты">
+        <Fluent:MenuItem Header="Точка спавна"/>
+        <Fluent:MenuItem Header="NPC"/>
+        <Fluent:MenuItem Header="Триггер"/>
+        <Fluent:MenuItem Header="Объект"/>
+        <Fluent:MenuItem Header="Локация"/>
+        <Fluent:MenuItem Header="Сценарий"/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Игра">
+        <Fluent:MenuItem Header="Запуск" Icon="pack://application:,,,/Icons/placeholder.png"/>
+        <Fluent:MenuItem Header="Запуск в редакторе" Icon="pack://application:,,,/Icons/placeholder.png"/>
+        <Fluent:MenuItem Header="Собрать проект" Icon="pack://application:,,,/Icons/placeholder.png"/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Дополнительно">
+        <Fluent:MenuItem Header="Грунт"/>
+        <Fluent:MenuItem Header="Освещение"/>
+    </Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Геометрия">
+    <Fluent:RibbonGroupBox Header="Изменить">
+        <Fluent:SplitButton Header="Mesh">
+            <Fluent:MenuItem Header="Плоскость"/>
+            <Fluent:MenuItem Header="Параллелепипед"/>
+            <Fluent:MenuItem Header="Цилиндр"/>
+            <Fluent:MenuItem Header="Сфера"/>
+            <Fluent:MenuItem Header="Арка"/>
+            <Fluent:MenuItem Header="Пирамида"/>
+        </Fluent:SplitButton>
+        <Fluent:SplitButton Header="Prop">
+            <Fluent:MenuItem Header="Статичный"/>
+            <Fluent:MenuItem Header="Динамичный"/>
+            <Fluent:MenuItem Header="Физический"/>
+        </Fluent:SplitButton>
+    </Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Освещение">
+    <Fluent:RibbonGroupBox Header="Естественное">
+        <Fluent:MenuItem Header="Общее"/>
+        <Fluent:MenuItem Header="Солнце"/>
+        <Fluent:MenuItem Header="Луна"/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Искусственное">
+        <Fluent:MenuItem Header="Лампа"/>
+        <Fluent:MenuItem Header="Прожектор"/>
+    </Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Текстурирование">
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Скриптинг">
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Звук">
+    <Fluent:RibbonGroupBox Header="Звуковое окружение">
+        <Fluent:ToggleButton Header="Добавить"/>
+    </Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Настройки">
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Информация">
+    <Fluent:RibbonGroupBox Header="Документация">
+        <Fluent:ToggleButton Header=""/>
+        <Fluent:ToggleButton Header=""/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Поддержка">
+        <Fluent:ToggleButton Header=""/>
+        <Fluent:ToggleButton Header=""/>
+    </Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>
+<Fluent:RibbonTabItem Header="Публикация">
+    <Fluent:RibbonGroupBox Header="Steam">
+        <Fluent:ToggleButton Header=""/>
+        <Fluent:ToggleButton Header=""/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Steam workshop">
+        <Fluent:ToggleButton Header=""/>
+        <Fluent:ToggleButton Header=""/>
+    </Fluent:RibbonGroupBox>
+    <Fluent:RibbonGroupBox Header="Other">
+        <Fluent:ToggleButton Header=""/>
+        <Fluent:ToggleButton Header=""/>
+    </Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>

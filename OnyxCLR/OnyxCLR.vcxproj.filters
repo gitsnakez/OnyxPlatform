@@ -23,6 +23,18 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="ExceptionHelper.h" />
+    <ClInclude Include="OSharp.h">
+      <Filter>CLR</Filter>
+    </ClInclude>
+    <ClInclude Include="IInputSystem.h">
+      <Filter>CLR</Filter>
+    </ClInclude>
+    <ClInclude Include="IWindowCallBack.h">
+      <Filter>CLR</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Window">
@@ -50,5 +62,19 @@
       <Filter>InputSystem</Filter>
     </ClCompile>
     <ClCompile Include="ExceptionHelper.cpp" />
+    <ClCompile Include="IInputSystem.cpp">
+      <Filter>CLR</Filter>
+    </ClCompile>
+    <ClCompile Include="IWindowCallBack.cpp">
+      <Filter>CLR</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OnyxCLR.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
 </Project>

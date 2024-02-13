@@ -1,0 +1,63 @@
+﻿<Fluent:Ribbon x:Class="Editor.Parts.RibbonOnyx"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Fluent="urn:fluent-ribbon"
+             xmlns:local="clr-namespace:Editor.Parts"
+             mc:Ignorable="d">
+    <Fluent:Ribbon.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type Fluent:ToggleButton}">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="MaxWidth" Value="80"/>
+                <Setter Property="LargeIcon" Value="pack://application:,,,/Icons/placeholder.png"/>
+            </Style>
+            <Style TargetType="{x:Type Fluent:SplitButton}">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="MaxWidth" Value="80"/>
+                <Setter Property="LargeIcon" Value="pack://application:,,,/Icons/placeholder.png"/>
+            </Style>
+            <Style TargetType="{x:Type Fluent:DropDownButton}">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="MaxWidth" Value="80"/>
+                <Setter Property="LargeIcon" Value="pack://application:,,,/Icons/placeholder.png"/>
+            </Style>
+            <Style TargetType="{x:Type Fluent:MenuItem}">
+                <Setter Property="Icon" Value="pack://application:,,,/Icons/placeholder.png"/>
+            </Style>
+            <Style TargetType="{x:Type Fluent:RibbonTabItem}">
+                <Setter Property="ActiveTabBorderBrush" Value="Transparent"/>
+            </Style>
+        </ResourceDictionary>
+    </Fluent:Ribbon.Resources>
+    <Fluent:Ribbon.Menu>
+        <Fluent:Backstage>
+            <Fluent:BackstageTabControl>
+                <Fluent:BackstageTabItem Header="Выход"/>
+            </Fluent:BackstageTabControl>
+        </Fluent:Backstage>
+    </Fluent:Ribbon.Menu>
+    <Fluent:RibbonTabItem Header="Главная">
+        <Fluent:RibbonGroupBox Header="Взаимодействие">
+            <Fluent:ToggleButton Header="Выбрать"/>
+            <Fluent:ToggleButton Header="Камера"/>
+        </Fluent:RibbonGroupBox>
+    </Fluent:RibbonTabItem>
+    <Fluent:RibbonTabItem Header="Геометрия">
+        <Fluent:RibbonGroupBox Header="Добавить">
+            <Fluent:ToggleButton Header="Куб"/>
+        </Fluent:RibbonGroupBox>
+    </Fluent:RibbonTabItem>
+    <Fluent:RibbonTabItem Header="Настройки">
+        <Fluent:RibbonGroupBox Header="Внешний вид">
+            <Fluent:DropDownButton Header="Окна">
+                <Fluent:MenuItem IsCheckable="True" IsChecked="True" Header="Область просмотра"/>
+                <Fluent:MenuItem IsCheckable="True" IsChecked="True" Header="Свойства"/>
+            </Fluent:DropDownButton>
+        </Fluent:RibbonGroupBox>
+    </Fluent:RibbonTabItem>
+</Fluent:Ribbon>

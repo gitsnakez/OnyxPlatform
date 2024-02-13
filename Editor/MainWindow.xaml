@@ -1,0 +1,77 @@
+﻿<Fluent:RibbonWindow xmlns:Controls="clr-namespace:Editor.Controls"
+        xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Fluent="urn:fluent-ribbon" x:Class="Editor.MainWindow"
+        xmlns:avalon="https://github.com/Dirkster99/AvalonDock"
+        xmlns:local="clr-namespace:Editor"
+        xmlns:parts="clr-namespace:Editor.Parts"
+        Title="Onyx Editor" WindowStartupLocation="CenterScreen" Closing="RibbonWindow_Closing"
+        Width="1296" Height="759" TitleBarHeight="31" Loaded="RibbonWindow_Loaded"
+        Foreground="White" Background="#323232" TitleBackground="#252525"
+        ContentRendered="RibbonWindow_ContentRendered" MinWidth="466" MinHeight="289">
+    <Fluent:RibbonWindow.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </Fluent:RibbonWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <parts:RibbonOnyx Grid.Row="0" x:Name="ribbonPart"/>
+        
+        <DockingManager Grid.Row="1">
+            <avalon:LayoutRoot x:Name="Root">
+                <avalon:LayoutPanel x:Name="Panel">
+
+                    <avalon:LayoutAnchorablePaneGroup x:Name="CenterViewGroup" DockWidth="8*" Orientation="Vertical">
+                        <avalon:LayoutAnchorablePane x:Name="CenterTopPane">
+                            <avalon:LayoutAnchorable Title="Область просмотра" CanClose="False" ContentId="viewport">
+                                <Frame x:Name="viewportPlace"/>
+                            </avalon:LayoutAnchorable>
+                        </avalon:LayoutAnchorablePane>
+                    </avalon:LayoutAnchorablePaneGroup>
+
+                    <avalon:LayoutAnchorablePaneGroup x:Name="LeftAnchorableGroup" Orientation="Vertical" DockWidth="2*">
+                        <avalon:LayoutAnchorablePane x:Name="LeftPaneBottom">
+                            <avalon:LayoutAnchorable Title="Свойства" ContentId="Property">
+                                <Controls:PropertyGrid CellBorderBrush="#161616" HeaderBackground="#202020" Foreground="LightGray"
+                                                       PropertiesHeader="Свойство" ValuesHeader="Значение" SelectionBrush="#FA6800"/>
+                            </avalon:LayoutAnchorable>
+                        </avalon:LayoutAnchorablePane>
+                    </avalon:LayoutAnchorablePaneGroup>
+                    
+                </avalon:LayoutPanel>
+
+            </avalon:LayoutRoot>
+        </DockingManager>
+
+        <Fluent:StatusBar VerticalAlignment="Top" Grid.Row="2">
+            <Fluent:StatusBarItem Title="EditorState" Margin="8 0 0 0"
+                          Value="3D"
+                          HorizontalAlignment="Left">
+                <TextBlock Text="3D Вид" />
+            </Fluent:StatusBarItem>
+
+            <Fluent:StatusBarItem Title="EditorState" Margin="8 0 0 0"
+              Value="3D"
+              HorizontalAlignment="Left">
+                <TextBlock Text="Перспектива" />
+            </Fluent:StatusBarItem>
+
+            <Fluent:StatusBarItem Title="ProjectState" Margin="8 0 0 0"
+                          Value="Project"
+                          Content="Без проекта"
+                          HorizontalAlignment="Left" />
+
+            <Fluent:StatusBarItem Title="Watermark" Margin="0 0 8 0"
+                          HorizontalAlignment="Right"
+                          Value="Onyx Platform" />
+        </Fluent:StatusBar>
+    </Grid>
+</Fluent:RibbonWindow>

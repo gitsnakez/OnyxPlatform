@@ -4,13 +4,8 @@
 #include <Windows.h>
 #include <string>
 
-class OnyxAPIPrivate;
-
 class EXTERNALDLL OnyxAPIWrapper
 {
-private:
-	OnyxAPIPrivate* _private;
-
 public:
 	OnyxAPIWrapper(HWND Handle);
 	~OnyxAPIWrapper();

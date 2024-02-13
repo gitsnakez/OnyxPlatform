@@ -146,18 +146,12 @@ void Window::CreateWindowForm(wstring class_name, wstring text, wstring message_
 			DwmSetWindowAttribute(Handle, 20, &useImmersiveDarkMode, sizeof(int));
 	}
 	
-	OSVERSIONINFOEXW osvi = {};
-	GetVersion(&osvi);
+	int cornerStyle = DWMWCP_DEFAULT;
+	DwmSetWindowAttribute(Handle, 33, &cornerStyle, sizeof(int));
 
-	if (osvi.dwBuildNumber >= 22000)
-	{
-		int cornerStyle = DWMWCP_DONOTROUND;
-		DwmSetWindowAttribute(Handle, 33, &cornerStyle, sizeof(COLORREF));
-
-		DwmSetWindowAttribute(Handle, DWMWA_BORDER_COLOR, &bordercolor, sizeof(COLORREF));
-		DwmSetWindowAttribute(Handle, DWMWA_CAPTION_COLOR, &captioncolor, sizeof(COLORREF));
-		DwmSetWindowAttribute(Handle, DWMWA_TEXT_COLOR, &textcolor, sizeof(COLORREF));
-	}
+	DwmSetWindowAttribute(Handle, DWMWA_BORDER_COLOR, &bordercolor, sizeof(COLORREF));
+	DwmSetWindowAttribute(Handle, DWMWA_CAPTION_COLOR, &captioncolor, sizeof(COLORREF));
+	DwmSetWindowAttribute(Handle, DWMWA_TEXT_COLOR, &textcolor, sizeof(COLORREF));
 
 	// Show up window
 	ShowWindow(Handle, SW_SHOW);
@@ -177,7 +171,7 @@ Window::Window()
 	CreateWindowForm(
 		STANDART_WINDOW_CLASSNAME,
 		STANDART_WINDOW_NAME,
-		STANDART_CAPTION,
+		L"Onyx Platform",
 		STANDART_TITLE_BRUSH,
 		center_x,
 		center_y,
@@ -207,13 +201,13 @@ Window::Window(wstring window_classname, wstring window_title, wstring caption, 
 		y,
 		width,
 		height,
-		STANDART_BACKCOLOR,
+		CreateSolidBrush((COLORREF)(RGB(32, 32, 32))),
 		icon,
-		GAME_WINDOW_STYLES,
+		STANDART_WINDOW_STYLES,
 		GAME_WINDOW_EX_STYLES,
-		STANDART_DWM_BORDERCOLOR,
-		STANDART_DWM_CAPTIONCOLOR,
-		STANDART_DWM_TEXTCOLOR);
+		(COLORREF)(RGB(92, 92, 92)),
+		(COLORREF)(RGB(32, 32, 32)),
+		(COLORREF)(RGB(255, 255, 255)));
 
 	apiPtr = new OnyxAPIWrapper(Handle);
 }
@@ -243,8 +237,6 @@ bool Window::Broadcast()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-
-	Sleep(1);
 
 	return true;
 }
@@ -291,49 +283,6 @@ RECT Window::GetScreenRectangle()
 	rc.bottom = ::GetSystemMetrics(SM_CYSCREEN);
 
 	return rc;
-}
-
-typedef void (WINAPI* RtlGetVersion_FUNC) (OSVERSIONINFOEXW*);
-
-BOOL Window::GetVersion(OSVERSIONINFOEX* os) {
-	HMODULE hMod;
-	RtlGetVersion_FUNC func;
-#ifdef UNICODE
-	OSVERSIONINFOEXW* osw = os;
-#else
-	OSVERSIONINFOEXW o;
-	OSVERSIONINFOEXW* osw = &o;
-#endif
-
-	hMod = LoadLibrary(TEXT("ntdll.dll"));
-	if (hMod) {
-		func = (RtlGetVersion_FUNC)GetProcAddress(hMod, "RtlGetVersion");
-		if (func == 0) {
-			FreeLibrary(hMod);
-			return FALSE;
-		}
-		ZeroMemory(osw, sizeof(*osw));
-		osw->dwOSVersionInfoSize = sizeof(*osw);
-		func(osw);
-#ifndef UNICODE
-		os->dwBuildNumber = osw->dwBuildNumber;
-		os->dwMajorVersion = osw->dwMajorVersion;
-		os->dwMinorVersion = osw->dwMinorVersion;
-		os->dwPlatformId = osw->dwPlatformId;
-		os->dwOSVersionInfoSize = sizeof(*os);
-		DWORD sz = sizeof(os->szCSDVersion);
-		WCHAR* src = osw->szCSDVersion;
-		unsigned char* dtc = (unsigned char*)os->szCSDVersion;
-		while (*src)
-			*Dtc++ = (unsigned char)*src++;
-		*Dtc = '\ 0';
-#endif
-
-	}
-	else
-		return FALSE;
-	FreeLibrary(hMod);
-	return TRUE;
 }
 
 void Window::OnCreateWindow()

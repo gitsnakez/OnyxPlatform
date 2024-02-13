@@ -25,7 +25,6 @@ public:
 	RECT GetClientWindowRectangle();
 	RECT GetWindowRectangle();
 	static RECT GetScreenRectangle();
-	BOOL GetVersion(OSVERSIONINFOEX* os);
 
 	/// <summary>
 	/// Create window event.

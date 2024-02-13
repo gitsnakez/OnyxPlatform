@@ -1,1 +1,6 @@
-﻿  OnyxCLR.vcxproj -> D:\OnyxPlatform\OnyxCLR\x64\Debug\game.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2146,5): warning : The referenced project '..\Engine\Onyx.csproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Angara.vcxproj, Onyx.vcxproj, OnyxDX.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ExceptionHelper.cpp
+  ExceptionHelper.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+     Creating library D:\OnyxPlatform\x64\Debug\onyx.lib and object D:\OnyxPlatform\x64\Debug\onyx.exp
+  OnyxCLR.vcxproj -> D:\OnyxPlatform\x64\Debug\onyx.exe

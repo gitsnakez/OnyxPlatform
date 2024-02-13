@@ -1,4 +1,49 @@
-﻿  ExceptionHelper.cpp
-  ExceptionHelper.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
-     Создается библиотека D:\OnyxPlatform\\OnyxCLR\x64\Release\game.lib и объект D:\OnyxPlatform\\OnyxCLR\x64\Release\game.exp
-  OnyxCLR.vcxproj -> D:\OnyxPlatform\OnyxCLR\x64\Release\game.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2146,5): warning : The referenced project '..\Engine\Onyx.csproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (Angara.vcxproj, Onyx.vcxproj, OnyxDX.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ExceptionHelper.cpp
+  IInputSystem.cpp
+  InputSystem.cpp
+  IWindowCallBack.cpp
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(12,29): warning C4244: '=': conversion from 'LONG_PTR' to 'long', possible loss of data
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(16,29): warning C4244: '=': conversion from 'LONG_PTR' to 'long', possible loss of data
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(22,49): warning C4244: '=': conversion from 'LONG_PTR' to 'long', possible loss of data
+  main.cpp
+  OnyxAPIWrapper.cpp
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(12,1): warning C4273: 'OnyxAPIWrapper::OnyxAPIWrapper': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(10,2): message : see previous definition of '{ctor}'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(19,1): warning C4273: 'OnyxAPIWrapper::~OnyxAPIWrapper': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(11,3): message : see previous definition of '{dtor}'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(24,1): warning C4273: 'OnyxAPIWrapper::OnCreate': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(14,7): message : see previous definition of 'OnCreate'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(30,1): warning C4273: 'OnyxAPIWrapper::OnUpdate': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(15,7): message : see previous definition of 'OnUpdate'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(36,1): warning C4273: 'OnyxAPIWrapper::OnDestroy': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(16,7): message : see previous definition of 'OnDestroy'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(42,1): warning C4273: 'OnyxAPIWrapper::OnResizeWindow': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(17,7): message : see previous definition of 'OnResizeWindow'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(48,1): warning C4273: 'OnyxAPIWrapper::OnChangeWindowPosition': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(18,7): message : see previous definition of 'OnChangeWindowPosition'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(54,1): warning C4273: 'OnyxAPIWrapper::OnEnter': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(19,7): message : see previous definition of 'OnEnter'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(60,1): warning C4273: 'OnyxAPIWrapper::OnLeave': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(20,7): message : see previous definition of 'OnLeave'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(66,1): warning C4273: 'OnyxAPIWrapper::ShowMessage': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(21,14): message : see previous definition of 'ShowMessage'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(67,86): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(68,92): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(73,1): warning C4273: 'OnyxAPIWrapper::OnKeyDown': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(24,7): message : see previous definition of 'OnKeyDown'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(79,1): warning C4273: 'OnyxAPIWrapper::OnKeyUp': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(25,7): message : see previous definition of 'OnKeyUp'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(85,1): warning C4273: 'OnyxAPIWrapper::OnMouseMove': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(26,7): message : see previous definition of 'OnMouseMove'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(91,1): warning C4273: 'OnyxAPIWrapper::OnMouseButtonDown': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(27,7): message : see previous definition of 'OnMouseButtonDown'
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(97,1): warning C4273: 'OnyxAPIWrapper::OnMouseButtonUp': inconsistent dll linkage
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(28,7): message : see previous definition of 'OnMouseButtonUp'
+  Window.cpp
+  .NETFramework,Version=v4.8.AssemblyAttributes.cpp
+  Generating Code...
+  ExceptionHelper.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+     Creating library D:\OnyxPlatform\x64\Release\onyx.lib and object D:\OnyxPlatform\x64\Release\onyx.exp
+  OnyxCLR.vcxproj -> D:\OnyxPlatform\x64\Release\onyx.exe

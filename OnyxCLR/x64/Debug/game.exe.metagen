@@ -1,9 +1,0 @@
-ImageRuntimeVersion: v4.0.30319
-Assembly game, Version=0.0.*, Culture=Инвариантный язык (Инвариантная страна): 
-	hash=SHA1, flags=PublicKey
-Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
-	hash=None, flags=None
-Assembly Onyx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9b0c462d1e23f9ca: 
-	hash=None, flags=None
-Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
-	hash=None, flags=None

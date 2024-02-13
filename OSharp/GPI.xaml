@@ -1,0 +1,27 @@
+﻿<Window x:Class="OSharp.GPI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OSharp"
+        mc:Ignorable="d"
+        Title="Pipeline informator" Height="600" Width="450" Background="#202020" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ControlAppearanceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource OnyxFlatDataGrid}">
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <DataGrid ColumnWidth="*" ItemsSource="{Binding DataItemList}"
+                  CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True" x:Name="GPI_Table">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
