@@ -23,13 +23,18 @@
 /// For more information contact snakezfortress04@gmail.com
 
 #include <Windows.h>
+#include "steam_api.h"
+#include "SteamStartAch.h"
 #include "defs.h"
 #include "Controller.h"
 #include "owm.h"
 #include "engine.h"
 #include "WindowCallback.h"
+#include "appMain.h"
 #include <string>
 #include <thread>
+
+// steam appid 2872880
 
 using namespace onyxengine;
 using namespace std;
@@ -41,9 +46,17 @@ using namespace std;
 ///
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	// Steam stuff
+	if (!SteamAPI_Init())
+	{
+		MessageBox(NULL, L"Steam not initialized!", L"Onyx Platform", MB_OK);
+		return 0;
+	}
+	//SteamAPI_RestartAppIfNecessary(2872880);
+
 	// Input initialization
 	try { InputSystem::Create(); }
-	catch (...) { return -1; }
+	catch (...) { EngineShutdown(-1); }
 
 	HWIN window = MakeWindow(Classic);
 	HENGINE engine = CreateEngine();
@@ -60,6 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	WindowCallback* callback = new WindowCallback(&hDesc, &control);
 
 	SetWindowCallback(window, (void*)callback);
+	SetFirstStartAchievement();
 
 	// Loop
 	callback->OnCreate();
@@ -69,5 +83,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// App finish
 	InputSystem::Release();
-	return 0;
+
+	EngineShutdown(0);
 }

@@ -33,9 +33,10 @@ namespace onyxengine
 	{
 	public:
 		virtual void OnCreate() = 0;
+		virtual void OnClosing(bool *isCancle) = 0;
 		virtual void OnUpdate() = 0;
-		virtual void OnResize() = 0;
-		virtual void OnChangePosition() = 0;
+		virtual void OnResize(const Rectangle& size) = 0;
+		virtual void OnChangePosition(const Point& location) = 0;
 		virtual void OnDestroy() = 0;
 
 		virtual void OnEnter() = 0;

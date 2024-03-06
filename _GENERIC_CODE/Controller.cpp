@@ -23,9 +23,7 @@
 /// For more information contact snakezfortress04@gmail.com
 
 #include "Controller.h"
-#include "Window.h"
-#include "Messages.h"
-#include <Windows.h>
+#include "SystemUtilities.h"
 
 namespace onyxengine
 {
@@ -42,20 +40,119 @@ namespace onyxengine
 	{
 		switch (key)
 		{
-			// Maximize viewport
+			// Change fullscreen mode viewport
 			case 0x0D:
-			{
-				DisplayMessageBoxWithModal(((Window*)hndDescPtr->hWin)->GetHandler(), L"Key: Enter", L"Input system test");
-			}
+				FullScreen = !FullScreen;
+
+				if (FullScreen)
+				{
+					Rectangle _primScrSize = SystemUtilities::GetPrimaryScreenSize();
+					SetFullscreenMode(((Viewport*)hndDescPtr->hViewPort), FullScreen, _primScrSize.Width, _primScrSize.Height);
+					useBorders = false;
+				}
+				else
+				{
+					SetFullscreenMode(((Viewport*)hndDescPtr->hViewPort), FullScreen, ((Window*)hndDescPtr->hWin)->Size->Width, ((Window*)hndDescPtr->hWin)->Size->Height);
+					useBorders = true;
+				}
+				break;
+
+			case 'Z': // Fly mode
+				if (!keyZ)
+					break;
+
+				keyZ = true;
+				playmode = !playmode;
+				break;
+
+			case 0x57: // Forward
+				forward = movespeed * (deltatime * 16);
+				break;
+
+			case 0x41:// Left
+				rightward = -movespeed * (deltatime * 16);
+				break;
+
+			case 0x53: // Back
+				forward = -movespeed * (deltatime * 16);
+				break;
+
+			case 0x44: // Right
+				rightward = movespeed * (deltatime * 16);
+				break;
 		}
 	}
 
 	void Controller::OnKeyUp(int key)
 	{
+		switch (key)
+		{
+		case 0x57: // Forward
+			movespeed = 0;
+			break;
+
+		case 0x41:// Left
+			movespeed = 0;
+			break;
+
+		case 0x53: // Back
+			movespeed = 0;
+			break;
+
+		case 0x44: // Right
+			movespeed = 0;
+			break;
+
+			case 'Z':
+			{
+				if (playmode)
+				{
+					InputSystem::Get()->ShowCursor();
+					playmode = false;
+					rotx = oldrotx;
+					roty = oldroty;
+					forward = 0;
+					rightward = 0;
+					movespeed = 0;
+				}
+				else
+				{
+					int x = ((Window*)hndDescPtr->hWin)->Location->X;
+					int y = ((Window*)hndDescPtr->hWin)->Location->Y;
+					int width = ((Window*)hndDescPtr->hWin)->Size->Width;
+					int height = ((Window*)hndDescPtr->hWin)->Size->Height;
+					int width_center = (width - (useBorders ? 16 : 0)) / 2;
+					int height_center = (height - (useBorders ? 39 : 0)) / 2;
+					InputSystem::Get()->HideCursor();
+					InputSystem::Get()->SetCursorPosition(Point(x + (useBorders ? 8 : 0) + width_center, y + (useBorders ? 31 : 0) + height_center));
+					playmode = true;
+				}
+			}
+		}
 	}
 
 	void Controller::OnMouseMove(const Point& delta_mouse_pos)
 	{
+		// Camera rotation
+		if (playmode)
+		{
+			int loc_x = ((Window*)hndDescPtr->hWin)->Location->X;
+			int loc_y = ((Window*)hndDescPtr->hWin)->Location->Y;
+			int width = ((Window*)hndDescPtr->hWin)->Size->Width;
+			int height = ((Window*)hndDescPtr->hWin)->Size->Height;
+			int width_center = (width - (useBorders ? 16 : 0)) / 2;
+			int height_center = (height - (useBorders ? 39 : 0)) / 2;
+
+			roty += ((delta_mouse_pos.X - (loc_x + (useBorders ? 8 : 0))) - width_center) * deltatime * 0.1f;
+			rotx += ((delta_mouse_pos.Y - (loc_y + (useBorders ? 31 : 0))) - height_center) * deltatime * 0.1f;
+
+			if (rotx > 1.5f)
+				rotx = 1.5f;
+			else if (rotx < -1.5f)
+				rotx = -1.5f;
+
+			InputSystem::Get()->SetCursorPosition(Point(loc_x + (useBorders ? 8 : 0) + width_center, loc_y + (useBorders ? 31 : 0) + height_center));
+		}
 	}
 
 	void Controller::OnMouseLeftButtonDown(const Point& delta_mouse_pos)

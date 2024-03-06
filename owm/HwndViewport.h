@@ -1,16 +1,17 @@
 #pragma once
 
+#include "api.h"
 #include <Windows.h>
 
 namespace onyxengine
 {
-	class HwndViewport
+	EXTERN API class HwndViewport
 	{
 	public:
 		HwndViewport(HWND Parent, int Width, int Height);
 		~HwndViewport();
 
-		HWND GetHandle();
+		API HWND GetHandle();
 
 	private:
 		HWND Handle;

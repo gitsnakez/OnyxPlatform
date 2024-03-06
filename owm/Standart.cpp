@@ -38,13 +38,13 @@ namespace onyxengine
         Y = y;
     }
 
-    Size::Size()
+    Rectangle::Rectangle()
     {
         Width = 0;
         Height = 0;
     }
 
-    Size::Size(int width, int height)
+    Rectangle::Rectangle(int width, int height)
     {
         Width = width;
         Height = height;

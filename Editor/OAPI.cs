@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Editor
 {
+    internal enum WindowMessage
+    {
+        Size = 0x0005,
+        Sizing = 0x0214,
+        EnterSizeMove = 0x0231,
+        Paint = 0x000F,
+        ExitSizeMove = 0x0232,
+        SysCommand = 0x0112
+    }
+
     internal static class OAPI
     {
-        internal enum Win32Msg
-        {
-            WM_SIZE = 0x0005,
-            WM_SIZING = 0x0214,
-            WM_ENTERSIZEMOVE = 0x0231,
-            WM_PAINT = 0x000F,
-            WM_EXITSIZEMOVE = 0x0232
-        }
-
-        const string oapidll = "oapi.dll";
-        const string owmdll = "owm.dll";
+        #region ENGINE
         const string enginedll = "Engine.dll";
 
         [DllImport(enginedll, CallingConvention = CallingConvention.Cdecl)]
@@ -39,10 +39,42 @@ namespace Editor
 
         [DllImport(enginedll, CallingConvention = CallingConvention.Cdecl)]
         static internal extern void OnResizeViewport(IntPtr vp);
+        #endregion
+        #region OAPI
+        const string oapidll = "oapi.dll";
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern IntPtr CreateRenderWindow(IntPtr Parent);
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern IntPtr CreateRenderWindowBorders();
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern IntPtr GetRenderWindowHandle(IntPtr viewport);
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern void StopRenderWindow(IntPtr viewport);
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern int RunWithGraphics(IntPtr windowPtr);
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern int RunWithGraphics2(IntPtr Parent, IntPtr viewport_pointer);
 
 
 
         [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
-        static internal extern IntPtr InitWin32Viewport(IntPtr Parent, int Width, int Height);
+        static internal extern void CreateGraphics(IntPtr windowPtr);
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern void UpdateGraphics(IntPtr windowPtr);
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern void DestroyGraphics();
+
+        #endregion
+        #region OWM
+        const string owmdll = "owm.dll";
+        #endregion
     }
 }

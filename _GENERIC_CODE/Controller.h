@@ -26,6 +26,11 @@
 
 #include "defs.h"
 #include "Standart.h"
+#include "InputSystem.h"
+#include "Window.h"
+#include "Messages.h"
+#include "Viewport.h"
+#include <Windows.h>
 
 namespace onyxengine
 {
@@ -43,7 +48,27 @@ namespace onyxengine
 		void OnMouseRightButtonDown(const Point& delta_mouse_pos);
 		void OnMouseRightButtonUp(const Point& delta_mouse_pos);
 
+		float deltatime = 0;
+		bool playmode = false;
+
+		// Movement
+		float forward = 0;
+		float rightward = 0;
+		float movespeed = 0;
+
+		// Camera
+		float rotx = 0;
+		float roty = 0;
+		float oldrotx = 0;
+		float oldroty = 0;
+		float camx = 0;
+		float camy = 0;
+
+		bool keyZ = false;
+		bool useBorders = true;
+
 	private:
 		HDESC* hndDescPtr;
+		bool FullScreen = false;
 	};
 }

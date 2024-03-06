@@ -71,8 +71,10 @@ Ankh.NoLoad
 *.ico
 *.psd
 
+.vs/
 OnyxEngine/.vs/
 OnyxApplication/.vs/
 OnyxCLR/.vs/
 OnyxDX11/.vs/
 OnyxLauncher/.vs/
+SteamWorks/

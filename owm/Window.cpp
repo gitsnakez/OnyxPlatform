@@ -61,9 +61,26 @@ namespace onyxengine
 			if (window) window->OnCreateWindow();
 			break;
 
+		case WM_CLOSE:
+			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+
+			if (window)
+			{
+				bool iscncl = false;
+				window->OnClosingWindow(&iscncl);
+				if (!iscncl) DestroyWindow(hWnd);
+			}
+			break;
+
 		case WM_MOVE:
 			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-			if (window) window->OnChangeWindowPosition();
+			if (window)
+			{
+				//Loc								Horizontal(X)				Vertical(Y)
+				window->Location = new Point((int)(short)LOWORD(lParam), (int)(short)HIWORD(lParam));
+
+				window->OnChangeWindowPosition(Point((int)(short)LOWORD(lParam), (int)(short)HIWORD(lParam)));
+			}
 			break;
 
 		case WM_SETFOCUS:
@@ -84,15 +101,19 @@ namespace onyxengine
 			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 			//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
 
-			window->OnDestroyWindow();
-
+			if (window) window->OnDestroyWindow();
 			break;
 
 		case WM_SIZE:
 			// Event fired when the window resized.
 			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+			if (window)
+			{
+				//Size							Horizontal(x)			Verticla(Y)
+				window->Size = new Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam));
 
-			if (window) window->OnResizeWindow();
+				window->OnResizeWindow(Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam)));
+			}
 			break;
 
 		default:
@@ -100,6 +121,49 @@ namespace onyxengine
 		}
 
 		return NULL;
+	}
+
+	void Window::CreateViewportWindow(HWND Parent)
+	{
+		WNDCLASSEX wc;
+		ZeroMemory(&wc, sizeof(wc));
+
+		wc.cbSize = sizeof(wc);
+		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.lpfnWndProc = &WndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = 0;
+		wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wc.hbrBackground = STANDART_BACKCOLOR;
+		wc.lpszMenuName = NULL;
+		wc.lpszClassName = STANDART_WINDOW_CLASSNAME;
+		wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+
+		if (!RegisterClassEx(&wc)) // If registration of class will fail, the function will return false
+			OExSys::ShowException("Window class failed!", "Onyx engine");
+
+		RECT rect{};
+		const wchar_t* caption{ L"onyxengine" };
+
+		GetWindowRect(Parent, &rect);
+		AdjustWindowRect(&rect, WS_CHILD, FALSE);
+
+		const int top{ rect.top };
+		const int left{ rect.left };
+		const int width{ rect.right - left };
+		const int height{ rect.bottom - top };
+
+		Handle = CreateWindowEx(0, wc.lpszClassName, caption, WS_CHILD, left, top, width, height, Parent, NULL, NULL, NULL);
+
+		if (!Handle) OExSys::ShowException("Window handler failed!", "Onyx engine");
+
+		ShowWindow(Handle, SW_SHOWNORMAL);
+		UpdateWindow(Handle);
+
+		// Runnging flag status
+		Running = true;
 	}
 
 	void Window::CreateWindowForm(
@@ -135,6 +199,9 @@ namespace onyxengine
 		wc.style = NULL;
 		wc.lpfnWndProc = &WndProc;
 
+		Location = new Point(x, y);
+		Size = new Rectangle(width, height);
+
 		if (!::RegisterClassEx(&wc)) // If registration of class will fail, the function will return false
 		{
 			OExSys::ShowException("Window class failed!", converted_caption);
@@ -152,7 +219,7 @@ namespace onyxengine
 		//Hard set classic mode
 		//SetWindowTheme(Handle, NULL, L"CLASSIC"); int rectCorner = 1;
 		//DwmSetWindowAttribute(Handle, DWMWA_WINDOW_CORNER_PREFERENCE, &rectCorner, sizeof(int));
-
+		
 		// Set title dark mode
 		if (DwmSetWindowAttribute(Handle, 19, &dwmdesc[1], sizeof(int)) != 0)
 			DwmSetWindowAttribute(Handle, 20, &dwmdesc[1], sizeof(int));
@@ -169,6 +236,8 @@ namespace onyxengine
 		// Runnging flag status
 		Running = true;
 	}
+
+
 
 	Window::Window()
 	{
@@ -193,6 +262,11 @@ namespace onyxengine
 			dwmdesc);
 	}
 
+	Window::Window(HWND Parent)
+	{
+		CreateViewportWindow(Parent);
+	}
+
 	Window::Window(wstring window_classname, wstring window_title, UINT x, UINT y, UINT width, UINT height, wstring icon_path)
 	{
 		int dwmdesc[] = STANDART_DWMDESC;
@@ -215,6 +289,26 @@ namespace onyxengine
 	Window::Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path)
 	{
 		int dwmdesc[] = STANDART_DWMDESC;
+		HICON icon = (icon_path.length() == 0) ? STANDART_ICON : LOAD_FILE_ICON(icon_path.c_str());
+
+		CreateWindowForm(
+			window_classname,
+			window_title,
+			x,
+			y,
+			width,
+			height,
+			STANDART_BACKCOLOR,
+			icon,
+			winStyles,
+			winExStyles,
+			dwmdesc);
+	}
+
+	Window::Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, bool isRectangle)
+	{
+		int dwmdesc[] = STANDART_DWMDESC;
+		dwmdesc[0] = isRectangle ? DWM_DONOTROUND : DWM_ROUND;
 		HICON icon = (icon_path.length() == 0) ? STANDART_ICON : LOAD_FILE_ICON(icon_path.c_str());
 
 		CreateWindowForm(
@@ -257,8 +351,6 @@ namespace onyxengine
 			DispatchMessage(&msg);
 		}
 
-		Sleep(1);
-
 		return true;
 	}
 
@@ -275,9 +367,9 @@ namespace onyxengine
 		return Running;
 	}
 
-	void Window::Start()
+	void Window::Stop()
 	{
-		Running = true;
+		Running = false;
 	}
 
 	RECT Window::GetClientWindowRectangle()
@@ -327,14 +419,19 @@ namespace onyxengine
 		callback->OnUpdate();
 	}
 
-	void Window::OnResizeWindow()
+	void Window::OnResizeWindow(const Rectangle& size)
 	{
-		callback->OnResize();
+		callback->OnResize(size);
 	}
 
-	void Window::OnChangeWindowPosition()
+	void Window::OnChangeWindowPosition(const Point& location)
 	{
-		callback->OnChangePosition();
+		callback->OnChangePosition(location);
+	}
+
+	void Window::OnClosingWindow(bool* isCancle)
+	{
+		callback->OnClosing(isCancle);
 	}
 
 	void Window::OnDestroyWindow()

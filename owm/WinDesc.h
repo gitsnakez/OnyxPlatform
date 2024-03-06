@@ -44,7 +44,8 @@ namespace onyxengine
     {
         Classic = 0,
         GameReady = 1,
-        NoBorder = 2,
+        Borderless = 2,
+        AsViewport = 3
     };
 
     typedef int Style;
@@ -65,7 +66,7 @@ namespace onyxengine
         ExStyle winexstyles;
 
         Point location = Point(0, 0);
-        Size size = Size(0, 0);
+        Rectangle size = Rectangle(0, 0);
 
     };
 }

@@ -12,6 +12,10 @@
 #include "Matrix4x4.h"
 #include "Prerequisites.h"
 
+EXTERN API void UpdateMovementParameters(Viewport* vp, float forward, float rightward);
+EXTERN API void UpdateRotateParameters(Viewport* vp, float camx, float camy);
+EXTERN API void SetFullscreenMode(Viewport* vp, bool isFullScr, int winWidth, int winHeight);
+
 EXTERN API class Viewport
 {
 public:
@@ -34,8 +38,8 @@ public:
 	// Inherited via Window
 	API void OnCreate();
 	API void OnUpdate();
-	API void OnResize();
-	API void OnChangeLocation();
+	API void OnResize(int width, int height);
+	API void OnChangeLocation(int x, int y);
 	API void OnDestroy();
 	API void OnEnter();
 	API void OnLeave();

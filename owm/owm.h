@@ -31,10 +31,8 @@
 namespace onyxengine
 {
 	EXTERN API void* MakeWindow(WinPreset preset);
-	EXTERN API void* MakeWindowArg(WinPreset preset, HWND Parent, int Width, int Height);
+	EXTERN API void* MakeWindowArg(WinPreset preset, HWND Parent);
 	EXTERN API HWND GetWindowHandler(void* window);
 	EXTERN API bool WindowRunning(void* window);
 	EXTERN API bool SetWindowCallback(void* window, void* callback);
-
-	EXTERN API void* InitViewport(HWND Parent, int Width, int Height);
 }

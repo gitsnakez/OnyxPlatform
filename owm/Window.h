@@ -39,17 +39,19 @@ namespace onyxengine
 
 	using namespace std;
 
-	class API Window : InputListener
+	EXTERN class API Window : InputListener
 	{
 	public:
 		Window();
+		Window(HWND Parent);
 		Window(wstring window_classname, wstring window_title, UINT x, UINT y, UINT width, UINT height, wstring icon_path);
 		Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path);
+		Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, bool isRectangle);
 		~Window();
 
 		HWND GetHandler();
 		bool IsRunning();
-		void Start();
+		void Stop();
 		RECT GetClientWindowRectangle();
 		RECT GetWindowRectangle();
 		static RECT GetScreenRectangle();
@@ -65,11 +67,15 @@ namespace onyxengine
 		/// <summary>
 		/// Resize window event.
 		/// </summary>
-		virtual void OnResizeWindow();
+		virtual void OnResizeWindow(const Rectangle& size);
 		/// <summary>
 		/// Relocate window event.
 		/// </summary>
-		virtual void OnChangeWindowPosition();
+		virtual void OnChangeWindowPosition(const Point& location);
+		/// <summary>
+		/// Closing window event.
+		/// </summary>
+		virtual void OnClosingWindow(bool* isCancle);
 		/// <summary>
 		/// Destroy window event.
 		/// </summary>
@@ -89,9 +95,13 @@ namespace onyxengine
 		virtual void OnMouseRightButtonUp(const Point& delta_mouse_pos);
 
 		IWindowCallback* callback;
+		Point* Location;
+		Rectangle* Size;
 
 	private:
 		bool Broadcast();
+
+		void CreateViewportWindow(HWND Parent);
 		void CreateWindowForm(wstring class_name, wstring text,
 			UINT x, UINT y, UINT width,
 			UINT height, HBRUSH backcolor,

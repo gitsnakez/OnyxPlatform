@@ -129,8 +129,8 @@ void Viewport::UpdateCamera()
 	temp.SetRotationY(cam_y);
 	World_Cam *= temp;
 
-	Vector3D new_cam_pos = m_world_camera.GetTranslation() + World_Cam.GetZDirection() * (m_forward * 0.3f);
-	new_cam_pos = new_cam_pos + World_Cam.GetXDirection() * (m_rightward * 0.3f);
+	Vector3D new_cam_pos = m_world_camera.GetTranslation() + World_Cam.GetZDirection() * (m_forward);
+	new_cam_pos = new_cam_pos + World_Cam.GetXDirection() * (m_rightward);
 	World_Cam.SetTranslation(new_cam_pos);
 	m_world_camera = World_Cam;
 	World_Cam.Inverse();
@@ -145,11 +145,8 @@ void Viewport::UpdateCamera()
 
 void Viewport::UpdateLight()
 {
-	m_light_rot_y += 1.57f * m_delta_time;
-
-	float dist_from_origin = 1.0f;
-
-	m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 2.0f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
+	Vector3D campos = m_world_camera.GetTranslation();
+	m_light_position = Vector4D(campos.m_x, campos.m_y, campos.m_z, 1.0f);
 }
 
 void Viewport::DrawMesh(const MeshPtr& mesh, const std::vector<MaterialPtr>& materialSet)
@@ -177,6 +174,9 @@ void Viewport::OnCreate()
 	// Camera start position
 	m_world_camera.SetTranslation(Vector3D(0, 1, 3));
 
+	m_light_position = Vector4D(0, 1, 3, 1);
+	m_light_radius = 40;
+
 	AssetLoader assetLoader = AssetLoader();
 
 	// Materials
@@ -192,30 +192,24 @@ void Viewport::OnCreate()
 	m_swap_chain = _enginePtr->GetRenderSystem()->CreateSwapChain(_hWnd, winw, winh);
 }
 
-void Viewport::OnResize()
+void Viewport::OnResize(int width, int height)
 {
-	RECT rect;
-	if (GetWindowRect(_hWnd, &rect))
-	{
-		winw = rect.right - rect.left;
-		winh = rect.bottom - rect.top;
-		if (winw > 0 && winh > 0)
-		{
-			//RESIZE SWAPCHAIN AND RENDER TARGET
-			m_swap_chain->Resize(winw, winh);
-			Render();
-		}
-	}
+	//RESIZE SWAPCHAIN AND RENDER TARGET
+	winw = width;
+	winh = height;
+	m_swap_chain->Resize(winw, winh);
+	Render();
 }
 
-API void Viewport::OnChangeLocation()
+API void Viewport::OnChangeLocation(int x, int y)
 {
 	Render();
 }
 
 EXTERN API void OnResizeViewport(Viewport* vp)
 {
-	vp->OnResize();
+	return; // Obsolete code
+	vp->OnResize(-1, -1);
 }
 
 void Viewport::LoadMap()
@@ -252,9 +246,9 @@ void Viewport::LoadMaterials()
 	m_mat_model3->SetCullMode(CULL_BACK);
 
 	// Terrain
-	m_mat_terrain = _enginePtr->CreateMaterial(mat);
+	m_mat_terrain = _enginePtr->CreateMaterial(mat_bump);
 	m_mat_terrain->AddTexture(AssetLoader::Get()->GetMaterial("TERRAIN_COLOR"));
-	//m_mat_terrain->AddTexture(AssetLoader::Get()->GetMaterial("TERRAIN_NORMAL"));
+	m_mat_terrain->AddTexture(AssetLoader::Get()->GetMaterial("TERRAIN_NORMAL"));
 	m_mat_terrain->SetCullMode(CULL_BACK);
 
 	// Sky

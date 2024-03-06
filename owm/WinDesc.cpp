@@ -35,7 +35,7 @@ namespace onyxengine
 		winstyles = intstyles;
 		winexstyles = intexstyles;
 		location = Point(x, y);
-		size = Size(width, height);
+		size = Rectangle(width, height);
 	}
 
 	WinParams::WinParams(WinPreset preset)

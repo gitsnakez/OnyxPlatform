@@ -73,7 +73,7 @@ namespace onyxengine
     {
     }
 
-    HWND HwndViewport::GetHandle()
+    API HWND HwndViewport::GetHandle()
     {
         return Handle;
     }

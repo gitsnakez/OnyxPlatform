@@ -17,30 +17,67 @@ namespace onyxengine
 		if (vp != nullptr) vp->OnCreate();
 	}
 
+	void WindowCallback::OnClosing(bool* isCancle)
+	{
+	}
+
 	void WindowCallback::OnUpdate()
 	{
-		auto currentTime = std::chrono::steady_clock::now();
-		auto elapsed = previousTime - currentTime;
+		// Input
+		if (ct->playmode)
+		{
+			ct->camx = Math::Lerp(ct->oldrotx, ct->rotx, deltatime * 50);
+			ct->camy = Math::Lerp(ct->oldroty, ct->roty, deltatime * 50);
+			ct->oldrotx = ct->camx;
+			ct->oldroty = ct->camy;
+			UpdateMovementParameters(vp, ct->forward, ct->rightward);
+			UpdateRotateParameters(vp, ct->camx, ct->camy);
+			ct->forward = 0;
+			ct->rightward = 0;
 
+			ct->forward = 0;
+			ct->rightward = 0;
 
-		if (vp != nullptr) vp->OnUpdate();
+			ct->movespeed = 0.2f;
+			/*
+			if (ct->movespeed < 0.2f)
+				ct->movespeed = Math::Lerp(ct->movespeed, 0.21f, deltatime * 2);*/
+		}
+		else
+		{
+			ct->camx = ct->oldrotx;
+			ct->camy = ct->oldroty;
+		}
 
-		float elapsed_f = elapsed.count();
+		// Final update
+		if (vp != nullptr)
+		{
+			vp->m_delta_time = deltatime;
+			vp->OnUpdate();
+		}
 
+		// Delta time stuff
+		if (vp != nullptr) vp->m_delta_time = deltatime;
+		ct->deltatime = deltatime;
 
-		if (vp != nullptr) vp->m_delta_time = elapsed_f;
+		// Delta time define
+		old_delta = new_delta;
+		new_delta = GetTickCount64();
 
-		previousTime = currentTime;
+		deltatime = (old_delta) ? ((new_delta - old_delta) / 1000.0f) : 0;
 	}
 
-	void WindowCallback::OnResize()
+	void WindowCallback::OnResize(const Rectangle& size)
 	{
-		if (vp != nullptr) vp->OnResize();
+		if (ct->useBorders)
+			if (vp != nullptr) vp->OnResize(size.Width - 16, size.Height - 39); else;
+		else
+			if (vp != nullptr) vp->OnResize(size.Width, size.Height); else;
 	}
 
-	void WindowCallback::OnChangePosition()
+	void WindowCallback::OnChangePosition(const Point& location)
 	{
-		if (vp != nullptr) vp->OnChangeLocation();
+		if (vp != nullptr) vp->OnChangeLocation(location.X, location.Y);
 	}
 
 	void WindowCallback::OnDestroy()

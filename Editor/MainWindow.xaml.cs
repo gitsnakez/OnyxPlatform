@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -27,55 +28,49 @@ namespace Editor
             InitializeComponent();
         }
 
+        bool inited = false;
+
         private void RibbonWindow_ContentRendered(object sender, EventArgs e)
         {
             CornerPreference = ControlzEx.Behaviors.WindowCornerPreference.DoNotRound;
             WindowState = WindowState.Maximized;
 
-            new Thread(()=> { EngineLoop(); }).Start();
-        }
-
-        private IntPtr _engine;
-        private IntPtr _viewport;
-
-        private void EngineLoop()
-        {
-            _engine = OAPI.CreateEngine();
-            _viewport = OAPI.CreateViewport(_controlHost.Handle, _engine);
-            OAPI.OnCreateViewport(_viewport);
-
-            while(IsRunning)
-            {
-                OAPI.OnUpdateViewport(_viewport, 0.16f);
-                Thread.Sleep(1);
-            }
-
-            OAPI.OnDestroyViewport(_viewport);
+            OAPI.CreateGraphics(_controlHost._hwndVp);
+            inited = true;
+            new Thread(StartEngine).Start();
         }
 
         private ControlHost _controlHost = null;
         private bool disposed;
-        
 
         private void RibbonWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Loaded -= RibbonWindow_Loaded;
             _controlHost = new ControlHost();
-            _controlHost.MessageHook += new System.Windows.Interop.HwndSourceHook(HostMessageFilter);
+            _controlHost.MessageHook += new HwndSourceHook(HostMessageFilter);
             viewportPlace.Content = _controlHost;
+        }
+
+        void StartEngine()
+        {
+            //IntPtr intPtr = OAPI.CreateRenderWindowBorders();
+            OAPI.RunWithGraphics(_controlHost._hwndVp);
+            OAPI.UpdateGraphics(_controlHost._hwndVp);
         }
 
         private IntPtr HostMessageFilter(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam, ref bool handled)
         {
-            switch ((OAPI.Win32Msg)msg)
+            switch ((WindowMessage)msg)
             {
-                case OAPI.Win32Msg.WM_SIZE: break;
-                case OAPI.Win32Msg.WM_SIZING: break;
-                case OAPI.Win32Msg.WM_PAINT: break;
-                case OAPI.Win32Msg.WM_ENTERSIZEMOVE: break;
-                case OAPI.Win32Msg.WM_EXITSIZEMOVE: break;
+                case WindowMessage.Size: break;
+                case WindowMessage.Sizing: break;
+                case WindowMessage.Paint: break;
+                case WindowMessage.EnterSizeMove: break;
+                case WindowMessage.ExitSizeMove: break;
                     default: break;
             }
+
+            /*if (inited)
+                OAPI.UpdateGraphics(_controlHost._hwndVp);*/
 
             return IntPtr.Zero;
         }
@@ -97,10 +92,10 @@ namespace Editor
             GC.SuppressFinalize(this);
         }
 
-        private bool IsRunning = true;
         private void RibbonWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            IsRunning = false;
+            OAPI.StopRenderWindow(_controlHost._hwndVp);
+            OAPI.DestroyGraphics();
         }
     }
 }

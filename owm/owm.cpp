@@ -25,7 +25,6 @@
 #include "owm.h"
 #include "standart_resources.h"
 #include "IWindowCallback.h"
-#include "HwndViewport.h"
 
 namespace onyxengine
 {
@@ -61,13 +60,13 @@ namespace onyxengine
 				L"bin\\icon.ico");
 		}
 
-		case NoBorder:
+		case Borderless:
 		{
 			int center_x = (rc.right / 2) - (STANDART_WIDTH / 2);
 			int center_y = (rc.bottom / 2) - (STANDART_HEIGHT / 2);
 			return (void*) new Window(STANDART_WINDOW_CLASSNAME, STANDART_WINDOW_NAME,
 				GAME_STYLES_NOBORDER, GAME_WINDOW_EX_STYLES,
-				center_x, center_y, STANDART_WIDTH, STANDART_HEIGHT, L"");
+				center_x, center_y, STANDART_WIDTH, STANDART_HEIGHT, L"bin\\icon.ico", true);
 		}
 
 		default:
@@ -80,25 +79,26 @@ namespace onyxengine
 		}
 	}
 
+	void* _CrtVPrt(HWND _parent)
+	{
+		return (void*) new Window(_parent);
+	}
+
 	EXTERN API void* MakeWindow(WinPreset preset)
 	{
 		return _CrtWnd(preset);
 	}
 
-	EXTERN API void* MakeWindowArg(WinPreset preset, HWND Parent, int Width, int Height)
+	EXTERN API void* MakeWindowArg(WinPreset preset, HWND Parent)
 	{
-		void* _vpWnd = _CrtWnd(preset);
-		HWND _vpHwnd = ((Window*)_vpWnd)->GetHandler();
-
-		RECT rect{};
-		GetWindowRect(Parent, &rect);
-		AdjustWindowRect(&rect, WS_CHILD, FALSE);
-
-		MoveWindow(_vpHwnd, 0, 0, Width, Height, TRUE);
-		ShowWindow(_vpHwnd, SW_SHOWNORMAL);
-		UpdateWindow(_vpHwnd);
-
-		return _vpWnd;
+		switch (preset)
+		{
+		case AsViewport:
+			return _CrtVPrt(Parent);
+			
+		default:
+			return _CrtWnd(preset);
+		}
 	}
 
 	EXTERN API HWND GetWindowHandler(void* window)
@@ -114,11 +114,5 @@ namespace onyxengine
 	EXTERN API bool SetWindowCallback(void* window, void* callback)
 	{
 		return ((Window*)window)->callback = (IWindowCallback*)callback;
-	}
-
-	EXTERN API void* InitViewport(HWND Parent, int Width, int Height)
-	{
-		HwndViewport hwndVP = HwndViewport(Parent, Width, Height);
-		return hwndVP.GetHandle();
 	}
 }

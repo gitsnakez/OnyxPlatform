@@ -29,6 +29,7 @@
 #include "defs.h"
 #include "Viewport.h"
 #include "GraphicsEngine.h"
+#include "OMath.h"
 #include <chrono>
 
 namespace onyxengine
@@ -40,10 +41,11 @@ namespace onyxengine
 		WindowCallback();
 
 		virtual void OnCreate();
+		virtual void OnClosing(bool *isCancle);
 		virtual void OnUpdate();
 
-		virtual void OnResize();
-		virtual void OnChangePosition();
+		virtual void OnResize(const Rectangle& size);
+		virtual void OnChangePosition(const Point& location);
 		virtual void OnDestroy();
 		virtual void OnEnter();
 		virtual void OnLeave();
@@ -57,8 +59,10 @@ namespace onyxengine
 		virtual void OnMouseRightButtonUp(const Point& delta_mouse_pos);
 
 	private:
-		std::chrono::steady_clock::time_point previousTime = std::chrono::steady_clock::now();
-		std::chrono::steady_clock::time_point elapsed = std::chrono::steady_clock::now();
+		long old_delta = 0;
+		long new_delta = 0;
+
+		float deltatime = 0;
 
 		Viewport* vp = nullptr;
 		Controller* ct;

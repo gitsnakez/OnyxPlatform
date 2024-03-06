@@ -32,7 +32,7 @@ namespace onyxengine
     API typedef uint8_t ubyte;
 
 
-    struct API Point
+    EXTERN struct API Point
     {
         Point();
         Point(int x, int y);
@@ -41,10 +41,10 @@ namespace onyxengine
         int Y;
     };
 
-    struct API Size
+    EXTERN struct API Rectangle
     {
-        Size();
-        Size(int width, int height);
+        Rectangle();
+        Rectangle(int width, int height);
 
         int Width;
         int Height;
