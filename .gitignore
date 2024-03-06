@@ -67,10 +67,6 @@ Ankh.NoLoad
 *.vcxproj.filters
 *.vcxproj.user
 
-*.lnk
-*.ico
-*.psd
-
 .vs/
 OnyxEngine/.vs/
 OnyxApplication/.vs/
