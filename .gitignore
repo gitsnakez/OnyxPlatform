@@ -74,3 +74,9 @@ OnyxCLR/.vs/
 OnyxDX11/.vs/
 OnyxLauncher/.vs/
 SteamWorks/
+*.vsidx
+*.vsidx
+*.testlog
+*.db
+*.bin
+*.db
