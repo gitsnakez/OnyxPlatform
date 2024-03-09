@@ -32,8 +32,8 @@ cbuffer constant: register(b0)
 
 float4 psmain(PS_INPUT input) : SV_TARGET
 {
-    float4 color = Color.Sample(ColorSampler, float2(input.texcoord.x, 1.0 - input.texcoord.y));
-    float4 normal = Normal.Sample(NormalSampler, float2(input.texcoord.x, 1.0 - input.texcoord.y));
+    float4 color = Color.Sample(ColorSampler, float2(1.0 - input.texcoord.x, 1.0 - input.texcoord.y));
+    float4 normal = Normal.Sample(NormalSampler, float2(1.0 - input.texcoord.x, 1.0 - input.texcoord.y));
     
     normal.xyz = (normal.xyz * 2.0) - 1.0;
     normal.xyz = mul(normal.xyz, input.tbn);
@@ -56,18 +56,19 @@ float4 psmain(PS_INPUT input) : SV_TARGET
     float3 diffuse_light = kd * id * amount_diffuse_light;
     
     //SPECULAR LIGHT
-    float ks = 1.0;
-    float3 is = float3(1.0, 1.0, 1.0);
-    float3 reflected_light = reflect(m_light_direction.xyz, normal.xyz);
-    float shininess = 10.0;
-    float amount_specular_light = 0;
+    //float ks = 0.4;
+    //float3 is = float3(0.7, 0.7, 0.7);
+    //float3 reflected_light = reflect(m_light_direction.xyz, normal.xyz);
+    //float shininess = 0.4;
+    //float amount_specular_light = 0;
+    //
+    //if(dot_nl > 0)
+    //    amount_specular_light = pow(max(0.0, dot(reflected_light, input.direction_to_camera)), shininess);
+    //
+    //float3 specular_light = ks * amount_specular_light * is;
     
-    if(dot_nl > 0)
-        amount_specular_light = pow(max(0.0, dot(reflected_light, input.direction_to_camera)), shininess);
-    
-    float3 specular_light = ks * amount_specular_light * is;
-    
-    float3 final_light = ambient_light + diffuse_light + specular_light;
+    //float3 final_light = ambient_light + diffuse_light + specular_light;
+    float3 final_light = ambient_light + diffuse_light;
 
     return float4(final_light, 1.0);
 }

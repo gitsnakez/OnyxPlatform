@@ -5,7 +5,7 @@
 #include "RenderSystem.h"
 #include "ExceptHelper.h"
 
-SwapChain::SwapChain(HWND hWnd, UINT WinWidth, UINT WinHeight, RenderSystem* system): m_system(system)
+SwapChain::SwapChain(HWND hWnd, UINT WinWidth, UINT WinHeight, RenderSystem* system) : m_system(system)
 {
     ID3D11Device* device = m_system->m_d3d_device;
 
@@ -42,7 +42,7 @@ void SwapChain::Resize(unsigned int width, unsigned int height)
     if (m_dsv) m_dsv->Release();
     
     m_swap_chain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
-    ReloadBuffers(width, height);
+    ReloadBuffers(width, height);// ReloadBuffers(width, height);
 }
 
 void SwapChain::SetFullsceenMode(bool isfullscr, UINT width, UINT height)

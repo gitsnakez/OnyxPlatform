@@ -57,15 +57,8 @@ obj/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
-*.sln
-*.csproj
-*.csproj.user
 *.baml
 *.snk
-*.config
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
 
 .vs/
 OnyxEngine/.vs/

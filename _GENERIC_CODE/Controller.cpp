@@ -65,6 +65,14 @@ namespace onyxengine
 				playmode = !playmode;
 				break;
 
+			case 0xA0: //Sprint
+				isSprint = true;
+				break;
+
+			case 0xA4: //Sprint
+				isSlow = true;
+				break;
+
 			case 0x57: // Forward
 				forward = movespeed * (deltatime * 16);
 				break;
@@ -101,6 +109,14 @@ namespace onyxengine
 
 		case 0x44: // Right
 			movespeed = 0;
+			break;
+
+		case 0xA0: //Sprint
+			isSprint = false;
+			break;
+
+		case 0xA4: //Sprint
+			isSlow = false;
 			break;
 
 			case 'Z':
@@ -143,8 +159,8 @@ namespace onyxengine
 			int width_center = (width - (useBorders ? 16 : 0)) / 2;
 			int height_center = (height - (useBorders ? 39 : 0)) / 2;
 
-			roty += ((delta_mouse_pos.X - (loc_x + (useBorders ? 8 : 0))) - width_center) * deltatime * 0.1f;
-			rotx += ((delta_mouse_pos.Y - (loc_y + (useBorders ? 31 : 0))) - height_center) * deltatime * 0.1f;
+			roty += ((delta_mouse_pos.X - (loc_x + (useBorders ? 8 : 0))) - width_center) * (deltatime * 0.1f);
+			rotx += ((delta_mouse_pos.Y - (loc_y + (useBorders ? 31 : 0))) - height_center) * (deltatime * 0.1f);
 
 			if (rotx > 1.5f)
 				rotx = 1.5f;

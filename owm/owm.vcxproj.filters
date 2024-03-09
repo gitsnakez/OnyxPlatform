@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="WinDesc.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="Standart.h" />
+    <ClInclude Include="InputListener.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="oexsys.h" />
+    <ClInclude Include="standart_resources.h" />
+    <ClInclude Include="resource.h">
+      <Filter>DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="IWindowCallback.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="owm.h">
+      <Filter>DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="Messages.h" />
+    <ClInclude Include="SystemUtilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Standart.cpp" />
+    <ClCompile Include="WinDesc.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="oexsys.cpp" />
+    <ClCompile Include="owm.cpp">
+      <Filter>DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="Messages.cpp" />
+    <ClCompile Include="SystemUtilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{9529223a-57cd-4646-930d-91c2c854a3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{86bfc66e-31d2-4cbd-8a7c-292195c1e625}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="owm.rc">
+      <Filter>DLL</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

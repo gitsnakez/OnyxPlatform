@@ -19,7 +19,7 @@ EXTERN API void SetFullscreenMode(Viewport* vp, bool isFullScr, int winWidth, in
 EXTERN API class Viewport
 {
 public:
-	API Viewport(void* hWnd, void* engine);
+	API Viewport(void* hWnd, void* engine, bool isBorder);
 	API ~Viewport();
 
 	// Scene

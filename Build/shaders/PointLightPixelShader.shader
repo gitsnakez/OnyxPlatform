@@ -30,7 +30,7 @@ cbuffer constant: register(b0)
 float4 psmain(PS_INPUT input) : SV_TARGET
 {
 	return Color.Sample(ColorSampler, 1.0 - input.texcoord);
-    float4 color = Color.Sample(ColorSampler, float2(input.texcoord.x, 1.0 - input.texcoord.y));
+    float4 color = Color.Sample(ColorSampler, float2(1.0 - input.texcoord.x, input.texcoord.y));
     
     //AMBIENT LIGHT
     float ka = 8.5;

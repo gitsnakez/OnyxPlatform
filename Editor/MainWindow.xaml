@@ -8,7 +8,7 @@
         xmlns:avalon="https://github.com/Dirkster99/AvalonDock"
         xmlns:local="clr-namespace:Editor"
         xmlns:parts="clr-namespace:Editor.Parts"
-        Title="enthusiasm" WindowStartupLocation="CenterScreen" Closing="RibbonWindow_Closing"
+        Title="Onyx Editor" WindowStartupLocation="CenterScreen" Closing="RibbonWindow_Closing"
         Width="1296" Height="759" TitleBarHeight="31" Loaded="RibbonWindow_Loaded"
         Foreground="White" Background="#323232" TitleBackground="#252525"
         ContentRendered="RibbonWindow_ContentRendered" MinWidth="466" MinHeight="289" Icon="/Icons/placeholder.png">

@@ -23,11 +23,11 @@ namespace Editor
             _hwnd = IntPtr.Zero;
         }
 
-        protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        /*protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             handled = false;
             return IntPtr.Zero;
-        }
+        }*/
 
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {

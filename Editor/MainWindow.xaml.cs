@@ -46,7 +46,7 @@ namespace Editor
         private void RibbonWindow_Loaded(object sender, RoutedEventArgs e)
         {
             _controlHost = new ControlHost();
-            _controlHost.MessageHook += new HwndSourceHook(HostMessageFilter);
+            //_controlHost.MessageHook += new HwndSourceHook(HostMessageFilter);
             viewportPlace.Content = _controlHost;
         }
 
@@ -54,7 +54,7 @@ namespace Editor
         {
             //IntPtr intPtr = OAPI.CreateRenderWindowBorders();
             OAPI.RunWithGraphics(_controlHost._hwndVp);
-            OAPI.UpdateGraphics(_controlHost._hwndVp);
+            //OAPI.UpdateGraphics(_controlHost._hwndVp);
         }
 
         private IntPtr HostMessageFilter(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam, ref bool handled)
@@ -94,8 +94,8 @@ namespace Editor
 
         private void RibbonWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            OAPI.StopRenderWindow(_controlHost._hwndVp);
-            OAPI.DestroyGraphics();
+            //OAPI.StopRenderWindow(_controlHost._hwndVp);
+            //OAPI.DestroyGraphics();
         }
     }
 }

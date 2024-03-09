@@ -46,7 +46,7 @@ namespace onyxengine
 
 		//HWIN window = MakeWindowArg(Classic);
 		HENGINE engine = CreateEngine();
-		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine);
+		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine, false);
 
 		HDESC hDesc =
 		{
@@ -80,7 +80,7 @@ namespace onyxengine
 		HWIN window = MakeWindowArg(AsViewport, Parent);
 		viewport_pointer = ((Window*)window)->GetHandler();
 		HENGINE engine = CreateEngine();
-		HVP viewport = CreateViewport(GetWindowHandler(window), engine);
+		HVP viewport = CreateViewport(GetWindowHandler(window), engine, false);
 
 		HDESC hDesc =
 		{
@@ -112,7 +112,7 @@ namespace onyxengine
 
 		//HWIN window = MakeWindowArg(Classic);
 		HENGINE engine = CreateEngine();
-		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine);
+		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine, false);
 
 		HDESC hDesc =
 		{

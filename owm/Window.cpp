@@ -112,10 +112,20 @@ namespace onyxengine
 				//Size							Horizontal(x)			Verticla(Y)
 				window->Size = new Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam));
 
-				window->OnResizeWindow(Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam)));
+				if (window->MinSize->Width > window->Size->Width ||
+					window->MinSize->Height > window->Size->Height)
+				{
+					window->Size = window->MinSize;
+					MoveWindow(window->GetHandler(), window->Location->X, window->Location->Y, window->Size->Width, window->Size->Height, TRUE);
+				}
+				else
+				{
+					window->OnResizeWindow(Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam)));
+				}
+
 			}
 			break;
-
+			
 		default:
 			return ::DefWindowProc(hWnd, Msg, wParam, lParam);
 		}
@@ -365,6 +375,38 @@ namespace onyxengine
 			Broadcast();
 
 		return Running;
+	}
+
+	void Window::ShowLogo()
+	{
+		// Background
+		HDC hdc = GetDC(Handle);
+		RECT rect = { 0, 0, Size->Width - 16, Size->Height - 39 };
+		HBRUSH brush = CreateSolidBrush(RGB(40, 40, 40));
+		FillRect(hdc, &rect, brush);
+
+		// Logo
+		int x = Size->Width / 2 - 166;
+		int y = Size->Height / 2 - 89;
+		BITMAP bitmap;
+		HBITMAP hBitmap = NULL;
+		HDC hdcMem;
+		HDC oldBitmap;
+
+		hdcMem = CreateCompatibleDC(GetDC(NULL));
+		oldBitmap = (HDC)SelectObject(hdcMem, hBitmap);
+
+		hBitmap = (HBITMAP)LoadImage(GetModuleHandle(NULL),
+			L"resources\\images\\logobanner.bmp", IMAGE_BITMAP, 300, 100, LR_LOADFROMFILE);
+		oldBitmap = (HDC)SelectObject(hdcMem, hBitmap);
+		GetObject(hBitmap, sizeof(bitmap), &bitmap);
+		BitBlt(hdc, x, y, bitmap.bmWidth, bitmap.bmHeight, hdcMem, 0, 0, SRCCOPY);
+
+		// Release resources
+		SelectObject(hdcMem, oldBitmap);
+		DeleteDC(hdcMem);
+		DeleteObject(brush);
+		ReleaseDC(Handle, hdc);
 	}
 
 	void Window::Stop()

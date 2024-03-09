@@ -13,7 +13,7 @@
 #include "MapLoader.h"
 #include <fstream>
 
-EXTERN API Viewport::Viewport(void* hWnd, void* engine)
+EXTERN API Viewport::Viewport(void* hWnd, void* engine, bool isBorder)
 {
 	_hWnd = (HWND)hWnd;
 	_enginePtr = (GraphicsEngine*)engine;
@@ -21,8 +21,8 @@ EXTERN API Viewport::Viewport(void* hWnd, void* engine)
 	RECT rect;
 	if (GetWindowRect(_hWnd, &rect))
 	{
-		winw = rect.right - rect.left;
-		winh = rect.bottom - rect.top;
+		winw = rect.right - rect.left - (isBorder ? 16 : 0);
+		winh = rect.bottom - rect.top - (isBorder ? 39 : 0);
 	}
 }
 
@@ -195,10 +195,13 @@ void Viewport::OnCreate()
 void Viewport::OnResize(int width, int height)
 {
 	//RESIZE SWAPCHAIN AND RENDER TARGET
-	winw = width;
-	winh = height;
-	m_swap_chain->Resize(winw, winh);
-	Render();
+	if (width - 16 > 0 || height - 39 > 39)
+	{
+		winw = width;
+		winh = height;
+		m_swap_chain->Resize(winw, winh);
+		Render();
+	}
 }
 
 API void Viewport::OnChangeLocation(int x, int y)
@@ -230,9 +233,9 @@ void Viewport::LoadMaterials()
 	MaterialPtr mat_bump = _enginePtr->CreateMaterial(L"shaders/dirLightVS.shader", L"shaders/dirLightPS.shader");
 
 	// Scene
-	m_mat_model1 = _enginePtr->CreateMaterial(mat_bump);
+	m_mat_model1 = _enginePtr->CreateMaterial(mat);
 	m_mat_model1->AddTexture(AssetLoader::Get()->GetMaterial("MODEL1_COLOR"));
-	m_mat_model1->AddTexture(AssetLoader::Get()->GetMaterial("MODEL1_NORMAL"));
+	//m_mat_model1->AddTexture(AssetLoader::Get()->GetMaterial("MODEL1_NORMAL"));
 	m_mat_model1->SetCullMode(CULL_BACK);
 
 	m_mat_model2 = _enginePtr->CreateMaterial(mat);

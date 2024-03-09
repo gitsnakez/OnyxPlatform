@@ -14,6 +14,7 @@ public:
 	void SetFullsceenMode(bool isfullscr, UINT width, UINT height);
 	bool Present(bool vsync);
 private:
+
 	void ReloadBuffers(unsigned int Width, unsigned int Height);
 
 	IDXGISwapChain* m_swap_chain = nullptr;

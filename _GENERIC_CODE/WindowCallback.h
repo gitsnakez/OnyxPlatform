@@ -30,7 +30,9 @@
 #include "Viewport.h"
 #include "GraphicsEngine.h"
 #include "OMath.h"
+#include <cstdio>
 #include <chrono>
+#include <thread>
 
 namespace onyxengine
 {
@@ -61,6 +63,9 @@ namespace onyxengine
 	private:
 		long old_delta = 0;
 		long new_delta = 0;
+
+		std::chrono::steady_clock clock;
+		std::chrono::milliseconds frameTimeMin = std::chrono::milliseconds(7);
 
 		float deltatime = 0;
 

@@ -23,6 +23,15 @@ namespace onyxengine
 
 	void WindowCallback::OnUpdate()
 	{
+		// Counts Per Second
+		INT64 counts_per_sec = 0;
+		QueryPerformanceFrequency((LARGE_INTEGER*)&counts_per_sec);
+		// Seconds Per Count
+		float sec_per_count = 1.0f / (float)counts_per_sec;
+		// Pervious Time
+		INT64 prev_time = 0;
+		QueryPerformanceCounter((LARGE_INTEGER*)&prev_time);
+
 		// Input
 		if (ct->playmode)
 		{
@@ -38,7 +47,12 @@ namespace onyxengine
 			ct->forward = 0;
 			ct->rightward = 0;
 
-			ct->movespeed = 0.2f;
+			if(ct->isSlow)
+				ct->movespeed = 0.05f;
+			else if (ct->isSprint)
+				ct->movespeed = 0.5f;
+			else
+				ct->movespeed = 0.2f;
 			/*
 			if (ct->movespeed < 0.2f)
 				ct->movespeed = Math::Lerp(ct->movespeed, 0.21f, deltatime * 2);*/
@@ -55,16 +69,23 @@ namespace onyxengine
 			vp->m_delta_time = deltatime;
 			vp->OnUpdate();
 		}
-
-		// Delta time stuff
 		if (vp != nullptr) vp->m_delta_time = deltatime;
 		ct->deltatime = deltatime;
 
-		// Delta time define
-		old_delta = new_delta;
-		new_delta = GetTickCount64();
+		Sleep(1);
 
-		deltatime = (old_delta) ? ((new_delta - old_delta) / 1000.0f) : 0;
+		// Get current count
+		INT64 current_time = 0;
+		QueryPerformanceCounter((LARGE_INTEGER*)&current_time);
+
+		// DeltaTime
+		deltatime = (current_time - prev_time) * sec_per_count;
+
+		// Delta time define (OLD IMPLEMENTATION)
+		//old_delta = new_delta;
+		//new_delta = GetTickCount64();
+		//
+		//deltatime = (old_delta) ? ((new_delta - old_delta) / 1000.0f) : 0;
 	}
 
 	void WindowCallback::OnResize(const Rectangle& size)

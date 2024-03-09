@@ -49,7 +49,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Steam stuff
 	if (!SteamAPI_Init())
 	{
-		MessageBox(NULL, L"Steam not initialized!", L"Onyx Platform", MB_OK);
+		MessageBox(NULL, L"Steam is not initialized!\nPlease start steam process to use Onyx Platform SDK!", L"Steam API", MB_OK);
 		return 0;
 	}
 	//SteamAPI_RestartAppIfNecessary(2872880);
@@ -59,8 +59,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	catch (...) { EngineShutdown(-1); }
 
 	HWIN window = MakeWindow(Classic);
+	((Window*)window)->ShowLogo();
 	HENGINE engine = CreateEngine();
-	HVP viewport = CreateViewport(GetWindowHandler(window), engine);
+	HVP viewport = CreateViewport(GetWindowHandler(window), engine, true);
 
 	HDESC hDesc =
 	{
@@ -78,6 +79,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Loop
 	callback->OnCreate();
 	OnCreateViewport(viewport);
+	((Window*)window)->engineinited = true;
 	while (WindowRunning(window))
 		InputSystem::Get()->Update();
 

@@ -64,6 +64,9 @@ namespace onyxengine
 		float camx = 0;
 		float camy = 0;
 
+		bool isSprint = false;
+		bool isSlow = false;
+
 		bool keyZ = false;
 		bool useBorders = true;
 

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\_GENERIC_CODE\Controller.cpp" />
+    <ClCompile Include="SteamStartAch.cpp" />
+    <ClCompile Include="..\_GENERIC_CODE\WindowCallback.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="RES">
+      <UniqueIdentifier>{f4ee9130-1d87-40dc-b6e0-70b8711160f7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="App.rc">
+      <Filter>RES</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\x64\Debug\bin\icon.ico">
+      <Filter>RES</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>RES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_GENERIC_CODE\api.h" />
+    <ClInclude Include="..\_GENERIC_CODE\Controller.h" />
+    <ClInclude Include="..\_GENERIC_CODE\defs.h" />
+    <ClInclude Include="appMain.h" />
+    <ClInclude Include="SteamStartAch.h" />
+    <ClInclude Include="..\_GENERIC_CODE\WindowCallback.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="steam_api64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="steam_api64.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ComputeShader.hlsl" />
+  </ItemGroup>
+</Project>

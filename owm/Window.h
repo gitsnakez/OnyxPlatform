@@ -51,6 +51,7 @@ namespace onyxengine
 
 		HWND GetHandler();
 		bool IsRunning();
+		void ShowLogo();
 		void Stop();
 		RECT GetClientWindowRectangle();
 		RECT GetWindowRectangle();
@@ -97,6 +98,10 @@ namespace onyxengine
 		IWindowCallback* callback;
 		Point* Location;
 		Rectangle* Size;
+		Rectangle* MinSize = new Rectangle(640, 480);
+
+		HBITMAP LogoBanner;
+		bool engineinited = false;
 
 	private:
 		bool Broadcast();
