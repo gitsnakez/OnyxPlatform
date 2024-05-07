@@ -1,36 +1,30 @@
 #include "Material.h"
 #include "GraphicsEngine.h"
 #include "RenderSystem.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
-Material::Material(GraphicsEngine* engine, const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
+Material::Material(const ShaderPtr& shader)
 {
-	_enginePtr = engine;
-
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-	_enginePtr->GetRenderSystem()->CompileVertexShader(vertex_shader_path, "vsmain", &shader_byte_code, &size_shader);
-	m_vertex_shader = _enginePtr->GetRenderSystem()->CreateVertexShader(shader_byte_code, size_shader);
-	_enginePtr->GetRenderSystem()->ReleaseCompiledShader();
-
-	if (!m_vertex_shader) ExceptHelper::ShowError("Material not created successfully!");
-
-	_enginePtr->GetRenderSystem()->CompilePixelShader(pixel_shader_path, "psmain", &shader_byte_code, &size_shader);
-	m_pixel_shader = _enginePtr->GetRenderSystem()->CreatePixelShader(shader_byte_code, size_shader);
-	_enginePtr->GetRenderSystem()->ReleaseCompiledShader();
-
-	if (!m_pixel_shader) ExceptHelper::ShowError("Material not created successfully!");
+	_enginePtr = shader->_enginePtr;
+	m_vertex_shader = shader->_pVertexShader;
+	m_pixel_shader = shader->_pPixelShader;
 }
 
-Material::Material(GraphicsEngine* engine, const MaterialPtr& material)
+Material::Material(const ShaderPtr& shader, const std::vector<TexturePtr>& textures)
 {
-	_enginePtr = material->_enginePtr;
-	m_vertex_shader = material->m_vertex_shader;
-	m_pixel_shader = material->m_pixel_shader;
+	_enginePtr = shader->_enginePtr;
+	m_vertex_shader = shader->_pVertexShader;
+	m_pixel_shader = shader->_pPixelShader;
+
+	m_vec_textures = textures;
 }
 
 Material::~Material()
 {
+	//for (size_t i = 0; i < m_vec_textures.size(); i++)
+	//	delete m_vec_textures[i].get();
+	//
+	//m_vec_textures.clear();
 }
 
 void Material::AddTexture(const TexturePtr& texture)

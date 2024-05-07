@@ -1,0 +1,5 @@
+mesh:		"mirage_tower.obj"
+materials
+{
+	tower:	"tower.omat"
+}

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 #include <map>
 #include <regex>
 
@@ -14,4 +14,5 @@ public:
 	~file_reader();
 
 	std::map<std::string, std::string> GetHeaderDictionaryFromFile(const wchar_t* filename);
+	std::map<std::wstring, std::wstring> GetWideHeaderDictionaryFromFile(const wchar_t* filename);
 };

@@ -2,9 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\_GENERIC_CODE\Controller.cpp" />
     <ClCompile Include="SteamStartAch.cpp" />
-    <ClCompile Include="..\_GENERIC_CODE\WindowCallback.cpp" />
+    <ClCompile Include="SteamStatus.cpp" />
+    <ClCompile Include="WindowCallback.cpp" />
+    <ClCompile Include="ConsoleCallback.cpp" />
+    <ClCompile Include="Controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RES">
@@ -20,17 +22,27 @@
     <Image Include="..\x64\Debug\bin\icon.ico">
       <Filter>RES</Filter>
     </Image>
+    <Image Include="..\x64\Debug\bin\app_roundicon.ico">
+      <Filter>RES</Filter>
+    </Image>
+    <Image Include="..\x64\Debug\bin\app_recticon.ico">
+      <Filter>RES</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>RES</Filter>
     </ClInclude>
-    <ClInclude Include="..\_GENERIC_CODE\api.h" />
-    <ClInclude Include="..\_GENERIC_CODE\Controller.h" />
-    <ClInclude Include="..\_GENERIC_CODE\defs.h" />
-    <ClInclude Include="appMain.h" />
     <ClInclude Include="SteamStartAch.h" />
-    <ClInclude Include="..\_GENERIC_CODE\WindowCallback.h" />
+    <ClInclude Include="SteamStatus.h" />
+    <ClInclude Include="ErrorDispatcher.h" />
+    <ClInclude Include="api.h" />
+    <ClInclude Include="ConvertChars2.h" />
+    <ClInclude Include="OMath.h" />
+    <ClInclude Include="WindowCallback.h" />
+    <ClInclude Include="ConsoleCallback.h" />
+    <ClInclude Include="..\_GENERIC_CODE\defs.h" />
+    <ClInclude Include="Controller.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="steam_api64.dll" />
@@ -39,6 +51,6 @@
     <Library Include="steam_api64.lib" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="ComputeShader.hlsl" />
+    <Manifest Include="app.manifest" />
   </ItemGroup>
 </Project>

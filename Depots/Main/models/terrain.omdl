@@ -1,0 +1,5 @@
+mesh:		"plane.obj"
+materials
+{
+	terrain:	"terrain.omat"
+}

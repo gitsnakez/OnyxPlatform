@@ -1,6 +1,8 @@
 // Copyright (c) 2023 snakEZ
 // All rights reserved
 
+#include <Windows.h>
+
 #pragma once
 
 class Vector2D
@@ -10,6 +12,11 @@ public:
 	~Vector2D() {};
 	Vector2D(float x, float y): m_x(x), m_y(y) {};
 	Vector2D(const Vector2D& vector): m_x(vector.m_x), m_y(vector.m_y) {};
+
+	static Vector2D Parse(LPCWSTR str)
+	{
+		return Vector2D();
+	}
 
 	Vector2D operator *(float num) const
 	{

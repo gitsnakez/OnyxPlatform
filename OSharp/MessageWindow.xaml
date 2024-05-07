@@ -3,37 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OSharp"
-        mc:Ignorable="d"
-        Title="Test title" SizeToContent="WidthAndHeight" ShowInTaskbar="False"
-        Width="Auto" Height="Auto" MinWidth="240" MinHeight="140"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        FontFamily="Segoe UI" FontSize="12" Foreground="White" Background="#262626"
-        BorderThickness="0">
+        xmlns:local="clr-namespace:OSharp" Foreground="White" MinHeight="140" MinWidth="140" Loaded="Window_Loaded"
+        mc:Ignorable="d" Background="#303030" FontFamily="Segoe UI" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen"
+        Title="Caption" Height="140" Width="140" FontSize="12" SizeToContent="WidthAndHeight" SnapsToDevicePixels="True" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ControlAppearanceDictionary.xaml" />
+                <ResourceDictionary Source="MainStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OnyxFlatButton}">
-                <Setter Property="BorderBrush" Value="#3F3F3F"/>
-                <Setter Property="MinWidth" Value="76"/>
-                <Setter Property="Width" Value="116"/>
-                <Setter Property="Height" Value="26"/>
-                <Setter Property="Margin" Value="4 4 0 0"/>
-            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Border VerticalAlignment="Top" Grid.Row="0">
-            <Label x:Name="Message" Content="Some text for test..." Margin="20 20 20 20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Foreground="White"/>
-        </Border>
-        <Border Background="#202020" VerticalAlignment="Top" Grid.Row="1">
-            <Button Content="OK" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 20 4 4" Width="Auto" Height="24" Click="Button_Click" Padding="0,0,0,0"/>
-        </Border>
+        <Grid Grid.Row="0" Margin="20 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="MessageLabel" Foreground="White" Content="Message" Padding="2" Margin="0 0 0 10" Grid.Row="0"/>
+            <StackPanel Grid.Row="1">
+                <Label x:Name="DetailsLabel" Visibility="Collapsed" Content="Details" Foreground="White"/>
+                <local:ClickSelectTextBox x:Name="DetailsBox" IsReadOnly="True" Background="#282828" TabIndex="1" IsTabStop="True" Visibility="Collapsed" BorderBrush="#484848" BorderThickness="2"
+                     SelectionBrush="Gray" Foreground="White" Padding="4 4 16 16"/>
+            </StackPanel>
+        </Grid>
+        <DockPanel VerticalAlignment="Bottom" Background="#262626" Grid.Row="1">
+            <Button Style="{DynamicResource ButtonFlatStyle}" x:Name="okButton" Click="Button_Click" TabIndex="0" IsTabStop="True" Background="#282828" Foreground="White" Margin="10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <TextBlock Text="OK" Margin="10 0"/>
+            </Button>
+        </DockPanel>
     </Grid>
 </Window>

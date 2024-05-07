@@ -3,7 +3,12 @@
 
 #pragma once
 
+#include <Windows.h>
 #include <cmath>
+#include <wchar.h>
+#include <regex>
+
+#define REGEX_VECTOR3      L"[ \t]*([-+]?[0-9]{0,12}[.?,?0-9]{1,5})[ \t]*([-+]?[0-9]{0,12}[.?,?0-9]{1,5})[ \t]*([-+]?[0-9]{0,12}[.?,?0-9]{1,5}).*?"
 
 class Vector3D
 {
@@ -44,6 +49,23 @@ public:
 	Vector3D operator -(const Vector3D& vec) const
 	{
 		return Vector3D(m_x - vec.m_x, m_y - vec.m_y, m_z - vec.m_z);
+	}
+
+	static Vector3D Parse(LPCWSTR str)
+	{
+		std::wcmatch resultsMatch;
+		std::wregex parser = std::wregex(REGEX_VECTOR3); // line with 3 floats
+
+		if (regex_match(str, resultsMatch, parser))
+		{
+			wchar_t* pEnd;
+			return Vector3D(
+				wcstold(resultsMatch[1].str().c_str(), &pEnd),
+				wcstold(resultsMatch[2].str().c_str(), &pEnd),
+				wcstold(resultsMatch[3].str().c_str(), &pEnd));
+		}
+
+		return Vector3D();
 	}
 
 	static Vector3D Normalize(const Vector3D& vec)

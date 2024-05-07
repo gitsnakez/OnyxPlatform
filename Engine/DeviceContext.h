@@ -21,6 +21,7 @@ public:
 	void DrawTriangleList(UINT vertex_count, UINT start_vertex_index);
 	void DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location);
 	void DrawTriangleStrip(UINT vertex_count, UINT start_vertex_index);
+
 	void SetViewportSize(UINT width, UINT height);
 
 	void SetVertexShader(const VertexShaderPtr& vertex_shader);
@@ -31,6 +32,9 @@ public:
 
 	void SetConstantBuffer(const VertexShaderPtr& vertex_shader, const ConstantBufferPtr& buffer);
 	void SetConstantBuffer(const PixelShaderPtr& pixel_shader, const ConstantBufferPtr& buffer);
+
+	int drawcalls_iterator = 0;
+
 private:
 	ID3D11DeviceContext* m_device_context;
 	RenderSystem* m_system = nullptr;

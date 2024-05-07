@@ -1,25 +1,57 @@
-#include "oapi.h"
+/// Copyright (C) 2024 Roman Sivkov - All Rights Reserved.
+/// You may use, distribute and modify this code under the
+/// terms of the MIT License
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files(the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and /or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions :
+///
+/// The above copyright notice and this permission notice shall be included in all
+/// copies or substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+/// SOFTWARE.
+///
+/// For more information contact snakezfortress04@gmail.com
 #include <Windows.h>
+#include <uxtheme.h>
+#include "ErrorDispatcher.h"
+#include "steam_api.h"
+#include "SteamStartAch.h"
 #include "defs.h"
 #include "Controller.h"
 #include "owm.h"
 #include "engine.h"
 #include "WindowCallback.h"
+#include "SteamStatus.h"
+#include "OPlus/OPlus.h"
 #include <string>
 #include <thread>
+#include <combaseapi.h>
+#include <shellapi.h>
+
+using namespace std;
 
 namespace onyxengine
 {
-	#pragma region FORMWORK
+#pragma region FORMWORK
 
-	EXTERN API void* CreateRenderWindow(HWND Parent)
+	EXTERN API void* CreateRenderViewportWindow(HWND Parent)
 	{
 		return MakeWindowArg(AsViewport, Parent);
 	}
-	
-	EXTERN API void* CreateRenderWindowBorders()
+
+	EXTERN API void* CreateRenderWindowBorderless()
 	{
-		return MakeWindow(Classic);
+		return MakeWindow(Borderless);
 	}
 
 	EXTERN API void* GetRenderWindowHandle(HWIN viewport)
@@ -32,37 +64,65 @@ namespace onyxengine
 		((Window*)viewport)->Stop();
 	}
 
-	#pragma endregion
-	
+#pragma endregion
 
 
-	#pragma region RENDERWORK
+
+#pragma region RENDERWORK
+
+	EXTERN API void InitGraphics(HWIN windowPtr)
+	{
+		// Input initialization
+		try { InputSystem::Create(); }
+		catch (...) { }
+
+		HENGINE engine = CreateEngine();
+		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine, true);
+
+		HDESC hDesc =
+		{
+			windowPtr,  //	hWin
+			engine,		//	hEngine
+			viewport	//	hViewPort
+		};
+
+		WindowCallback* callback = new WindowCallback(&hDesc, nullptr);
+		SetWindowCallback(windowPtr, (void*)callback);
+	}
+
+	EXTERN API void LoopGraphics(HWIN windowPtr)
+	{
+		// Loop
+		while (WindowRunning(windowPtr))
+			InputSystem::Get()->Update();
+	}
+
+	EXTERN API int DestroyGraphics(HWIN windowPtr)
+	{
+		InputSystem::Release();
+		return 0;
+	}
 
 	EXTERN API int RunWithGraphics(HWIN windowPtr)
 	{
 		// Input initialization
 		try { InputSystem::Create(); }
-		catch (...) { return -1; }
+		catch (...) { return 1; }
 
-		//HWIN window = MakeWindowArg(Classic);
 		HENGINE engine = CreateEngine();
-		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine, false);
+		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine, true);
 
 		HDESC hDesc =
 		{
-			windowPtr,  // hWin
-			engine,		// hEngine
-			viewport	// hViewPort
+			windowPtr,  //	hWin
+			engine,		//	hEngine
+			viewport	//	hViewPort
 		};
 
-		Controller control = Controller(&hDesc);
-		WindowCallback* callback = new WindowCallback(&hDesc, &control);
-
+		WindowCallback* callback = new WindowCallback(&hDesc, nullptr);
 		SetWindowCallback(windowPtr, (void*)callback);
 
 		// Loop
-		callback->OnCreate();
-		OnCreateViewport(viewport);
 		while (WindowRunning(windowPtr))
 			InputSystem::Get()->Update();
 
@@ -70,77 +130,6 @@ namespace onyxengine
 		InputSystem::Release();
 		return 0;
 	}
-
-	EXTERN API int RunWithGraphics2(HWND Parent, HWND viewport_pointer)
-	{
-		// Input initialization
-		try { InputSystem::Create(); }
-		catch (...) { return -1; }
-
-		HWIN window = MakeWindowArg(AsViewport, Parent);
-		viewport_pointer = ((Window*)window)->GetHandler();
-		HENGINE engine = CreateEngine();
-		HVP viewport = CreateViewport(GetWindowHandler(window), engine, false);
-
-		HDESC hDesc =
-		{
-			window,		// hWin
-			engine,		// hEngine
-			viewport	// hViewPort
-		};
-
-		Controller control = Controller(&hDesc);
-		WindowCallback* callback = new WindowCallback(&hDesc, &control);
-
-		SetWindowCallback(window, (void*)callback);
-
-		// Loop
-		callback->OnCreate();
-		OnCreateViewport(viewport);
-		while (WindowRunning(window))
-			InputSystem::Get()->Update();
-
-		// App finish
-		InputSystem::Release();
-		return 0;
-	}
-
-	EXTERN API void CreateGraphics(HWIN windowPtr)
-	{
-		try { InputSystem::Create(); }
-		catch (...) {  }
-
-		//HWIN window = MakeWindowArg(Classic);
-		HENGINE engine = CreateEngine();
-		HVP viewport = CreateViewport(GetWindowHandler(windowPtr), engine, false);
-
-		HDESC hDesc =
-		{
-			windowPtr,  // hWin
-			engine,		// hEngine
-			viewport	// hViewPort
-		};
-
-		Controller control = Controller(&hDesc);
-		WindowCallback* callback = new WindowCallback(&hDesc, &control);
-
-		SetWindowCallback(windowPtr, (void*)callback);
-
-		// Loop
-		callback->OnCreate();
-		OnCreateViewport(viewport);
-	}
-
-	EXTERN API void UpdateGraphics(HWIN windowPtr)
-	{
-		if(WindowRunning(windowPtr))
-			InputSystem::Get()->Update();
-	}
-
-	EXTERN API void DestroyGraphics()
-	{
-		InputSystem::Release();
-	}
-
-	#pragma endregion
 }
+
+#pragma endregion

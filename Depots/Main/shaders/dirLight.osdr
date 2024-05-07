@@ -1,0 +1,2 @@
+pixel_shader:	"dirLightPS.shader"
+vertex_shader:	"dirLightVS.shader"

@@ -1,0 +1,2 @@
+pixel_shader:	"PointLightPixelShader.shader"
+vertex_shader:	"skyboxVS.shader"

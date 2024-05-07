@@ -3,7 +3,7 @@
 
 #include "SwapChain.h"
 #include "RenderSystem.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 SwapChain::SwapChain(HWND hWnd, UINT WinWidth, UINT WinHeight, RenderSystem* system) : m_system(system)
 {
@@ -65,13 +65,13 @@ void SwapChain::ReloadBuffers(unsigned int width, unsigned int height)
     HRESULT hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
 
     if (FAILED(hr))
-        ExceptHelper::ShowError("Get buffer from swap chain failure!\nSwapChain creation was failed!");
+        ShowErrorMessage("Get buffer from swap chain failure!\nSwapChain creation was failed!");
 
     hr = device->CreateRenderTargetView(buffer, NULL, &m_rtv);
     buffer->Release();
 
     if (FAILED(hr))
-        ExceptHelper::ShowError("Creating render target view failure!\nSwapChain creation was failed!");
+        ShowErrorMessage("Creating render target view failure!\nSwapChain creation was failed!");
 
     D3D11_TEXTURE2D_DESC tex_desc = {};
     tex_desc.Width = width;
@@ -89,11 +89,11 @@ void SwapChain::ReloadBuffers(unsigned int width, unsigned int height)
     hr = device->CreateTexture2D(&tex_desc, nullptr, &buffer);
 
     if (FAILED(hr))
-        ExceptHelper::ShowError("Creating depth stencil view failure!\nSwapChain creation was failed!");
+        ShowErrorMessage("Creating depth stencil view failure!\nSwapChain creation was failed!");
 
     hr = device->CreateDepthStencilView(buffer, NULL, &m_dsv);
     buffer->Release();
 
     if (FAILED(hr))
-        ExceptHelper::ShowError("Creating depth stencil view failure!\nSwapChain creation was failed!");
+        ShowErrorMessage("Creating depth stencil view failure!\nSwapChain creation was failed!");
 }

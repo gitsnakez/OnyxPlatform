@@ -27,10 +27,9 @@
 #include <Uxtheme.h>
 #include "oexsys.h"
 #include "InputListener.h"
+#include "ConvertChars.h"
 #include <chrono>
 #include <thread>
-#include <locale>
-#include <codecvt>
 
 namespace onyxengine
 {
@@ -86,14 +85,19 @@ namespace onyxengine
 		case WM_SETFOCUS:
 			// Event fired when the window is focused.
 			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
-			if (window) window->OnEnter();
+
+			if (window)
+				window->OnEnter();
+
 			break;
 
 		case WM_KILLFOCUS:
 			// Event fired when the window lost focus.
 			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 
-			if (window) window->OnLeave();
+			if (window)
+				window->OnLeave();
+
 			break;
 
 		case WM_DESTROY:
@@ -109,20 +113,9 @@ namespace onyxengine
 			window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 			if (window)
 			{
-				//Size							Horizontal(x)			Verticla(Y)
+				//Size						Horizontal(x)			Verticla(Y)
 				window->Size = new Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam));
-
-				if (window->MinSize->Width > window->Size->Width ||
-					window->MinSize->Height > window->Size->Height)
-				{
-					window->Size = window->MinSize;
-					MoveWindow(window->GetHandler(), window->Location->X, window->Location->Y, window->Size->Width, window->Size->Height, TRUE);
-				}
-				else
-				{
-					window->OnResizeWindow(Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam)));
-				}
-
+				window->OnResizeWindow(Rectangle((UINT)LOWORD(lParam), (UINT)HIWORD(lParam)));
 			}
 			break;
 			
@@ -131,6 +124,11 @@ namespace onyxengine
 		}
 
 		return NULL;
+	}
+
+	void Window::Exit()
+	{
+		Running = false;
 	}
 
 	void Window::CreateViewportWindow(HWND Parent)
@@ -160,10 +158,10 @@ namespace onyxengine
 		GetWindowRect(Parent, &rect);
 		AdjustWindowRect(&rect, WS_CHILD, FALSE);
 
-		const int top{ rect.top };
-		const int left{ rect.left };
-		const int width{ rect.right - left };
-		const int height{ rect.bottom - top };
+		const int top { rect.top };
+		const int left { rect.left };
+		const int width { rect.right - left };
+		const int height { rect.bottom - top };
 
 		Handle = CreateWindowEx(0, wc.lpszClassName, caption, WS_CHILD, left, top, width, height, Parent, NULL, NULL, NULL);
 
@@ -181,18 +179,13 @@ namespace onyxengine
 		UINT x, UINT y, UINT width,
 		UINT height, HBRUSH backcolor,
 		HICON icon, DWORD window_styles,
-		DWORD window_ex_styles, int dwmdesc[])
+		DWORD window_ex_styles, int dwmdesc[], int showMode)
 	{
 		// init info
-
-		//setup converter
-		using convert_type = std::codecvt_utf8<wchar_t>;
-		std::wstring_convert<convert_type, wchar_t> converter;
-
 		LPCWSTR win_classname = class_name.c_str();
 		LPCWSTR win_title = text.c_str();
 
-		std::string converted_caption = converter.to_bytes(text);
+		std::string converted_caption = ConvertWstrToStr(text.c_str());
 
 		// creating
 		WNDCLASSEX wc;
@@ -238,9 +231,9 @@ namespace onyxengine
 		DwmSetWindowAttribute(Handle, DWMWA_BORDER_COLOR, &dwmdesc[2], sizeof(COLORREF));
 		DwmSetWindowAttribute(Handle, DWMWA_CAPTION_COLOR, &dwmdesc[3], sizeof(COLORREF));
 		DwmSetWindowAttribute(Handle, DWMWA_TEXT_COLOR, &dwmdesc[4], sizeof(COLORREF));
-		
+
 		// Show up window
-		ShowWindow(Handle, SW_SHOW);
+		ShowWindow(Handle, showMode);
 		UpdateWindow(Handle);
 
 		// Runnging flag status
@@ -269,7 +262,7 @@ namespace onyxengine
 			STANDART_ICON,
 			GAME_WINDOW_STYLES,
 			GAME_WINDOW_EX_STYLES,
-			dwmdesc);
+			dwmdesc, SW_SHOW);
 	}
 
 	Window::Window(HWND Parent)
@@ -277,7 +270,7 @@ namespace onyxengine
 		CreateViewportWindow(Parent);
 	}
 
-	Window::Window(wstring window_classname, wstring window_title, UINT x, UINT y, UINT width, UINT height, wstring icon_path)
+	Window::Window(wstring window_classname, wstring window_title, UINT x, UINT y, UINT width, UINT height, wstring icon_path, INT showMode)
 	{
 		int dwmdesc[] = STANDART_DWMDESC;
 		HICON icon = (icon_path.length() == 0) ? STANDART_ICON : LOAD_FILE_ICON(icon_path.c_str());
@@ -293,10 +286,10 @@ namespace onyxengine
 			icon,
 			GAME_WINDOW_STYLES,
 			GAME_WINDOW_EX_STYLES,
-			dwmdesc);
+			dwmdesc, showMode);
 	}
 
-	Window::Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path)
+	Window::Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, INT showMode)
 	{
 		int dwmdesc[] = STANDART_DWMDESC;
 		HICON icon = (icon_path.length() == 0) ? STANDART_ICON : LOAD_FILE_ICON(icon_path.c_str());
@@ -312,10 +305,10 @@ namespace onyxengine
 			icon,
 			winStyles,
 			winExStyles,
-			dwmdesc);
+			dwmdesc, showMode);
 	}
 
-	Window::Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, bool isRectangle)
+	Window::Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, bool isRectangle, INT showMode)
 	{
 		int dwmdesc[] = STANDART_DWMDESC;
 		dwmdesc[0] = isRectangle ? DWM_DONOTROUND : DWM_ROUND;
@@ -332,7 +325,7 @@ namespace onyxengine
 			icon,
 			winStyles,
 			winExStyles,
-			dwmdesc);
+			dwmdesc, showMode);
 	}
 
 	Window::~Window()
@@ -377,7 +370,7 @@ namespace onyxengine
 		return Running;
 	}
 
-	void Window::ShowLogo()
+	void Window::ShowLogo(std::wstring banner_filename, int width, int height)
 	{
 		// Background
 		HDC hdc = GetDC(Handle);
@@ -386,8 +379,8 @@ namespace onyxengine
 		FillRect(hdc, &rect, brush);
 
 		// Logo
-		int x = Size->Width / 2 - 166;
-		int y = Size->Height / 2 - 89;
+		int x = Size->Width / 2 - width / 2 - 16;
+		int y = Size->Height / 2 - height / 2 -39;
 		BITMAP bitmap;
 		HBITMAP hBitmap = NULL;
 		HDC hdcMem;
@@ -396,8 +389,8 @@ namespace onyxengine
 		hdcMem = CreateCompatibleDC(GetDC(NULL));
 		oldBitmap = (HDC)SelectObject(hdcMem, hBitmap);
 
-		hBitmap = (HBITMAP)LoadImage(GetModuleHandle(NULL),
-			L"resources\\images\\logobanner.bmp", IMAGE_BITMAP, 300, 100, LR_LOADFROMFILE);
+
+		hBitmap = (HBITMAP)LoadImage(GetModuleHandle(NULL), banner_filename.c_str(), IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 		oldBitmap = (HDC)SelectObject(hdcMem, hBitmap);
 		GetObject(hBitmap, sizeof(bitmap), &bitmap);
 		BitBlt(hdc, x, y, bitmap.bmWidth, bitmap.bmHeight, hdcMem, 0, 0, SRCCOPY);
@@ -412,6 +405,19 @@ namespace onyxengine
 	void Window::Stop()
 	{
 		Running = false;
+	}
+
+	// Функция для мерцания значка в таскбаре
+	void Window::FlashTaskbarIcon(bool flash)
+	{
+		FLASHWINFO flashInfo;
+		flashInfo.cbSize = sizeof(FLASHWINFO);
+		flashInfo.hwnd = Handle;
+		flashInfo.dwFlags = FLASHW_TRAY | (flash ? FLASHW_ALL : FLASHW_STOP);
+		flashInfo.uCount = 15; // Количество мерцаний (можно изменить по желанию)
+		flashInfo.dwTimeout = 0;
+
+		FlashWindowEx(&flashInfo);
 	}
 
 	RECT Window::GetClientWindowRectangle()
@@ -433,26 +439,17 @@ namespace onyxengine
 		RECT rc;
 
 		rc.left = 0;
-		rc.right = ::GetSystemMetrics(SM_CXSCREEN);
+		rc.right = GetSystemMetrics(SM_CXSCREEN);
 		rc.top = 0;
-		rc.bottom = ::GetSystemMetrics(SM_CYSCREEN);
+		rc.bottom = GetSystemMetrics(SM_CYSCREEN);
 
 		return rc;
 	}
 
 	void Window::OnCreateWindow()
 	{
+		isFocused = true;
 		InputSystem::Get()->AddListener(this);
-
-		RECT rcClient;
-		GetWindowRect(Handle, &rcClient);
-
-		// Inform the application of the frame change.
-		SetWindowPos(Handle,
-			NULL,
-			rcClient.left, rcClient.top, rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
-			SWP_FRAMECHANGED);
-
 		callback->OnCreate();
 	}
 
@@ -485,11 +482,14 @@ namespace onyxengine
 
 	void Window::OnEnter()
 	{
+		isFocused = true;
+		InputSystem::Get()->AddListener(this);
 		callback->OnEnter();
 	}
 
 	void Window::OnLeave()
 	{
+		isFocused = false;
 		callback->OnLeave();
 	}
 

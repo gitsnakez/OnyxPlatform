@@ -1,2 +1,0 @@
-D:\OnyxPlatform\OnyxCLR\x64\Debug\OnyxCLR.vcxproj.AssemblyReference.cache
-D:\OnyxPlatform\OnyxCLR\x64\Debug\OnyxCLR.vcxproj.CopyComplete

@@ -28,11 +28,13 @@
 
 namespace onyxengine
 {
-	class API InputListener
+	EXTERN class API InputListener
 	{
 	public:
 		InputListener() {}
 		~InputListener() {}
+
+		bool isFocused;
 
 		//KEYBOARD
 		virtual void OnKeyDown(int key) = 0;

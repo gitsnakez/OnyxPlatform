@@ -1,58 +1,36 @@
-﻿using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows;
 
-// Общие сведения об этой сборке предоставляются следующим набором
-// набора атрибутов. Измените значения этих атрибутов для изменения сведений,
-// связанные со сборкой.
-[assembly: AssemblyTitle("Logic module of Onyx Engine")]
-[assembly: AssemblyDescription("Logic module of Onyx Engine")]
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("OSharp")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("snakEZ")]
-[assembly: AssemblyProduct("Onyx Platform©")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
-[assembly: AssemblyTrademark("© snakEZ. All rights reserved.")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("OSharp")]
+[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
-// для компонентов COM. Если необходимо обратиться к типу в этой сборке через
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
-[assembly: ComVisible(true)]
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
 
-// Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("a6447db7-08ac-4961-8b44-c8f5220458fd")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("009e8e01-ddcd-4ffa-b9a3-62f1083ae0d9")]
 
-//Чтобы начать создание локализуемых приложений, задайте
-//<UICulture>CultureYouAreCodingWith</UICulture> в файле .csproj
-//в <PropertyGroup>. Например, при использовании английского (США)
-//в своих исходных файлах установите <UICulture> в en-US.  Затем отмените преобразование в комментарий
-//атрибута NeutralResourceLanguage ниже.  Обновите "en-US" в
-//строка внизу для обеспечения соответствия настройки UICulture в файле проекта.
-
-//[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
-
-
-[assembly: ThemeInfo(
-    ResourceDictionaryLocation.None, //где расположены словари ресурсов по конкретным тематикам
-                                     //(используется, если ресурс не найден на странице,
-                                     // или в словарях ресурсов приложения)
-    ResourceDictionaryLocation.SourceAssembly //где расположен словарь универсальных ресурсов
-                                              //(используется, если ресурс не найден на странице,
-                                              // в приложении или в каких-либо словарях ресурсов для конкретной темы)
-)]
-
-// Сведения о версии сборки состоят из указанных ниже четырех значений:
+// Version information for an assembly consists of the following four values:
 //
-//      Основной номер версии
-//      Дополнительный номер версии
-//      Номер сборки
-//      Редакция
+//      Major Version
+//      Minor Version
+//      Build Number
+//      Revision
 //
-// Можно задать все значения или принять номера сборки и редакции по умолчанию 
-// используя "*", как показано ниже:
+// You can specify all the values or you can default the Build and Revision Numbers
+// by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.384.24009")]
-[assembly: AssemblyFileVersion("0.1.384.24009")]
-[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: AssemblyVersion("0.1.512.24473")]
+[assembly: AssemblyFileVersion("0.1.512.24473")]

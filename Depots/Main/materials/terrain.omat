@@ -1,0 +1,6 @@
+textures
+{
+	basecolor:		"devgrid.png"
+}
+
+shader:	"dirLight.osdr"

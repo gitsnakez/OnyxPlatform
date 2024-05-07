@@ -7,7 +7,7 @@
 class Texture: public Resource
 {
 public:
-	Texture(const wchar_t* full_filename);
+	Texture(const wchar_t* full_filename, RenderSystem* rsystem);
 	~Texture();
 private:
 	ID3D11Resource* m_texture = nullptr;

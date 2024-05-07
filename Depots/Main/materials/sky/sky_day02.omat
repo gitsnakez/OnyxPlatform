@@ -1,0 +1,6 @@
+textures
+{
+	basecolor:		"sky/sky_day02.png"
+}
+
+shader:			"PointLight.osdr"

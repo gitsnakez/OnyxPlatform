@@ -19,14 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_GENERIC_CODE\Controller.cpp" />
-    <ClCompile Include="..\_GENERIC_CODE\WindowCallback.cpp" />
+    <ClCompile Include="ConsoleCallback.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SteamStartAch.cpp" />
+    <ClCompile Include="SteamStatus.cpp" />
+    <ClCompile Include="WindowCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{4f6086b3-2490-4854-a736-c5ea66815707}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\OPlus\OPlus.vcxproj">
+      <Project>{07d10be2-50a7-470d-9327-8bbdc17cf7b7}</Project>
     </ProjectReference>
     <ProjectReference Include="..\owm\owm.vcxproj">
       <Project>{3d3a43a1-972f-423d-a96c-a3f61abb8b11}</Project>
@@ -35,18 +40,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_GENERIC_CODE\api.h" />
-    <ClInclude Include="..\_GENERIC_CODE\Controller.h" />
     <ClInclude Include="..\_GENERIC_CODE\defs.h" />
-    <ClInclude Include="..\_GENERIC_CODE\WindowCallback.h" />
-    <ClInclude Include="appMain.h" />
+    <ClInclude Include="api.h" />
+    <ClInclude Include="ConsoleCallback.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="ConvertChars2.h" />
+    <ClInclude Include="ErrorDispatcher.h" />
+    <ClInclude Include="OMath.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SteamStartAch.h" />
+    <ClInclude Include="SteamStatus.h" />
+    <ClInclude Include="WindowCallback.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="App.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\x64\Debug\bin\app_recticon.ico" />
+    <Image Include="..\x64\Debug\bin\app_roundicon.ico" />
     <Image Include="..\x64\Debug\bin\icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -56,10 +67,7 @@
     <Library Include="steam_api64.lib" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="ComputeShader.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
+    <Manifest Include="app.manifest" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -114,9 +122,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,16 +164,19 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalModuleDependencies>
       </AdditionalModuleDependencies>
-      <AdditionalIncludeDirectories>$(SolutionDir)owm\;$(SolutionDir)Engine\;$(SolutionDir)SteamWorks\;$(SolutionDir)_GENERIC_CODE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(SolutionDir)owm\;$(SolutionDir)Engine\;$(SolutionDir)SteamWorks\;$(SolutionDir)export\;$(SolutionDir)_GENERIC_CODE\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)$(IntDir)owm.lib;$(SolutionDir)$(IntDir)Engine.lib;$(SolutionDir)$(ProjectName)\steam_api64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>
-      </DelayLoadDLLs>
+      <AdditionalDependencies>$(SolutionDir)$(IntDir)bin\owm.lib;$(SolutionDir)$(IntDir)bin\Engine.lib;$(SolutionDir)$(IntDir)bin\OPlus.lib;$(SolutionDir)$(IntDir)\bin\steam_api64.lib;UxTheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>steam_api64.dll;OPlus.dll;owm.dll;Engine.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,24 +185,27 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_STEAM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalModuleDependencies>
       </AdditionalModuleDependencies>
       <Optimization>MaxSpeed</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)owm\;$(SolutionDir)Engine\;$(SolutionDir)SteamWorks\;$(SolutionDir)_GENERIC_CODE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(SolutionDir)owm\;$(SolutionDir)Engine\;$(SolutionDir)SteamWorks\;$(SolutionDir)export\;$(SolutionDir)_GENERIC_CODE\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)$(IntDir)owm.lib;$(SolutionDir)$(IntDir)Engine.lib;$(SolutionDir)$(ProjectName)\steam_api64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>
-      </DelayLoadDLLs>
+      <AdditionalDependencies>$(SolutionDir)$(IntDir)bin\owm.lib;$(SolutionDir)$(IntDir)bin\Engine.lib;$(SolutionDir)$(IntDir)bin\OPlus.lib;$(SolutionDir)$(IntDir)\bin\steam_api64.lib;UxTheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>steam_api64.dll;OPlus.dll;owm.dll;Engine.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

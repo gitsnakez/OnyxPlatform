@@ -39,7 +39,7 @@ namespace onyxengine
 	class WindowCallback : public IWindowCallback
 	{
 	public:
-		WindowCallback(HDESC* hDesc, Controller* control);
+		WindowCallback(HDESC* DescHandler, Controller* control);
 		WindowCallback();
 
 		virtual void OnCreate();
@@ -64,12 +64,14 @@ namespace onyxengine
 		long old_delta = 0;
 		long new_delta = 0;
 
+		ConsoleCallback* consoleCallback;
+
 		std::chrono::steady_clock clock;
 		std::chrono::milliseconds frameTimeMin = std::chrono::milliseconds(7);
 
 		float deltatime = 0;
 
-		Viewport* vp = nullptr;
+		HDESC* hDesc = nullptr;
 		Controller* ct;
 	};
 }

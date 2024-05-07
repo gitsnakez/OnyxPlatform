@@ -41,19 +41,19 @@ namespace onyxengine
 		switch (key)
 		{
 			// Change fullscreen mode viewport
-			case 0x0D:
+			case 0x7A:
 				FullScreen = !FullScreen;
 
 				if (FullScreen)
 				{
+					//useBorders = false;
 					Rectangle _primScrSize = SystemUtilities::GetPrimaryScreenSize();
 					SetFullscreenMode(((Viewport*)hndDescPtr->hViewPort), FullScreen, _primScrSize.Width, _primScrSize.Height);
-					useBorders = false;
 				}
 				else
 				{
+					//useBorders = true;
 					SetFullscreenMode(((Viewport*)hndDescPtr->hViewPort), FullScreen, ((Window*)hndDescPtr->hWin)->Size->Width, ((Window*)hndDescPtr->hWin)->Size->Height);
-					useBorders = true;
 				}
 				break;
 
@@ -87,6 +87,11 @@ namespace onyxengine
 
 			case 0x44: // Right
 				rightward = movespeed * (deltatime * 16);
+				break;
+
+			case 0xC0: // Console
+				if (!FullScreen)
+					OpenTerminal();
 				break;
 		}
 	}
@@ -159,8 +164,8 @@ namespace onyxengine
 			int width_center = (width - (useBorders ? 16 : 0)) / 2;
 			int height_center = (height - (useBorders ? 39 : 0)) / 2;
 
-			roty += ((delta_mouse_pos.X - (loc_x + (useBorders ? 8 : 0))) - width_center) * (deltatime * 0.1f);
-			rotx += ((delta_mouse_pos.Y - (loc_y + (useBorders ? 31 : 0))) - height_center) * (deltatime * 0.1f);
+			roty += ((delta_mouse_pos.X - (loc_x + (useBorders ? 8 : 0))) - width_center) * (deltatime * sensetivity);
+			rotx += ((delta_mouse_pos.Y - (loc_y + (useBorders ? 31 : 0))) - height_center) * (deltatime * sensetivity);
 
 			if (rotx > 1.5f)
 				rotx = 1.5f;

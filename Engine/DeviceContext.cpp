@@ -8,7 +8,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Texture.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 DeviceContext::DeviceContext(ID3D11DeviceContext* device_context, RenderSystem* system):m_device_context(device_context), m_system(system)
 {
@@ -42,18 +42,21 @@ void DeviceContext::SetIndexBuffer(const IndexBufferPtr& index_buffer)
 
 void DeviceContext::DrawTriangleList(UINT vertex_count, UINT start_vertex_index)		
 {
+	drawcalls_iterator++;
 	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_device_context->Draw(vertex_count, start_vertex_index);
 }
 
 void DeviceContext::DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location)
 {
+	drawcalls_iterator++;
 	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_device_context->DrawIndexed(index_count, start_index_location, start_vertex_index);
 }
 
 void DeviceContext::DrawTriangleStrip(UINT vertex_count, UINT start_vertex_index)
 {
+	drawcalls_iterator++;
 	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	m_device_context->Draw(vertex_count, start_vertex_index);
 }

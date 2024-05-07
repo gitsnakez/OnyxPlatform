@@ -24,13 +24,12 @@
 
 #pragma once
 
-#include <cstdint>
 #include "api.h"
+#include <cstdint>
 
 namespace onyxengine
 {
     API typedef uint8_t ubyte;
-
 
     EXTERN struct API Point
     {

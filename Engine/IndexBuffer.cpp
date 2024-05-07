@@ -3,7 +3,7 @@
 
 #include "IndexBuffer.h"
 #include "RenderSystem.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 IndexBuffer::IndexBuffer(void* list_indices, UINT size_list, RenderSystem* system): m_buffer(0), m_system(system)
 {
@@ -22,7 +22,7 @@ IndexBuffer::IndexBuffer(void* list_indices, UINT size_list, RenderSystem* syste
     if (FAILED(m_system->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
     {
         //MessageBox(nullptr, L"DirectX 11:\nIndex buffer creation failure!", L"Engine", MB_OK);
-        ExceptHelper::ShowError("Creating index buffer failure!");
+        ShowErrorMessage("Creating index buffer failure!");
     }
 }
 

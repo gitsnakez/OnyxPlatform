@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,8 +116,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
-      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>D:\OnyxPlatform\_GENERIC_CODE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -137,8 +137,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
-      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalIncludeDirectories>D:\OnyxPlatform\_GENERIC_CODE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -165,6 +165,8 @@
     <ClInclude Include="SystemUtilities.h" />
     <ClInclude Include="WinDesc.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowTransparency.h" />
+    <ClInclude Include="WindowWorks.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputSystem.cpp" />
@@ -175,6 +177,8 @@
     <ClCompile Include="SystemUtilities.cpp" />
     <ClCompile Include="WinDesc.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowTransparency.cpp" />
+    <ClCompile Include="WindowWorks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx" />

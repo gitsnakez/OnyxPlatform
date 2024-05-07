@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="MouseOver.Border" Color="#bd0000"/>
+    <SolidColorBrush x:Key="Focus.Border" Color="#bd0000"/>
+    <SolidColorBrush x:Key="MouseOver.Background" Color="#e20000"/>
+    <SolidColorBrush x:Key="Pressed.Background" Color="#c10000"/>
+    <SolidColorBrush x:Key="Pressed.Border" Color="#c10000"/>
+</ResourceDictionary>

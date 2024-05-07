@@ -1,9 +1,9 @@
 #include "Texture.h"
 #include <DirectXTex.h>
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 #include "GraphicsEngine.h"
 
-Texture::Texture(const wchar_t* full_filename): Resource(full_filename)
+Texture::Texture(const wchar_t* full_filename, RenderSystem* rsystem): Resource(full_filename, rsystem)
 {
 	DirectX::ScratchImage image_data;
 	HRESULT res = DirectX::LoadFromWICFile(full_filename, DirectX::WIC_FLAGS_IGNORE_SRGB, nullptr, image_data);
@@ -30,7 +30,7 @@ Texture::Texture(const wchar_t* full_filename): Resource(full_filename)
 
 		res = GraphicsEngine::Get()->GetRenderSystem()->m_d3d_device->CreateShaderResourceView(m_texture, &desc, &m_shader_res_view);
 	}
-	else { ExceptHelper::ShowError("Material load failure!"); }
+	else { ShowErrorMessage("Texture initialization failure!"); }
 }
 
 Texture::~Texture()

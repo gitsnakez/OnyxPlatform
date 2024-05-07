@@ -19,6 +19,8 @@
     </ClInclude>
     <ClInclude Include="Messages.h" />
     <ClInclude Include="SystemUtilities.h" />
+    <ClInclude Include="WindowWorks.h" />
+    <ClInclude Include="WindowTransparency.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
@@ -31,6 +33,8 @@
     </ClCompile>
     <ClCompile Include="Messages.cpp" />
     <ClCompile Include="SystemUtilities.cpp" />
+    <ClCompile Include="WindowWorks.cpp" />
+    <ClCompile Include="WindowTransparency.cpp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx" />

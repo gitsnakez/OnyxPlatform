@@ -1,6 +1,7 @@
 #pragma once
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Shader.h";
 #include "ConstantBuffer.h"
 #include <vector>
 
@@ -8,8 +9,8 @@ class GraphicsEngine;
 class Material
 {
 public:
-	Material(GraphicsEngine* engine, const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path);
-	Material(GraphicsEngine* engine, const MaterialPtr& material);
+	Material(const ShaderPtr& shader);
+	Material(const ShaderPtr& shader, const std::vector<TexturePtr>& textures);
 	~Material();
 
 	void AddTexture(const TexturePtr& texture);

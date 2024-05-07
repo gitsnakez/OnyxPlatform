@@ -1,0 +1,7 @@
+mesh:		"tools/skydome.obj"
+cullmode:	"front"
+
+materials
+{
+	sky_day02:	"sky/sky_day02.omat"
+}

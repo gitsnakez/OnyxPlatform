@@ -1,6 +1,158 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2146,5): warning : The referenced project '..\Engine\Onyx.csproj' does not exist.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Angara.vcxproj, Onyx.vcxproj, OnyxDX.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2153,5): warning : The referenced project '..\Engine\Onyx.csproj' does not exist.
   ExceptionHelper.cpp
-  ExceptionHelper.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-     Creating library D:\OnyxPlatform\x64\Debug\onyx.lib and object D:\OnyxPlatform\x64\Debug\onyx.exp
-  OnyxCLR.vcxproj -> D:\OnyxPlatform\x64\Debug\onyx.exe
+  IInputSystem.cpp
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(6,48): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(6,48): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(6,60): error C2039: "IInputSystem": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(7,1): error C2499: IInputSystem: класс не может выступать в качестве базового для себя самого
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,44): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,44): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,56): error C2039: "O_Location": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,67): error C2061: синтаксическая ошибка: идентификатор "O_Location"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(4,46): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(4,46): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(4,58): error C2039: "O_Location": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(4,69): error C2065: O_Location: необъявленный идентификатор
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(4,69): error C2146: синтаксическая ошибка: отсутствие ")" перед идентификатором "point"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(5,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "{"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(5,1): error C2447: {: отсутствует заголовок функции (возможно, используется формальный список старого типа)
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(11,16): error C2872: InputSystem: неоднозначный символ
+D:\OnyxPlatform\OnyxCLR\InputSystem.h(9,7): message : может быть "InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(11,16): message : или       "OSharp::InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(11,21): error C2872: InputSystem: неоднозначный символ
+D:\OnyxPlatform\OnyxCLR\InputSystem.h(9,7): message : может быть "InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(11,21): message : или       "OSharp::InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(16,16): error C2872: InputSystem: неоднозначный символ
+D:\OnyxPlatform\OnyxCLR\InputSystem.h(9,7): message : может быть "InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(16,16): message : или       "OSharp::InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(16,21): error C2872: InputSystem: неоднозначный символ
+D:\OnyxPlatform\OnyxCLR\InputSystem.h(9,7): message : может быть "InputSystem"
+D:\OnyxPlatform\OnyxCLR\IInputSystem.cpp(16,21): message : или       "OSharp::InputSystem"
+  InputSystem.cpp
+  IWindowCallBack.cpp
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6,51): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6,51): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6,63): error C2039: "IWindowCallBack": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(7,1): error C2499: IWindowCallBack: класс не может выступать в качестве базового для себя самого
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,21): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,21): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,33): error C2039: "O_Location": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,44): error C3646: GetWindowLocation: неизвестный спецификатор переопределения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,70): error C2275: System::IntPtr: недопустимое использование этого типа в качестве выражения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11): message : см. объявление "System::IntPtr"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,77): error C2146: синтаксическая ошибка: отсутствие ")" перед идентификатором "winHandle"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,87): error C2238: непредвиденные лексемы перед ";"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,21): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,21): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,33): error C2039: "O_Size": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,40): error C3646: GetWindowSize: неизвестный спецификатор переопределения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,62): error C2275: System::IntPtr: недопустимое использование этого типа в качестве выражения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12): message : см. объявление "System::IntPtr"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,69): error C2146: синтаксическая ошибка: отсутствие ")" перед идентификатором "winHandle"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,79): error C2238: непредвиденные лексемы перед ";"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(12,29): warning C4244: =: преобразование "LONG_PTR" в "long", возможна потеря данных
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(16,29): warning C4244: =: преобразование "LONG_PTR" в "long", возможна потеря данных
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(22,49): warning C4244: =: преобразование "LONG_PTR" в "long", возможна потеря данных
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(40,9): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(40,9): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(40,21): error C2039: "O_Location": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(40,49): error C2039: "GetWindowLocation": не является членом "IWindowCallBack".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6): message : см. объявление "IWindowCallBack"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(40,66): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(40,66): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "GetWindowLocation"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(41,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "{"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(41,1): error C2447: {: отсутствует заголовок функции (возможно, используется формальный список старого типа)
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(48,9): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(48,9): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(48,21): error C2039: "O_Size": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(48,45): error C2039: "GetWindowSize": не является членом "IWindowCallBack".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6): message : см. объявление "IWindowCallBack"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(48,58): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(48,58): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "GetWindowSize"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(49,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "{"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.cpp(49,1): error C2447: {: отсутствует заголовок функции (возможно, используется формальный список старого типа)
+  main.cpp
+  OnyxAPIWrapper.cpp
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(6,48): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(6,48): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(6,60): error C2039: "IInputSystem": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(7,1): error C2499: IInputSystem: класс не может выступать в качестве базового для себя самого
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,44): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,44): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,56): error C2039: "O_Location": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IInputSystem.h(9,67): error C2061: синтаксическая ошибка: идентификатор "O_Location"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6,51): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6,51): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(6,63): error C2039: "IWindowCallBack": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(7,1): error C2499: IWindowCallBack: класс не может выступать в качестве базового для себя самого
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,21): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,21): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,33): error C2039: "O_Location": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,44): error C3646: GetWindowLocation: неизвестный спецификатор переопределения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,70): error C2275: System::IntPtr: недопустимое использование этого типа в качестве выражения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11): message : см. объявление "System::IntPtr"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,77): error C2146: синтаксическая ошибка: отсутствие ")" перед идентификатором "winHandle"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(11,87): error C2238: непредвиденные лексемы перед ";"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,21): error C2039: "Interfaces": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,21): error C3083: Interfaces: символ слева от "::" должен представлять тип
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,33): error C2039: "O_Size": не является членом "OSharp".
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,40): error C3646: GetWindowSize: неизвестный спецификатор переопределения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,62): error C2275: System::IntPtr: недопустимое использование этого типа в качестве выражения
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12): message : см. объявление "System::IntPtr"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,69): error C2146: синтаксическая ошибка: отсутствие ")" перед идентификатором "winHandle"
+D:\OnyxPlatform\OnyxCLR\IWindowCallBack.h(12,79): error C2238: непредвиденные лексемы перед ";"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(12,1): warning C4273: OnyxAPIWrapper::OnyxAPIWrapper: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(10,2): message : см. предыдущее определение "{ctor}"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(13,13): error C2039: "WindowHandle": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(13,26): error C2065: WindowHandle: необъявленный идентификатор
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(14,13): error C2039: "CallBack": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(14,22): error C2065: CallBack: необъявленный идентификатор
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(15,13): error C2039: "Input": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(15,19): error C2065: Input: необъявленный идентификатор
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(19,1): warning C4273: OnyxAPIWrapper::~OnyxAPIWrapper: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(11,3): message : см. предыдущее определение "{dtor}"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(24,1): warning C4273: OnyxAPIWrapper::OnCreate: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(14,7): message : см. предыдущее определение "OnCreate"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(26,13): error C2039: "OnCreate": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(30,1): warning C4273: OnyxAPIWrapper::OnUpdate: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(15,7): message : см. предыдущее определение "OnUpdate"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(32,13): error C2039: "OnUpdate": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(36,1): warning C4273: OnyxAPIWrapper::OnDestroy: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(16,7): message : см. предыдущее определение "OnDestroy"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(38,13): error C2039: "OnDestroy": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(42,1): warning C4273: OnyxAPIWrapper::OnResizeWindow: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(17,7): message : см. предыдущее определение "OnResizeWindow"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(44,13): error C2039: "OnResizeWindow": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(48,1): warning C4273: OnyxAPIWrapper::OnChangeWindowPosition: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(18,7): message : см. предыдущее определение "OnChangeWindowPosition"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(50,13): error C2039: "OnChangeWindowPosition": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(54,1): warning C4273: OnyxAPIWrapper::OnEnter: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(19,7): message : см. предыдущее определение "OnEnter"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(56,13): error C2039: "OnEnter": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(60,1): warning C4273: OnyxAPIWrapper::OnLeave: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(20,7): message : см. предыдущее определение "OnLeave"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(62,13): error C2039: "OnLeave": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(66,1): warning C4273: OnyxAPIWrapper::ShowMessage: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(21,14): message : см. предыдущее определение "ShowMessage"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(67,86): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(68,92): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(69,5): error C2653: MessageSystem: не является именем класса или пространства имен
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(69,20): error C3861: Show: идентификатор не найден
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(73,1): warning C4273: OnyxAPIWrapper::OnKeyDown: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(24,7): message : см. предыдущее определение "OnKeyDown"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(75,13): error C2039: "OnKeyDown": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(79,1): warning C4273: OnyxAPIWrapper::OnKeyUp: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(25,7): message : см. предыдущее определение "OnKeyUp"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(81,13): error C2039: "OnKeyUp": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(85,1): warning C4273: OnyxAPIWrapper::OnMouseMove: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(26,7): message : см. предыдущее определение "OnMouseMove"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(87,13): error C2039: "OnMouseMove": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(91,1): warning C4273: OnyxAPIWrapper::OnMouseButtonDown: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(27,7): message : см. предыдущее определение "OnMouseButtonDown"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(93,13): error C2039: "OnMouseButtonDown": не является членом "OSharp::Engine".
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(97,1): warning C4273: OnyxAPIWrapper::OnMouseButtonUp: несовместимое связывание dll
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.h(28,7): message : см. предыдущее определение "OnMouseButtonUp"
+D:\OnyxPlatform\OnyxCLR\OnyxAPIWrapper.cpp(99,13): error C2039: "OnMouseButtonUp": не является членом "OSharp::Engine".
+  Window.cpp
+  .NETFramework,Version=v4.8.AssemblyAttributes.cpp
+  Создание кода...

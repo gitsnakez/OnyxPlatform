@@ -3,7 +3,7 @@
 
 #include "ConstantBuffer.h"
 #include "RenderSystem.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 ConstantBuffer::ConstantBuffer(void* buffer, UINT size_buffer, RenderSystem* system): m_system(system)
 {
@@ -19,7 +19,7 @@ ConstantBuffer::ConstantBuffer(void* buffer, UINT size_buffer, RenderSystem* sys
 
     if (FAILED(m_system->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
     {
-        ExceptHelper::ShowError("Creating constant buffer failure!");
+        ShowErrorMessage("Creating constant buffer failure!");
     }
 }
 

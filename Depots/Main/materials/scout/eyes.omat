@@ -1,0 +1,6 @@
+textures
+{
+	basecolor:		"eye.png"
+}
+
+shader:	"PointLight.osdr"

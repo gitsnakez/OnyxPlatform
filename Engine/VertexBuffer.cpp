@@ -3,7 +3,7 @@
 
 #include "VertexBuffer.h"
 #include "RenderSystem.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, size_t size_byte_shader, RenderSystem* system):m_layout(0),m_buffer(0), m_system(system)
 {
@@ -23,7 +23,7 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
     if (FAILED(m_system->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
     {
         //MessageBox(nullptr, L"DirectX 11:\nBuffer creation failure!", L"Engine", MB_OK);
-        ExceptHelper::ShowError("Creating vertex buffer failure!");
+        ShowErrorMessage("Creating vertex buffer failure!");
     }
 
     D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -41,7 +41,7 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
     if (FAILED(m_system->m_d3d_device->CreateInputLayout(layout, size_layout, shader_byte_code, size_byte_shader, &m_layout)))
     {
         //MessageBox(nullptr, L"DirectX 11:\nInput layout creation failure!", L"Engine", MB_OK);
-        ExceptHelper::ShowError("Creating input layout failure!");
+        ShowErrorMessage("Creating input layout failure!");
     }
 }
 

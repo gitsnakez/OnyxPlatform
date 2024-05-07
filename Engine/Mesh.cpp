@@ -5,12 +5,10 @@
 #include "share.h"
 #include "GraphicsEngine.h"
 #include "VertexMesh.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
+#include "ConvertChars.h"
 
-#include <locale>
-#include <codecvt>
-
-Mesh::Mesh(const wchar_t* full_filename): Resource(full_filename)
+Mesh::Mesh(const wchar_t* full_filename, RenderSystem* rsystem): Resource(full_filename, rsystem)
 {
 	tinyobj::attrib_t attribs;
 	std::vector<tinyobj::shape_t> shapes;
@@ -19,17 +17,15 @@ Mesh::Mesh(const wchar_t* full_filename): Resource(full_filename)
 	std::string warn;
 	std::string err;
 
-	std::string inputfile = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(full_filename);
+
+	std::string inputfile = ConvertWstrToStr(full_filename);
 
 	std::string mtldir = inputfile.substr(0, inputfile.find_last_of("\\/"));
 
 	bool rslt = tinyobj::LoadObj(&attribs, &shapes, &materials, &warn, &err, inputfile.c_str(), mtldir.c_str());
 
-	if (!err.empty()) ExceptHelper::ShowError("Model wasn't loaded!");
-	if (!rslt) ExceptHelper::ShowError("Model wasn't loaded!");
-
-	// 1< shapes crush
-	//if(shapes.size() > 1) ExceptHelper::ShowError("Model wasn't loaded!");
+	if (!err.empty()) ShowErrorMessageDetails("Model loaded with problem!", err.c_str());
+	if (!rslt) ShowErrorMessage("Model loaded with problem!\nNo details.");
 
 	std::vector<VertexMesh> list_vertices;
 	std::vector<unsigned int> list_indices;
@@ -127,22 +123,9 @@ Mesh::Mesh(const wchar_t* full_filename): Resource(full_filename)
 						ny = attribs.normals[index.normal_index * 3 + 1];
 					}	nz = attribs.normals[index.normal_index * 3 + 2];
 
-					/*
-					tinyobj::real_t vx = attribs.vertices[index.vertex_index * 3 + 0];
-					tinyobj::real_t vy = attribs.vertices[index.vertex_index * 3 + 1];
-					tinyobj::real_t vz = attribs.vertices[index.vertex_index * 3 + 2];
-
-					tinyobj::real_t tx = attribs.texcoords[index.texcoord_index * 2 + 0];
-					tinyobj::real_t ty = attribs.texcoords[index.texcoord_index * 2 + 1];
-
-					tinyobj::real_t nx = attribs.normals[index.normal_index * 3 + 0];
-					tinyobj::real_t ny = attribs.normals[index.normal_index * 3 + 1];
-					tinyobj::real_t nz = attribs.normals[index.normal_index * 3 + 2];
-					*/
-
 					Vector3D v_tangent, v_binromal;
 					v_binromal = Vector3D::Cross(Vector3D(nx, ny, nz), tangent);
-					v_tangent = Vector3D::Cross(binromal, Vector3D(nx, ny, nz));
+					v_tangent = Vector3D::Cross(v_binromal, Vector3D(nx, ny, nz));
 
 					VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty), Vector3D(nx, ny, nz), v_tangent, v_binromal);
 					list_vertices.push_back(vertex);
@@ -193,6 +176,25 @@ void Mesh::ComputeTangents(
 	const Vector2D& t0, const Vector2D& t1, const Vector2D& t2,
 	Vector3D& tangent, Vector3D& binormal)
 {
+	Vector3D edge1 = v1 - v0;
+	Vector3D edge2 = v2 - v0;
+
+	Vector2D deltaUV1 = t1 - t0;
+	Vector2D deltaUV2 = t2 - t0;
+
+	float f = 1.0f / (deltaUV1.m_x * deltaUV2.m_y - deltaUV2.m_x * deltaUV1.m_y);
+
+	tangent.m_x = f * (deltaUV2.m_y * edge1.m_x - deltaUV1.m_y * edge2.m_x);
+	tangent.m_y = f * (deltaUV2.m_y * edge1.m_y - deltaUV1.m_y * edge2.m_y);
+	tangent.m_z = f * (deltaUV2.m_y * edge1.m_z - deltaUV1.m_y * edge2.m_z);
+	Vector3D::Normalize(tangent);
+
+	binormal.m_x = f * (-deltaUV2.m_x * edge1.m_x + deltaUV1.m_x * edge2.m_x);
+	binormal.m_y = f * (-deltaUV2.m_x * edge1.m_y + deltaUV1.m_x * edge2.m_y);
+	binormal.m_z = f * (-deltaUV2.m_x * edge1.m_z + deltaUV1.m_x * edge2.m_z);
+	Vector3D::Normalize(binormal);
+
+	/*
 	Vector3D deltaPos1 = v1 - v0;
 	Vector3D deltaPos2 = v2 - v0;
 
@@ -203,7 +205,7 @@ void Mesh::ComputeTangents(
 	tangent = (deltaPos1 * deltaUV2.m_y - deltaPos2 * deltaUV1.m_y);
 	tangent = Vector3D::Normalize(tangent);
 	binormal = (deltaPos2 * deltaUV1.m_x - deltaPos1 * deltaUV2.m_x);
-	binormal = Vector3D::Normalize(binormal);
+	binormal = Vector3D::Normalize(binormal);*/
 }
 
 Mesh::~Mesh()

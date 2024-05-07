@@ -1,0 +1,6 @@
+textures
+{
+	basecolor:	"scout_head.png"
+}
+
+shader:	"PointLight.osdr"

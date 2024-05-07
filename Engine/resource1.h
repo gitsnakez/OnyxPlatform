@@ -1,6 +1,7 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by Engine.rc
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется Engine.rc
+//
 
 // Next default values for new objects
 // 

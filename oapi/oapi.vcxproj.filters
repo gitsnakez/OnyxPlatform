@@ -1,19 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="oapi.h" />
-    <ClInclude Include="..\_GENERIC_CODE\api.h" />
-    <ClInclude Include="..\_GENERIC_CODE\Controller.h" />
-    <ClInclude Include="..\_GENERIC_CODE\defs.h" />
-    <ClInclude Include="..\_GENERIC_CODE\WindowCallback.h" />
     <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="oapi.cpp" />
-    <ClCompile Include="..\_GENERIC_CODE\Controller.cpp" />
-    <ClCompile Include="..\_GENERIC_CODE\WindowCallback.cpp" />
+    <ClInclude Include="api.h" />
+    <ClInclude Include="ConsoleCallback.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="ConvertChars.h" />
+    <ClInclude Include="ErrorDispatcher.h" />
+    <ClInclude Include="OMath.h" />
+    <ClInclude Include="SteamStartAch.h" />
+    <ClInclude Include="SteamStatus.h" />
+    <ClInclude Include="WindowCallback.h" />
+    <ClInclude Include="oapi.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="oapi.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ConsoleCallback.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="SteamStartAch.cpp" />
+    <ClCompile Include="SteamStatus.cpp" />
+    <ClCompile Include="oapi.cpp" />
+    <ClCompile Include="WindowCallback.cpp" />
   </ItemGroup>
 </Project>

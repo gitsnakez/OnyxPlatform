@@ -1,0 +1,7 @@
+textures
+{
+	basecolor:	"towertop_d.png"
+	normal:		"towertop_d_normal.png"
+}
+
+shader:	"dirLight.osdr"

@@ -28,7 +28,7 @@
 
 namespace onyxengine
 {
-	void* _CrtWnd(INT _preset)
+	void* _CrtWnd(INT _preset, INT _showMode)
 	{
 		RECT rc = Window::GetScreenRectangle();
 
@@ -39,11 +39,9 @@ namespace onyxengine
 			int center_x = (rc.right / 2) - (STANDART_WIDTH_WITH_BORDER / 2);
 			int center_y = (rc.bottom / 2) - (STANDART_HEIGHT_WITH_BORDER / 2);
 			return (void*) new Window(STANDART_WINDOW_CLASSNAME,
-				STANDART_WINDOW_NAME,
-				center_x, center_y,
-				STANDART_WIDTH_WITH_BORDER,
-				STANDART_HEIGHT_WITH_BORDER,
-				L"bin\\icon.ico");
+				STANDART_WINDOW_NAME, center_x, center_y,
+				STANDART_WIDTH_WITH_BORDER, STANDART_HEIGHT_WITH_BORDER,
+				L"bin\\icon.ico", _showMode);
 		}
 
 		case Classic:
@@ -51,13 +49,10 @@ namespace onyxengine
 			int center_x = (rc.right / 2) - (STANDART_WIDTH_WITH_BORDER / 2);
 			int center_y = (rc.bottom / 2) - (STANDART_HEIGHT_WITH_BORDER / 2);
 			return (void*) new Window(STANDART_WINDOW_CLASSNAME,
-				STANDART_WINDOW_NAME,
-				STANDART_WINDOW_STYLES,
-				STANDART_WINDOW_EX_STYLES,
-				center_x, center_y,
-				STANDART_WIDTH_WITH_BORDER,
-				STANDART_HEIGHT_WITH_BORDER,
-				L"bin\\icon.ico");
+				STANDART_WINDOW_NAME, STANDART_WINDOW_STYLES,
+				STANDART_WINDOW_EX_STYLES, center_x, center_y,
+				STANDART_WIDTH_WITH_BORDER, STANDART_HEIGHT_WITH_BORDER,
+				L"bin\\icon.ico", _showMode);
 		}
 
 		case Borderless:
@@ -65,8 +60,8 @@ namespace onyxengine
 			int center_x = (rc.right / 2) - (STANDART_WIDTH / 2);
 			int center_y = (rc.bottom / 2) - (STANDART_HEIGHT / 2);
 			return (void*) new Window(STANDART_WINDOW_CLASSNAME, STANDART_WINDOW_NAME,
-				GAME_STYLES_NOBORDER, GAME_WINDOW_EX_STYLES,
-				center_x, center_y, STANDART_WIDTH, STANDART_HEIGHT, L"bin\\icon.ico", true);
+				GAME_STYLES_NOBORDER, GAME_WINDOW_EX_STYLES, center_x, center_y,
+				STANDART_WIDTH, STANDART_HEIGHT, L"bin\\icon.ico", true, _showMode);
 		}
 
 		default:
@@ -74,7 +69,7 @@ namespace onyxengine
 			int center_x = (rc.right / 2) - (STANDART_WIDTH_WITH_BORDER / 2);
 			int center_y = (rc.bottom / 2) - (STANDART_HEIGHT_WITH_BORDER / 2);
 			return (void*) new Window(STANDART_WINDOW_CLASSNAME, STANDART_WINDOW_NAME,
-				center_x, center_y, STANDART_WIDTH, STANDART_HEIGHT, L"");
+				center_x, center_y, STANDART_WIDTH, STANDART_HEIGHT, L"", _showMode);
 		}
 		}
 	}
@@ -86,7 +81,12 @@ namespace onyxengine
 
 	EXTERN API void* MakeWindow(WinPreset preset)
 	{
-		return _CrtWnd(preset);
+		return _CrtWnd(preset, SW_SHOW);
+	}
+
+	EXTERN API void* MakeWindowShowMode(WinPreset preset, int cmdShow)
+	{
+		return _CrtWnd(preset, cmdShow);
 	}
 
 	EXTERN API void* MakeWindowArg(WinPreset preset, HWND Parent)
@@ -97,7 +97,7 @@ namespace onyxengine
 			return _CrtVPrt(Parent);
 			
 		default:
-			return _CrtWnd(preset);
+			return _CrtWnd(preset, SW_SHOW);
 		}
 	}
 

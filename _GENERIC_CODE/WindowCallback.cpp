@@ -1,10 +1,14 @@
 #include "WindowCallback.h"
+#include "isteamfriends.h"
+#include "ConvertChars.h"
+#include "Viewport.h"
+#include <string>
 
 namespace onyxengine
 {
-	WindowCallback::WindowCallback(HDESC* hDesc, Controller* control)
+	WindowCallback::WindowCallback(HDESC* DescHandler, Controller* control)
 	{
-		vp = (Viewport*)(hDesc->hViewPort);
+		hDesc = DescHandler;
 		ct = control;
 	}
 
@@ -14,7 +18,18 @@ namespace onyxengine
 
 	void WindowCallback::OnCreate()
 	{
-		if (vp != nullptr) vp->OnCreate();
+		auto compl_time = std::stringstream();
+		compl_time << __DATE__ << " - " << __TIME__;
+		SendBuildInfo(compl_time.str().c_str());
+
+		consoleCallback = new ConsoleCallback();
+		consoleCallback->hDesc = hDesc;
+		consoleCallback->_pWndCallback = this;
+		consoleCallback->_pController = ct;
+		SetupCallbacks(consoleCallback);
+
+		((Viewport*)hDesc->hViewPort)->OnCreate();
+		SetClientName((Viewport*)hDesc->hViewPort, ConvertStrToWstr(SteamFriends()->GetPersonaName()));
 	}
 
 	void WindowCallback::OnClosing(bool* isCancle)
@@ -39,8 +54,8 @@ namespace onyxengine
 			ct->camy = Math::Lerp(ct->oldroty, ct->roty, deltatime * 50);
 			ct->oldrotx = ct->camx;
 			ct->oldroty = ct->camy;
-			UpdateMovementParameters(vp, ct->forward, ct->rightward);
-			UpdateRotateParameters(vp, ct->camx, ct->camy);
+			UpdateMovementParameters((Viewport*)hDesc->hViewPort, ct->forward, ct->rightward);
+			UpdateRotateParameters((Viewport*)hDesc->hViewPort, ct->camx, ct->camy);
 			ct->forward = 0;
 			ct->rightward = 0;
 
@@ -64,12 +79,10 @@ namespace onyxengine
 		}
 
 		// Final update
-		if (vp != nullptr)
+		if ((Viewport*)hDesc->hViewPort != nullptr)
 		{
-			vp->m_delta_time = deltatime;
-			vp->OnUpdate();
+			OnUpdateViewport((Viewport*)hDesc->hViewPort, deltatime);
 		}
-		if (vp != nullptr) vp->m_delta_time = deltatime;
 		ct->deltatime = deltatime;
 
 		Sleep(1);
@@ -91,29 +104,29 @@ namespace onyxengine
 	void WindowCallback::OnResize(const Rectangle& size)
 	{
 		if (ct->useBorders)
-			if (vp != nullptr) vp->OnResize(size.Width - 16, size.Height - 39); else;
+			if ((Viewport*)hDesc->hViewPort != nullptr) ((Viewport*)hDesc->hViewPort)->OnResize(size.Width - 16, size.Height - 39); else;
 		else
-			if (vp != nullptr) vp->OnResize(size.Width, size.Height); else;
+			if ((Viewport*)hDesc->hViewPort != nullptr) ((Viewport*)hDesc->hViewPort)->OnResize(size.Width, size.Height); else;
 	}
 
 	void WindowCallback::OnChangePosition(const Point& location)
 	{
-		if (vp != nullptr) vp->OnChangeLocation(location.X, location.Y);
+		if ((Viewport*)hDesc->hViewPort != nullptr) ((Viewport*)hDesc->hViewPort)->OnChangeLocation(location.X, location.Y);
 	}
 
 	void WindowCallback::OnDestroy()
 	{
-		if (vp != nullptr) vp->OnDestroy();
+		if ((Viewport*)hDesc->hViewPort != nullptr) ((Viewport*)hDesc->hViewPort)->OnDestroy();
 	}
 
 	void WindowCallback::OnEnter()
 	{
-		if (vp != nullptr) vp->OnEnter();
+		if ((Viewport*)hDesc->hViewPort != nullptr) ((Viewport*)hDesc->hViewPort)->OnEnter();
 	}
 
 	void WindowCallback::OnLeave()
 	{
-		if (vp != nullptr) vp->OnLeave();
+		if ((Viewport*)hDesc->hViewPort != nullptr) ((Viewport*)hDesc->hViewPort)->OnLeave();
 	}
 
 	void WindowCallback::OnKeyDown(int key)

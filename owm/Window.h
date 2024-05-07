@@ -44,14 +44,15 @@ namespace onyxengine
 	public:
 		Window();
 		Window(HWND Parent);
-		Window(wstring window_classname, wstring window_title, UINT x, UINT y, UINT width, UINT height, wstring icon_path);
-		Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path);
-		Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, bool isRectangle);
+		Window(wstring window_classname, wstring window_title, UINT x, UINT y, UINT width, UINT height, wstring icon_path, INT showMode);
+		Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, INT showMode);
+		Window(wstring window_classname, wstring window_title, DWORD winStyles, DWORD winExStyles, UINT x, UINT y, UINT width, UINT height, wstring icon_path, bool isRectangle, INT showMode);
 		~Window();
 
 		HWND GetHandler();
 		bool IsRunning();
-		void ShowLogo();
+		void ShowLogo(std::wstring banner_filename, int width, int height);
+		void FlashTaskbarIcon(bool flash);
 		void Stop();
 		RECT GetClientWindowRectangle();
 		RECT GetWindowRectangle();
@@ -85,6 +86,8 @@ namespace onyxengine
 		virtual void OnEnter();
 		virtual void OnLeave();
 
+		void Exit();
+
 		// Inherited via InputListener
 		virtual void OnKeyDown(int key);
 		virtual void OnKeyUp(int key);
@@ -94,6 +97,7 @@ namespace onyxengine
 		virtual void OnMouseLeftButtonUp(const Point& delta_mouse_pos);
 		virtual void OnMouseRightButtonDown(const Point& delta_mouse_pos);
 		virtual void OnMouseRightButtonUp(const Point& delta_mouse_pos);
+
 
 		IWindowCallback* callback;
 		Point* Location;
@@ -111,7 +115,8 @@ namespace onyxengine
 			UINT x, UINT y, UINT width,
 			UINT height, HBRUSH backcolor,
 			HICON icon, DWORD window_styles,
-			DWORD window_ex_styles, int dwmdesc[]);
+			DWORD window_ex_styles, int dwmdesc[],
+			int showMode);
 
 	protected:
 		HWND Handle;

@@ -9,9 +9,10 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Font2D.h"
 
 #include <d3dcompiler.h>
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 
 
@@ -55,7 +56,7 @@ RenderSystem::RenderSystem()
     }
 
     if (FAILED(res))
-        ExceptHelper::ShowError("DirectX 11 creation device failure!");
+        ShowErrorMessage("DirectX 11 creation device failure!");
 
     m_imm_device_context = std::make_shared<DeviceContext>(m_imm_context, this);
 
@@ -64,6 +65,10 @@ RenderSystem::RenderSystem()
     m_dxgi_adapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_dxgi_factory);
 
     InitializeRasterizerState();
+
+    DXGI_ADAPTER_DESC adapterDesc;
+    m_dxgi_adapter->GetDesc(&adapterDesc);
+    gpuDesc = adapterDesc.Description;
 }
 
 RenderSystem::~RenderSystem()
@@ -86,7 +91,8 @@ bool RenderSystem::CompileVertexShader(const wchar_t* file_name, const char* ent
     ID3DBlob* errblob = nullptr;
     if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "vs_5_0", 0, 0, &m_blob, &errblob)))
     {
-        MessageBox(nullptr, L"DirectX 11:\nVertex shader compilation failed!", L"Engine", MB_ICONERROR);
+        auto msg = std::wstring(file_name);
+        ShowErrorMessageDetails("Vertex shader compilation failed!", std::string(msg.begin(), msg.end()).c_str());
         if (errblob)errblob->Release();
         return false;
     }
@@ -102,7 +108,8 @@ bool RenderSystem::CompilePixelShader(const wchar_t* file_name, const char* entr
     ID3DBlob* errblob = nullptr;
     if (!SUCCEEDED(D3DCompileFromFile(file_name, nullptr, nullptr, entry_point_name, "ps_5_0", 0, 0, &m_blob, &errblob)))
     {
-        MessageBox(nullptr, L"DirectX 11:\nPixel shader compilation failed!", L"Engine", MB_ICONERROR);
+        auto msg = std::wstring(file_name);
+        ShowErrorMessageDetails("Pixel shader compilation failed!", std::string(msg.begin(), msg.end()).c_str());
         if (errblob)errblob->Release();
         return false;
     }
@@ -120,9 +127,40 @@ void RenderSystem::ReleaseCompiledShader()
 
 void RenderSystem::SetRasterizerState(RasterizerState state)
 {
-    m_imm_context->RSSetState((state == 0) ?
+    if (isWireframe)
+        m_imm_context->RSSetState(wireframe_state);
+    else
+        m_imm_context->RSSetState((state == 0) ?
         m_cull_front_state :
         m_cull_back_state);
+}
+
+void RenderSystem::ClearState()
+{
+    m_imm_context->ClearState();
+}
+
+void RenderSystem::BlendTexture(bool blend)
+{
+    D3D11_BLEND_DESC blendDesc = {};
+    auto& brt = blendDesc.RenderTarget[0];
+
+    if (blend)
+    {
+        brt.BlendEnable = true;
+        brt.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+        brt.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+        brt.BlendOp = D3D11_BLEND_OP_ADD;
+        brt.SrcBlendAlpha = D3D11_BLEND_ZERO;
+        brt.DestBlendAlpha = D3D11_BLEND_ZERO;
+        brt.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+        brt.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    }
+    else
+    {
+        brt.BlendEnable = false;
+        brt.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    }
 }
 
 SwapChainPtr RenderSystem::CreateSwapChain(HWND hWnd, UINT WinWidth, UINT WinHeight)
@@ -205,6 +243,23 @@ PixelShaderPtr RenderSystem::CreatePixelShader(const void* shader_byte_code, siz
     return ps_ptr;
 }
 
+Font2DPtr RenderSystem::Create2DFont(const wchar_t* path)
+{
+    Font2DPtr font_ptr = nullptr;
+
+    try
+    {
+        font_ptr = std::make_shared<Font2D>(path, this);
+    }
+    catch (...) {}
+    return font_ptr;
+}
+
+LPCWSTR RenderSystem::GetGPUName()
+{
+    return gpuDesc.c_str();
+}
+
 void RenderSystem::InitializeRasterizerState()
 {
     D3D11_RASTERIZER_DESC desc = {};
@@ -219,4 +274,9 @@ void RenderSystem::InitializeRasterizerState()
     // Back init
     desc.CullMode = D3D11_CULL_BACK;
     m_d3d_device->CreateRasterizerState(&desc, &m_cull_back_state);
+
+    // Wireframe mode
+    desc.FillMode = D3D11_FILL_WIREFRAME;
+    desc.CullMode = D3D11_CULL_NONE;
+    m_d3d_device->CreateRasterizerState(&desc, &wireframe_state);
 }

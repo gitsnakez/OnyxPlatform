@@ -16,10 +16,10 @@ public:
 	void LoadMap(const wchar_t* filename);
 	void LoadReadableMap(const wchar_t* filename);
 
-	Vector3D GetPosOfObject(std::string objname);
+	Vector3D GetPosOfObject(std::wstring objname);
 
 	static MapLoader* Get();
 
 private:
-	std::map<std::string, Vector3D> m_positions;
+	std::map<std::wstring, Vector3D> m_positions;
 };

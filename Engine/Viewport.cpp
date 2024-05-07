@@ -1,17 +1,43 @@
-// 2023 Code wrote by Sivkov Roman Pavlovich a.k.a snakEZ
+/// Copyright (C) 2024 Roman Sivkov - All Rights Reserved.
+/// You may use, distribute and modify this code under the
+/// terms of the MIT License
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files(the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and /or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions :
+///
+/// The above copyright notice and this permission notice shall be included in all
+/// copies or substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+/// SOFTWARE.
+///
+/// For more information contact snakezfortress04@gmail.com
 
 #include "Viewport.h"
-#include <Windows.h>
+#include "EngineMath.h"
 #include "Vector3D.h"
 #include "Vector2D.h"
 #include "Matrix4x4.h"
 #include "vertex.h"
 #include "constant.h"
-#include "Mesh.h"
-#include "file_reader.h"
-#include "AssetLoader.h"
-#include "MapLoader.h"
+#include "Font.h"
+#include "Font2D.h"
+#include <sstream>
 #include <fstream>
+
+template<typename T>
+bool future_is_ready(std::future<T>* t) {
+	return t->wait_for(std::chrono::seconds(0)) == std::future_status::ready;
+}
 
 EXTERN API Viewport::Viewport(void* hWnd, void* engine, bool isBorder)
 {
@@ -32,86 +58,38 @@ EXTERN API Viewport::~Viewport()
 
 void Viewport::Update()
 {
+	/*if (!GraphicsEngine::Get()->isLevelLoaded && future_is_ready(levelLoadFuture))
+		GraphicsEngine::Get()->isLevelLoaded = true;*/
 	UpdateLight();
 	UpdateCamera();
 }
 
 void Viewport::Render()
 {
+	_enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->drawcalls_iterator = 0;
 	// CLEAR THE RENDER TARGET
 	_enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->ClearRenderTargetColor(m_swap_chain, 0, 0, 0, 1);
 
 	// SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	_enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->SetViewportSize(winw, winh);
 
-	// COMPUT TRANSFORM MATRICES
+	// COMPUTE TRANSFORM MATRICES
 	Update();
 
-	// Model
-	m_material_list.clear();
-	m_material_list.push_back(m_mat_model1);
-	m_material_list.push_back(m_mat_model2);
-	m_material_list.push_back(m_mat_model3);
-	UpdateModel(m_mesh_model, m_material_list);
-	DrawMesh(m_mesh_model, m_material_list);
+	// LEVEL
+	if (_level.get() != NULL)
+	{
+		UpdateLevel();
+		_level->Draw();
+	}
 
-	// Terrain
-	m_material_list.clear();
-	m_material_list.push_back(m_mat_terrain);
-	UpdateModel(m_mesh_terrain, m_material_list);
-	DrawMesh(m_mesh_terrain, m_material_list);
-
-	// Sky
-	m_material_list.clear();
-	m_material_list.push_back(m_mat_skydome);
-	UpdateModel(m_mesh_skydome, m_material_list);
-	DrawMesh(m_mesh_skydome, m_material_list);
-
-	m_material_list.clear();
+	DrawHud();
+	DrawBuildInfo();
+	DrawPos();
+	DrawGraph();
 
 	m_swap_chain->Present(m_vsync);
-}
-
-EXTERN API void RenderMesh(Viewport* vp, bool isrender)
-{
-	vp->m_mesh_model->IsRender = isrender;
-}
-
-void Viewport::UpdateModel(const MeshPtr& mesh, const std::vector<MaterialPtr>& materialSet)
-{
-	constant cc;
-
-	Matrix4x4 m_light_rot_matrix, temp;
-	m_light_rot_matrix.SetIdentity();
-	m_light_rot_matrix.SetRotationY(m_light_rot_y);
-	
-	cc.m_world.SetIdentity();
-
-	cc.m_view = m_view_camera;
-	cc.m_proj = m_proj_camera;
-	cc.m_camera_position = m_world_camera.GetTranslation();
-
-	temp.SetIdentity();
-	temp.SetTranslation(mesh->Position);
-	cc.m_world *= temp;
-
-	temp.SetIdentity();
-	temp.SetRotation(mesh->Rotation);
-	cc.m_world *= temp;
-
-	temp.SetIdentity();
-	temp.SetScale(mesh->Scale);
-	cc.m_world *= temp;
-
-	cc.m_light_position = m_light_position;
-	cc.m_light_radius = m_light_radius;
-	cc.m_light_direction = m_light_rot_matrix.GetZDirection();
-	cc.m_time = m_time;
-
-	for (size_t m = 0; m < materialSet.size(); m++)
-	{
-		materialSet[m]->SetData(&cc, sizeof(constant));
-	}
+	_enginePtr->GetRenderSystem()->ClearState();
 }
 
 void Viewport::UpdateCamera()
@@ -131,13 +109,23 @@ void Viewport::UpdateCamera()
 
 	Vector3D new_cam_pos = m_world_camera.GetTranslation() + World_Cam.GetZDirection() * (m_forward);
 	new_cam_pos = new_cam_pos + World_Cam.GetXDirection() * (m_rightward);
+
+	if (new_cam_pos.m_x > world_constraint) new_cam_pos.m_x = world_constraint;
+	else if (new_cam_pos.m_x < -world_constraint) new_cam_pos.m_x = -world_constraint;
+
+	if (new_cam_pos.m_y > world_constraint) new_cam_pos.m_y = world_constraint;
+	else if (new_cam_pos.m_y < -world_constraint) new_cam_pos.m_y = -world_constraint;
+
+	if (new_cam_pos.m_z > world_constraint) new_cam_pos.m_z = world_constraint;
+	else if (new_cam_pos.m_z < -world_constraint) new_cam_pos.m_z = -world_constraint;
+
 	World_Cam.SetTranslation(new_cam_pos);
 	m_world_camera = World_Cam;
 	World_Cam.Inverse();
 	m_view_camera = World_Cam;
 
 	// Orthographic camera
-	/*m_proj_camera.SetOrthoLH((float)winw, (float)winh, 0.1f, -1);*/
+	//m_proj_camera.SetOrthoLH((float)winw / 25, (float)winh / 25, 0, 1000);
 
 	//Perspective camera
 	m_proj_camera.SetPerspectiveFovLH(1.0f, ((float)winw / (float)winh), 0.1f, -1);
@@ -146,47 +134,22 @@ void Viewport::UpdateCamera()
 void Viewport::UpdateLight()
 {
 	Vector3D campos = m_world_camera.GetTranslation();
-	m_light_position = Vector4D(campos.m_x, campos.m_y, campos.m_z, 1.0f);
-}
-
-void Viewport::DrawMesh(const MeshPtr& mesh, const std::vector<MaterialPtr>& materialSet)
-{
-	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	_enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(mesh->GetVertexBuffer());
-
-	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	_enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->SetIndexBuffer(mesh->GetIndexBuffer());
-
-	for (size_t m = 0; m < mesh->GetNumMaterialSlots(); m++)
-	{
-		if (m >= materialSet.size()) break;
-
-		MaterialSlot mSlot = mesh->GetMaterialSlot(m);
-		_enginePtr->SetMaterial(materialSet[m]);
-
-		// FINALLY DRAW THE TRIANGLE
-		_enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->DrawIndexedTriangleList(mSlot.num_indices, 0, mSlot.start_index);
-	}
+	//m_light_rot_y = campos.m_y;
+	//m_light_position = Vector4D(campos.m_x, campos.m_y, campos.m_z, 1.0f);
 }
 
 void Viewport::OnCreate()
 {
 	// Camera start position
-	m_world_camera.SetTranslation(Vector3D(0, 1, 3));
+	m_world_camera.SetTranslation(Vector3D(0, 0, 0));
 
-	m_light_position = Vector4D(0, 1, 3, 1);
-	m_light_radius = 40;
 
-	AssetLoader assetLoader = AssetLoader();
+	_pHudFont = _enginePtr->CreateUIFont(L"resources\\fonts\\HintFont.spritefont");
+	_pGeneralFont = _enginePtr->CreateUIFont(L"resources\\fonts\\General.spritefont");
+	_pWatermarkFont = _enginePtr->CreateUIFont(L"resources\\fonts\\WatermarkFont.spritefont");
 
-	// Materials
-	LoadMaterials();
-
-	// Models
-	LoadModels();
-
-	// Object positions
-	LoadMap();
+	//LoadLevel(L"sdk/showmat");
+	LoadLevel(L"devmap");
 
 	// Create swap chain
 	m_swap_chain = _enginePtr->GetRenderSystem()->CreateSwapChain(_hWnd, winw, winh);
@@ -215,63 +178,171 @@ EXTERN API void OnResizeViewport(Viewport* vp)
 	vp->OnResize(-1, -1);
 }
 
-void Viewport::LoadMap()
+EXTERN API void Viewport::ShowGraph(const int* value)
 {
-	// Object positions
-	MapLoader::Get()->LoadReadableMap(L"maps/test.map_r");
-
-	m_mesh_model->Position = MapLoader::Get()->GetPosOfObject("MODEL");
-	m_mesh_terrain->Position = MapLoader::Get()->GetPosOfObject("TERRAIN");
-	m_mesh_skydome->Position = MapLoader::Get()->GetPosOfObject("SKY");
+	isShowGraph = *value;
 }
 
-void Viewport::LoadMaterials()
+#define VERDATE "May 2024"
+
+void Viewport::DrawGraph()
 {
-	AssetLoader::Get()->LoadMaterials(L"configs/mat_assets.cfg");
+	if (!isShowGraph)
+		return;
 
-	MaterialPtr mat = _enginePtr->CreateMaterial(L"shaders/PointLightVertexShader.shader", L"shaders/PointLightPixelShader.shader");
-	MaterialPtr mat_bump = _enginePtr->CreateMaterial(L"shaders/dirLightVS.shader", L"shaders/dirLightPS.shader");
+	auto textinfo = std::wstringstream();
+	textinfo << "fps: " << (int)(1.0f / m_delta_time) << "\tframetime: " << m_delta_time << "\n";
 
-	// Scene
-	m_mat_model1 = _enginePtr->CreateMaterial(mat);
-	m_mat_model1->AddTexture(AssetLoader::Get()->GetMaterial("MODEL1_COLOR"));
-	//m_mat_model1->AddTexture(AssetLoader::Get()->GetMaterial("MODEL1_NORMAL"));
-	m_mat_model1->SetCullMode(CULL_BACK);
+	#if _STEAM
+	textinfo << "steam client: " << *ClientName << "\n";
+	#endif
 
-	m_mat_model2 = _enginePtr->CreateMaterial(mat);
-	m_mat_model2->AddTexture(AssetLoader::Get()->GetMaterial("MODEL2_COLOR"));
-	//m_mat_model2->AddTexture(AssetLoader::Get()->GetMaterial("MODEL2_NORMAL"));
-	m_mat_model2->SetCullMode(CULL_BACK);
-
-	m_mat_model3 = _enginePtr->CreateMaterial(mat);
-	m_mat_model3->AddTexture(AssetLoader::Get()->GetMaterial("MODEL3_COLOR"));
-	//m_mat_model3->AddTexture(AssetLoader::Get()->GetMaterial("MODEL3_NORMAL"));
-	m_mat_model3->SetCullMode(CULL_BACK);
-
-	// Terrain
-	m_mat_terrain = _enginePtr->CreateMaterial(mat_bump);
-	m_mat_terrain->AddTexture(AssetLoader::Get()->GetMaterial("TERRAIN_COLOR"));
-	m_mat_terrain->AddTexture(AssetLoader::Get()->GetMaterial("TERRAIN_NORMAL"));
-	m_mat_terrain->SetCullMode(CULL_BACK);
-
-	// Sky
-	m_mat_skydome = _enginePtr->CreateMaterial(mat);
-	m_mat_skydome->AddTexture(AssetLoader::Get()->GetMaterial("SKY"));
-	m_mat_skydome->SetCullMode(CULL_FRONT);
-
-	m_material_list.reserve(32);
+	textinfo << "draw calls: " << _enginePtr->GetRenderSystem()->GetImmediateDeviceContext()->drawcalls_iterator << "\nvsync: " << (m_vsync ? "enabled" : "disabled") <<  "\n";
+	textinfo << _enginePtr->GetRenderSystem()->GetGPUName();
+	RECT rc = _pGeneralFont->GetBounds(textinfo.str().c_str());
+	_pGeneralFont->DrawUIString(textinfo.str().c_str(), 20, (float)winh - rc.bottom - 40);
 }
 
-void Viewport::LoadModels()
+void Viewport::DrawBuildInfo()
 {
-	AssetLoader::Get()->LoadModels(L"configs/mdl_assets.cfg");
+	auto textinfo = std::wstringstream();
+#if _STEAM
+#if _DEBUG
+	textinfo << "Steam private edition [Debug] | " << VERDATE;
+#elif NDEBUG
+	textinfo << "Steam private edition | " << VERDATE;
+#endif
+#else
+#if _DEBUG
+	textinfo << "Local private edition [Debug] | " << VERDATE;
+#elif NDEBUG
+textinfo << "Local private edition | " << VERDATE;
+#endif
+#endif
+	RECT rc = _pWatermarkFont->GetBounds(textinfo.str().c_str());
+	_pWatermarkFont->DrawUIString(textinfo.str().c_str(), 0, (float)winh - rc.bottom);
+}
 
-	m_mesh_model = AssetLoader::Get()->GetModel("MODEL");
-	m_mesh_model->Scale = Vector3D(1, 1, 1);
-	m_mesh_terrain = AssetLoader::Get()->GetModel("TERRAIN");
-	m_mesh_terrain->Scale = Vector3D(1, 1, 1);
-	m_mesh_skydome = AssetLoader::Get()->GetModel("SKY");
-	m_mesh_skydome->Scale = Vector3D(120.0f, 120.0f, 120.0f);
+EXTERN API void Viewport::ShowPos(const int* value)
+{
+	isShowPos = *value;
+}
+
+void Viewport::DrawPos()
+{
+	if (!isShowPos)
+		return;
+
+	auto textinfo = std::wstringstream();
+	textinfo << "Camera position:\n   x: " << EngineMath::RoundTo2(m_world_camera.GetTranslation().m_x) << " units\n   y: " << EngineMath::RoundTo2(m_world_camera.GetTranslation().m_y) << " units\n   z: " << EngineMath::RoundTo2(m_world_camera.GetTranslation().m_z) << " units\n\n";
+	textinfo << "Camera rotation:\n   x: " << EngineMath::AngleAddition(m_world_camera.GetXDirection().m_x) << "° \n   y: " << EngineMath::AngleAddition(m_world_camera.GetZDirection().m_y) << "°";
+
+	_pGeneralFont->DrawUIString(textinfo.str().c_str(), 10, 10);
+}
+
+API void Viewport::ShowHud(const int* value)
+{
+	isShowHud = *value;
+}
+
+void Viewport::DrawHud()
+{
+	if(!isShowHud)
+		return;
+
+	auto textinfo = std::wstringstream();
+	textinfo << ((is_fullscr) ? "Press F11 to exit the full-screen mode" : "Press F11 to go full-screen mode");
+
+	RECT rc = _pHudFont->GetBounds(textinfo.str().c_str());
+	_pHudFont->DrawUIString(textinfo.str().c_str(), winw / 2 - rc.right / 2, 10);
+}
+
+API void Viewport::ReloadAssets()
+{
+	GraphicsEngine::Get()->GetResourceManager()->ReloadShaders();
+}
+
+API void Viewport::SetVSync(bool value)
+{
+	m_vsync = value;
+}
+
+API void Viewport::GoToZeroPos()
+{
+	m_proj_camera.SetTranslation(Vector3D(0, 0, 0));
+	m_view_camera.SetTranslation(Vector3D(0, 0, 0));
+	m_world_camera.SetTranslation(Vector3D(0, 0, 0));
+}
+
+API void Viewport::SetWireframeMode(bool value)
+{
+	_enginePtr->GetRenderSystem()->isWireframe = value;
+}
+
+void Viewport::LoadLevel(LPCWSTR filename)
+{
+	GraphicsEngine::Get()->isLevelLoaded = false;
+	//delete levelLoadFuture;
+	//levelLoadFuture = new std::future<void>;
+	//levelLoadFuture->~future();
+	//*levelLoadFuture = std::async(std::launch::async, Level::OpenLevel,  );
+	Level::OpenLevel(filename, GraphicsEngine::Get(), &_level);
+	m_light_position = Vector4D(*_level->point_light);
+	m_light_radius = *_level->point_light_radius;
+	m_light_rot_y = *_level->point_light_roty;
+	m_world_camera.SetTranslation(*_level->point_player_start_position);
+	cam_x = (*_level->point_player_start_rotation).m_x;
+	cam_y = (*_level->point_player_start_rotation).m_y;
+
+}
+
+EXTERN API void LoadLevelAPI(LPCWSTR filename, Viewport* vp)
+{
+	vp->LoadLevel(filename);
+}
+
+void Viewport::UpdateLevel()
+{
+	for (size_t i = 0; i < _level->GetModels().size(); i++)
+	{
+		constant cc;
+
+		Matrix4x4 m_light_rot_matrix, temp;
+		m_light_rot_matrix.SetIdentity();
+		m_light_rot_matrix.SetRotationY(m_light_rot_y);
+		//m_light_rot_matrix.SetRotationY(1);
+
+		cc.m_world.SetIdentity();
+
+		cc.m_view = m_view_camera;
+		cc.m_proj = m_proj_camera;
+		cc.m_camera_position = m_world_camera.GetTranslation();
+
+		temp.SetIdentity();
+		temp.SetScale(_level->GetModels()[i]->transform->scale);
+		cc.m_world *= temp;
+		
+		temp.SetIdentity();
+		temp.SetRotation(_level->GetModels()[i]->transform->rotation);
+		cc.m_world *= temp;
+		
+		temp.SetIdentity();
+		temp.SetTranslation(_level->GetModels()[i]->transform->position);
+		cc.m_world *= temp;
+
+		cc.m_light_position = m_light_position;
+		cc.m_light_radius = m_light_radius;
+		cc.m_light_direction = m_light_rot_matrix.GetZDirection();
+		cc.m_time = m_delta_time;
+
+		for (size_t j = 0; j < _level->GetModels()[i]->GetMaterialSet().size(); j++)
+			_level->GetModels()[i]->GetMaterialSet()[j]->SetData(&cc, sizeof(constant));
+	}
+}
+API void Viewport::UnloadLevel()
+{
+	_level.reset();
+	_enginePtr->GetResourceManager()->ReleaseAssets();
 }
 
 void Viewport::OnUpdate()
@@ -312,14 +383,34 @@ EXTERN API void OnDestroyViewport(Viewport* vp)
 EXTERN API void SetFullscreenMode(Viewport* vp, bool isFullScr, int winWidth, int winHeight)
 {
 	vp->m_swap_chain->SetFullsceenMode(isFullScr, winWidth, winHeight);
+	if (isFullScr)
+	{
+		vp->fullScr_winw = winWidth;
+		vp->fullScr_winh = winHeight;
+	}
+
+	vp->is_fullscr = isFullScr;
 }
+
+#if _STEAM
+EXTERN API void SetClientName(Viewport* vp, std::wstring client)
+{
+	*vp->ClientName = client.c_str();
+}
+#endif
 
 void Viewport::OnEnter()
 {
+	if (is_fullscr)
+		m_swap_chain->SetFullsceenMode(is_fullscr, fullScr_winw, fullScr_winh);
 }
 
 void Viewport::OnLeave()
 {
+	if (is_fullscr)
+	{
+		ShowWindow(_hWnd, SW_MINIMIZE);
+	}
 }
 
 void Viewport::RecreateSwapChain()

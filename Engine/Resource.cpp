@@ -3,7 +3,7 @@
 
 #include "Resource.h"
 
-Resource::Resource(const wchar_t* full_filename): m_full_filename(full_filename)
+Resource::Resource(const wchar_t* full_filename, RenderSystem* rsystem): m_full_filename(full_filename), _pRenderSystem(rsystem)
 {
 }
 

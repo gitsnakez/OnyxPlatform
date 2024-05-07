@@ -1,23 +1,21 @@
 // Copyright (c) 2023 snakEZ
 // All rights reserved
 
-#include "GraphicsEngine.h"
 #include "api.h"
+#include "GraphicsEngine.h"
+#include "Font.h"
 #include "DeviceContext.h"
-#include "ExceptHelper.h"
+#include "ErrorDispatcher.h"
 
 GraphicsEngine* GraphicsEngine::m_engine = nullptr;
 
 EXTERN API GraphicsEngine::GraphicsEngine()
 {
     try { m_render_system = new RenderSystem(); }
-    catch (...) { ExceptHelper::ShowError("Render system creation failure!"); }
+    catch (...) { ShowErrorMessage("Render system creation failure!"); }
 
-    try { m_mat_manager = new TextureManager(); }
-    catch (...) { ExceptHelper::ShowError("Material manager creation failure!"); }
-
-    try { m_mdl_manager = new MeshManager(); }
-    catch (...) { ExceptHelper::ShowError("Model manager creation failure!"); }
+    try { resManager = new ResourceManager(this); }
+    catch (...) { ShowErrorMessage("Material manager creation failure!"); }
 
     void* shader_byte_code = nullptr;
     size_t size_shader = 0;
@@ -30,33 +28,39 @@ EXTERN API GraphicsEngine::GraphicsEngine()
 
 EXTERN API GraphicsEngine::~GraphicsEngine()
 {
-    delete m_mdl_manager;
-    delete m_mat_manager;
+    delete resManager;
     delete m_render_system;
 }
 
-RenderSystem* GraphicsEngine::GetRenderSystem()
+EXTERN API RenderSystem* GraphicsEngine::GetRenderSystem()
 {
     return m_render_system;
 }
 
-TextureManager* GraphicsEngine::GetMaterialManager()
+EXTERN API ResourceManager* GraphicsEngine::GetResourceManager()
 {
-    return m_mat_manager;
+    return resManager;
+}
+/*
+ShaderPtr GraphicsEngine::CreateShader(const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
+{
+    ShaderPtr sdr_ptr = nullptr;
+
+    try
+    {
+        sdr_ptr = std::make_shared<Shader>(this, vertex_shader_path, pixel_shader_path);
+    }
+    catch (...) {}
+    return sdr_ptr;
 }
 
-MeshManager* GraphicsEngine::GetModelManager()
-{
-    return m_mdl_manager;
-}
-
-MaterialPtr GraphicsEngine::CreateMaterial(const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
+MaterialPtr GraphicsEngine::CreateMaterial(const ShaderPtr &shader)
 {
     MaterialPtr mat_ptr = nullptr;
 
     try
     {
-        mat_ptr = std::make_shared<Material>(this, vertex_shader_path, pixel_shader_path);
+        mat_ptr = std::make_shared<Material>(shader);
     }
     catch (...) {}
     return mat_ptr;
@@ -72,6 +76,30 @@ MaterialPtr GraphicsEngine::CreateMaterial(const MaterialPtr& material)
     }
     catch (...) {}
     return mat_ptr;
+}
+
+ModelPtr GraphicsEngine::CreateModel(const MeshPtr& mesh_ptr, const std::vector<MaterialPtr>& mat_list_ptr)
+{
+    ModelPtr mdl_ptr = nullptr;
+
+    try
+    {
+        mdl_ptr = std::make_shared<Model>(mesh_ptr, mat_list_ptr);
+    }
+    catch (...) {}
+    return mdl_ptr;
+}
+*/
+FontPtr GraphicsEngine::CreateUIFont(const wchar_t* path)
+{
+    FontPtr font_ptr = nullptr;
+
+    try
+    {
+        font_ptr = std::make_shared<Font>(path, m_render_system);
+    }
+    catch (...) {}
+    return font_ptr;
 }
 
 void GraphicsEngine::SetMaterial(const MaterialPtr& material)

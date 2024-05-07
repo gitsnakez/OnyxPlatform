@@ -64,6 +64,10 @@ namespace Editor
 
 
         [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
+        static internal extern void SetEditorStatus(string pS, string pD);
+
+
+        [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]
         static internal extern void CreateGraphics(IntPtr windowPtr);
 
         [DllImport(oapidll, CallingConvention = CallingConvention.Cdecl)]

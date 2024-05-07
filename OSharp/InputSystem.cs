@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OSharp
+namespace OSharp.InputSystem
 {
+    #region Input System Enums
     /// <summary>
     /// Storage of signs of all keyboard keys
     /// </summary>
@@ -201,6 +202,9 @@ namespace OSharp
         Quote = 0xDE,
     }
 
+    /// <summary>
+    /// Storage of mouse keys, buttons
+    /// </summary>
     public enum Mouse
     {
         LeftMouseButton = 0x01,
@@ -208,5 +212,24 @@ namespace OSharp
         MouseWheel = 0x04,
         MouseButton4 = 0x05,
         MouseButton5 = 0x06,
+    }
+    #endregion
+
+    public struct Point
+    {
+        int X;
+        int Y;
+    }
+
+    public interface IViewportInputCallback
+    {
+        void OnKeyDown(int key);
+        void OnKeyUp(int key);
+
+        void OnMouseMove(Point DeltaMousePosition);
+		void OnMouseLeftButtonDown(Point delta_mouse_pos);
+		void OnMouseLeftButtonUp(Point delta_mouse_pos);
+		void OnMouseRightButtonDown(Point delta_mouse_pos);
+		void OnMouseRightButtonUp(Point delta_mouse_pos);
     }
 }

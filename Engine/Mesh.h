@@ -20,12 +20,8 @@ struct MaterialSlot
 class Mesh : public Resource
 {
 public:
-	Mesh(const wchar_t* full_filename);
+	Mesh(const wchar_t* full_filename, RenderSystem* rsystem);
 	~Mesh();
-
-	Vector3D Position;
-	Vector3D Rotation;
-	Vector3D Scale;
 
 	PixelShaderPtr ps;
 	VertexShaderPtr vs;

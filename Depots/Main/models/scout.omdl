@@ -1,0 +1,7 @@
+mesh:		"scout.obj"
+materials
+{
+	body:	"scout/body.omat"
+	head:	"scout/head.omat"
+	eyes:	"scout/eyes.omat"
+}

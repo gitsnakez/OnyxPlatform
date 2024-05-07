@@ -79,6 +79,12 @@ namespace onyxengine
 						else
 							(*it)->OnKeyDown(i);
 
+						if (!(*it)->isFocused)
+						{
+							RemoveListener(*it);
+							break;
+						}
+
 						++it;
 					}
 				}
@@ -95,6 +101,13 @@ namespace onyxengine
 								(*it)->OnMouseRightButtonUp(Point(current_cursor_pos.x, current_cursor_pos.y));
 							else
 								(*it)->OnKeyUp(i);
+
+							if (!(*it)->isFocused)
+							{
+								RemoveListener(*it);
+								break;
+							}
+
 							++it;
 						}
 					}

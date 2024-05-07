@@ -1,0 +1,79 @@
+// devmap for testing level system
+// 2024
+
+entity_001
+{
+	name:	"global_light"
+	class:	"point_light"
+	roty:	-0.6
+	radius:	40
+	transform
+	{
+		position:	2		6		2
+	}
+}
+
+entity_002
+{
+	name:	"camera_start"
+	class:	"point_player_start"
+	transform
+	{
+		position:	3		1		0
+		rotation:	0		0		0
+	}
+}
+
+entity_003
+{
+	name:	"scout"
+	class:	"prop_static"
+	model:	"scout.omdl"
+	transform
+	{
+		position:	3		0		3
+		// 3.1415 - 180 градусов
+		// 1,5707 - 90 градусов
+		rotation:	0		0		0
+		scale:		1		1		1
+	}
+}
+
+entity_004
+{
+	name:	"tower"
+	class:	"prop_static"
+	model:	"tower.omdl"
+	transform
+	{
+		position:	0		0		0
+		rotation:	0		0		0
+		scale:		1		1		1
+	}
+}
+
+entity_005
+{
+	name:	"terrain"
+	class:	"prop_static"
+	model:	"terrain.omdl"
+	transform
+	{
+		position:	0		0		0
+		rotation:	0		0		0
+		scale:		1		1		1
+	}
+}
+
+entity_006
+{
+	name:	"skydome"
+	class:	"prop_static"
+	model:	"tools/skydome.omdl"
+	transform
+	{
+		position:	0		0		0
+		rotation:	0		0		0
+		scale:		50		50		50
+	}
+}

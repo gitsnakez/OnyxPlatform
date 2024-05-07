@@ -1,0 +1,7 @@
+textures
+{
+	basecolor:	"scout_red.png"
+	normal:		"scout_normal.png"
+}
+
+shader:	"dirLight.osdr"

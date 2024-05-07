@@ -15,7 +15,7 @@ void MapLoader::LoadMap(const wchar_t* filename)
 	MessageBox(nullptr, L"Cant open unreadable map yet!", L"engine", MB_OK);
 }
 
-void MapLoader::LoadReadableMap(const wchar_t* filename)
+/*void MapLoader::LoadReadableMap(const wchar_t* filename)
 {
 	file_reader freader;
 	std::map<std::string, std::string> rawmap = freader.GetHeaderDictionaryFromFile(filename);
@@ -32,9 +32,28 @@ void MapLoader::LoadReadableMap(const wchar_t* filename)
 
 		m_positions[pos.first] = Vector3D(poss[0], poss[1], poss[2]);
 	}
+}*/
+
+void MapLoader::LoadReadableMap(const wchar_t* filename)
+{
+	file_reader freader;
+	std::map<std::wstring, std::wstring> rawmap = freader.GetWideHeaderDictionaryFromFile(filename);
+
+	for (const auto& pos : rawmap)
+	{
+		std::wstring* arr = SplitPosWStr(pos.second);
+		float poss[3];
+
+		for (int i = 0; i < 3; i++)
+		{
+			poss[i] = ::_wtof(arr[i].c_str());
+		}
+
+		m_positions[pos.first] = Vector3D(poss[0], poss[1], poss[2]);
+	}
 }
 
-Vector3D MapLoader::GetPosOfObject(std::string objname)
+Vector3D MapLoader::GetPosOfObject(std::wstring objname)
 {
 	return m_positions[objname];
 }

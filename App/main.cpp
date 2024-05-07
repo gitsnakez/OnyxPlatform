@@ -23,6 +23,8 @@
 /// For more information contact snakezfortress04@gmail.com
 
 #include <Windows.h>
+#include <uxtheme.h>
+#include "ErrorDispatcher.h"
 #include "steam_api.h"
 #include "SteamStartAch.h"
 #include "defs.h"
@@ -30,36 +32,83 @@
 #include "owm.h"
 #include "engine.h"
 #include "WindowCallback.h"
-#include "appMain.h"
+#include "SteamStatus.h"
+#include "OPlus/OPlus.h"
 #include <string>
 #include <thread>
+#include <combaseapi.h>
+#include <shellapi.h>
 
 // steam appid 2872880
+
+#pragma comment(linker,"\"/manifestdependency:type='win32' \
+name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
+processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 using namespace onyxengine;
 using namespace std;
 
+void SetupDllDirectory()
+{
+	SetDllDirectoryW(L"bin\\");
+	SetDllDirectoryA("bin\\");
+}
 
+//check tagCOINIT in combaseapi
+enum LocalThreadApartmentEnum
+{
+	MTA_Thread = 0x0,
+	STA_Thread = 0x2
+};
+
+HRESULT SetThreadApartment(int value)
+{
+	return CoInitializeEx(NULL, value);
+}
 
 ///
 /// THIS IS MAIN FUNCTION
 ///
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// Steam stuff
-	if (!SteamAPI_Init())
+	// Set-up path to dll catalog
+	SetupDllDirectory();
+
+	// Single Thread Apartment. Îäíîïîòî÷ííîå ïðèëîæåíèå.
+	if(SetThreadApartment(STA_Thread) != S_OK)
+		ShowErrorMessage("Problem with thread apartment.", NULLSTR, NULLSTR);
+
+	// Disable windows visual styles
+	DWORD dwFlags = (STAP_ALLOW_NONCLIENT);
+	SetThemeAppProperties(dwFlags);
+
+	#if _STEAM
+	// Check for steam application
+	if (SteamAPI_RestartAppIfNecessary(2872880))
 	{
-		MessageBox(NULL, L"Steam is not initialized!\nPlease start steam process to use Onyx Platform SDK!", L"Steam API", MB_OK);
-		return 0;
+		ShowErrorMessage("Game was launch not through Steam.\nPlease restart it through Steam!", NULLSTR, NULLSTR);
+		return -1;
 	}
-	//SteamAPI_RestartAppIfNecessary(2872880);
+
+	// Steam stuff
+	SteamErrMsg msg = {};
+	auto result = SteamAPI_InitEx(&msg);
+
+	if (result != k_ESteamAPIInitResult_OK)
+	{
+		ShowSteamErrorMessage(msg);
+		return 1;
+	}
+	//#else
+	//ShowOnyxMessage("WARNING! This is non-public copy of software.\nIf you are not developer or confidant, please,\ndo not leak information.\n\n\t\t\tOnyx Platform© 2024", "Confidential politics");
+	#endif
 
 	// Input initialization
 	try { InputSystem::Create(); }
-	catch (...) { EngineShutdown(-1); }
+	catch (...) { SteamAPI_Shutdown(); return 1; }
 
 	HWIN window = MakeWindow(Classic);
-	((Window*)window)->ShowLogo();
+	((Window*)window)->ShowLogo(std::wstring(L"resources/images/logobanner_vortex.bmp"), 600, 100);
 	HENGINE engine = CreateEngine();
 	HVP viewport = CreateViewport(GetWindowHandler(window), engine, true);
 
@@ -74,17 +123,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	WindowCallback* callback = new WindowCallback(&hDesc, &control);
 
 	SetWindowCallback(window, (void*)callback);
+
+	#if _STEAM
+	SetSteamStatus("In game", "#onx_ingame");
 	SetFirstStartAchievement();
+	#endif
 
 	// Loop
-	callback->OnCreate();
-	OnCreateViewport(viewport);
-	((Window*)window)->engineinited = true;
 	while (WindowRunning(window))
 		InputSystem::Get()->Update();
 
 	// App finish
 	InputSystem::Release();
 
-	EngineShutdown(0);
+#if _STEAM
+	SteamAPI_Shutdown();
+#endif
+	return 0;
 }

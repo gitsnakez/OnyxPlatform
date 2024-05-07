@@ -38,6 +38,9 @@
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>editor_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock, Version=4.72.1.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Dirkster.AvalonDock.4.72.1\lib\net40\AvalonDock.dll</HintPath>
@@ -145,6 +148,11 @@
   <ItemGroup>
     <Resource Include="Icons\placeholder.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="editor_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\editor_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

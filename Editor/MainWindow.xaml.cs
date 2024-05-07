@@ -28,15 +28,11 @@ namespace Editor
             InitializeComponent();
         }
 
-        bool inited = false;
-
         private void RibbonWindow_ContentRendered(object sender, EventArgs e)
         {
             CornerPreference = ControlzEx.Behaviors.WindowCornerPreference.DoNotRound;
             WindowState = WindowState.Maximized;
 
-            OAPI.CreateGraphics(_controlHost._hwndVp);
-            inited = true;
             new Thread(StartEngine).Start();
         }
 

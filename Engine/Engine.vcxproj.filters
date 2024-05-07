@@ -4,38 +4,14 @@
     <ClCompile Include="constant.h">
       <Filter>Types</Filter>
     </ClCompile>
-    <ClCompile Include="AssetLoader.cpp">
-      <Filter>Obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="MapLoader.cpp">
-      <Filter>Obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicsEngine.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Resource.cpp">
       <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Resources\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Resources\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshManager.cpp">
-      <Filter>Resources\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Resources\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="ExceptHelper.cpp">
-      <Filter>Obsolete</Filter>
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Obsolete</Filter>
@@ -64,17 +40,44 @@
     <ClCompile Include="ConstantBuffer.cpp">
       <Filter>Graphics\RenderSystem</Filter>
     </ClCompile>
-    <ClCompile Include="file_reader.cpp">
-      <Filter>Obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Materials</Filter>
-    </ClCompile>
     <ClCompile Include="engine.cpp">
       <Filter>DLL</Filter>
     </ClCompile>
     <ClCompile Include="BindSystem.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Font2D.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="readfile.cpp">
+      <Filter>SubTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolViewport.cpp">
+      <Filter>Obsolete</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,12 +99,6 @@
     <ClInclude Include="Matrix4x4.h">
       <Filter>Types</Filter>
     </ClInclude>
-    <ClInclude Include="AssetLoader.h">
-      <Filter>Obsolete</Filter>
-    </ClInclude>
-    <ClInclude Include="MapLoader.h">
-      <Filter>Obsolete</Filter>
-    </ClInclude>
     <ClInclude Include="ext_funcs.h">
       <Filter>SubTools</Filter>
     </ClInclude>
@@ -116,21 +113,6 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Resources\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Resources\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshManager.h">
-      <Filter>Resources\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Resources\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="ExceptHelper.h">
-      <Filter>Obsolete</Filter>
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>Obsolete</Filter>
@@ -165,13 +147,7 @@
     <ClInclude Include="ConstantBuffer.h">
       <Filter>Graphics\RenderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="file_reader.h">
-      <Filter>Obsolete</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Materials</Filter>
-    </ClInclude>
-    <ClInclude Include="resource1.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="api.h">
       <Filter>DLL</Filter>
     </ClInclude>
@@ -181,6 +157,46 @@
     <ClInclude Include="BindSystem.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Font2D.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_GENERIC_CODE\ConvertChars.h" />
+    <ClInclude Include="Font.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorDispatcher.h" />
+    <ClInclude Include="EngineMath.h" />
+    <ClInclude Include="Level.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="OnyxFileElement.h">
+      <Filter>SubTools</Filter>
+    </ClInclude>
+    <ClInclude Include="readfile.h">
+      <Filter>SubTools</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="transform.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolViewport.h">
+      <Filter>Obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Types">
@@ -198,17 +214,8 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{f8ae4ab0-e168-4037-abd9-4336b2fb216d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Texture">
-      <UniqueIdentifier>{049872cd-359f-469c-8c3e-0b54a79f290c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Mesh">
-      <UniqueIdentifier>{13b49ac3-d7c6-402c-8ab8-c364efd011d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Input">
       <UniqueIdentifier>{2464c861-d3b0-47f6-8484-9310b8fc6aa7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Materials">
-      <UniqueIdentifier>{30ae5930-995b-4337-b290-9fc7e8243d0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\RenderSystem">
       <UniqueIdentifier>{878fceb9-ccb7-4268-bac2-e1f4a2aa65af}</UniqueIdentifier>
