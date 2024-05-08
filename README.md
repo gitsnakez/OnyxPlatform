@@ -1,4 +1,4 @@
-# OnyxPlatform
+# Vortex
 My small 3D engine project.
  - C/C++
  - C#
